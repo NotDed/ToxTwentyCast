@@ -19,11 +19,11 @@ transformers_logger = logging.getLogger("transformers")
 transformers_logger.setLevel(logging.WARNING)
 
 #loading and spliting toxTwentyCast
-toxTwentyCastdf = pd.read_csv("toxTwentyCast.csv")
+toxTwentyCastdf = pd.read_csv("dataset/toxTwentyCast.csv")
 train_df, eval_df = train_test_split(toxTwentyCastdf, test_size=0.3)
 
 # Optional model configuration
-EPOCHS = 10
+EPOCHS = 1000
 seyonec = 'seyonec/BPE_SELFIES_PubChem_shard00_120k'
 
 # Create a ClassificationModel
