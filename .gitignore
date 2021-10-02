@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#ignorar
+outputs/
+runs/
+wandb/
+cache_dir/
