@@ -23,7 +23,7 @@ toxTwentyCastdf = pd.read_csv("dataset/toxTwentyCast.csv")
 train_df, eval_df = train_test_split(toxTwentyCastdf, test_size=0.3)
 
 # Optional model configuration
-EPOCHS = 1000
+EPOCHS = 100
 seyonec = 'seyonec/BPE_SELFIES_PubChem_shard00_120k'
 
 # Create a ClassificationModel
@@ -31,6 +31,11 @@ model_args = ClassificationArgs(
     num_train_epochs = EPOCHS,
     wandb_project = 'toxTwentyCast',
     tokenizer_name=seyonec)
+
+# Create a ClassificationModel
+model = ClassificationModel(
+    "roberta", seyonec, args=model_args,
+)
 
 # Train the model
 model.train_model(train_df)
