@@ -56,13 +56,13 @@ model = ClassificationModel(
 )
 
 # Train the model
-global_step, training_details = model.train_model(train_df, eval_df = val_df)
+model.train_model(train_df)
 
 # Evaluate the model
 result, model_outputs, wrong_predictions = model.eval_model(val_df)
 
 # accuracy
-result, model_outputs, wrong_predictions = model.eval_model(test_df, acc=metrics.accuracy_score)
+result, model_outputs, wrong_predictions = model.eval_model(val_df, acc=metrics.accuracy_score)
 
 # ROC-PRC
-result, model_outputs, wrong_predictions = model.eval_model(test_df, acc=metrics.average_precision_score)
+result, model_outputs, wrong_predictions = model.eval_model(val_df, acc=metrics.average_precision_score)
