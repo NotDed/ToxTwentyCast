@@ -54,7 +54,7 @@ model = ClassificationModel(
 )
 
 # Train the model
-model.train_model(train_df, eval_df = eval_df)
+model.train_model(train_df, eval_df)
 
 # Evaluate the model
 result, model_outputs, wrong_predictions = model.eval_model(eval_df)
