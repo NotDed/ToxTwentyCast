@@ -42,3 +42,9 @@ model.train_model(train_df)
 
 # Evaluate the model
 result, model_outputs, wrong_predictions = model.eval_model(eval_df)
+
+# accuracy
+result, model_outputs, wrong_predictions = model.eval_model(test_df, acc=sklearn.metrics.accuracy_score)
+
+# ROC-PRC
+result, model_outputs, wrong_predictions = model.eval_model(test_df, acc=sklearn.metrics.average_precision_score)
