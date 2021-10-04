@@ -22,7 +22,7 @@ transformers_logger.setLevel(logging.WARNING)
 
 #loading and spliting toxTwentyCast
 toxTwentyCastdf = pd.read_csv("dataset/toxTwentyCast.csv")
-train_df, eval_df = train_test_split(toxTwentyCastdf, test_size=0.3)
+train_df, val_df = train_test_split(toxTwentyCastdf, test_size=0.3)
 
 # Optional model configuration
 seyonec120K = 'seyonec/BPE_SELFIES_PubChem_shard00_120k'
@@ -54,10 +54,10 @@ model = ClassificationModel(
 )
 
 # Train the model
-model.train_model(train_df, eval_df)
+model.train_model(train_df, eval_df = val_df)
 
 # Evaluate the model
-result, model_outputs, wrong_predictions = model.eval_model(eval_df)
+result, model_outputs, wrong_predictions = model.eval_model(val_df)
 
 # accuracy
 result, model_outputs, wrong_predictions = model.eval_model(test_df, acc=sklearn.metrics.accuracy_score)
