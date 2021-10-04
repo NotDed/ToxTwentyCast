@@ -42,13 +42,13 @@ model_args.num_train_epochs = 15
 model_args.wandb_project = 'toxTwentyCast'
 model_args.tokenizer_name=seyonec120K
 model_args.save_model_every_epoch=False
-model_args.evaluate_during_training = True
+# model_args.evaluate_during_training = True
 model_args.output_dir = todayDir
 model_args.best_model_dir = todayBestDir
 model_args.eval_batch_size = 128
 model_args.train_batch_size = 128
-model_args.use_early_stopping = True
-model_args.early_stopping_metric = metrics.accuracy_score
+# model_args.use_early_stopping = True
+# model_args.early_stopping_metric = metrics.accuracy_score
 
 # Create a ClassificationModel9
 model = ClassificationModel(
