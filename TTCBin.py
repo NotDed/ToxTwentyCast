@@ -47,6 +47,7 @@ model_args.best_model_dir = todayBestDir
 model_args.eval_batch_size = 128
 model_args.train_batch_size = 128
 model_args.use_early_stopping = True
+model_args.early_stopping_metric = sklearn.metrics.accuracy_score
 
 # Create a ClassificationModel9
 model = ClassificationModel(
@@ -54,7 +55,7 @@ model = ClassificationModel(
 )
 
 # Train the model
-model.train_model(train_df, eval_df = val_df)
+model.train_model(train_df, val_df)
 
 # Evaluate the model
 result, model_outputs, wrong_predictions = model.eval_model(val_df)
