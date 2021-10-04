@@ -38,7 +38,7 @@ todayBestDir = now.strftime("outputs/%d-%m-%Y-%H%M/best_model")
 
 # Create a ClassificationModel
 model_args = ClassificationArgs()
-model_args.num_train_epochs = 15
+model_args.num_train_epochs = 50
 model_args.wandb_project = 'toxTwentyCast'
 model_args.tokenizer_name=seyonec120K
 model_args.save_model_every_epoch=False
