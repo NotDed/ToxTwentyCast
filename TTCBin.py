@@ -10,6 +10,7 @@ import pandas as pd
 import selfies
 import logging
 
+from sklearn import metrics
 from sklearn.model_selection import train_test_split
 from simpletransformers.classification import ClassificationModel, ClassificationArgs
 
@@ -47,7 +48,7 @@ model_args.best_model_dir = todayBestDir
 model_args.eval_batch_size = 128
 model_args.train_batch_size = 128
 model_args.use_early_stopping = True
-model_args.early_stopping_metric = sklearn.metrics.accuracy_score
+model_args.early_stopping_metric = metrics.accuracy_score
 
 # Create a ClassificationModel9
 model = ClassificationModel(
@@ -61,7 +62,7 @@ model.train_model(train_df, val_df)
 result, model_outputs, wrong_predictions = model.eval_model(val_df)
 
 # accuracy
-result, model_outputs, wrong_predictions = model.eval_model(test_df, acc=sklearn.metrics.accuracy_score)
+result, model_outputs, wrong_predictions = model.eval_model(test_df, acc=metrics.accuracy_score)
 
 # ROC-PRC
-result, model_outputs, wrong_predictions = model.eval_model(test_df, acc=sklearn.metrics.average_precision_score)
+result, model_outputs, wrong_predictions = model.eval_model(test_df, acc=metrics.average_precision_score)
