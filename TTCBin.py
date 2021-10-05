@@ -40,7 +40,7 @@ todayBestDir = now.strftime("outputs/%d-%m-%Y-%H%M/best_model")
 model_args = ClassificationArgs()
 model_args.num_train_epochs = 50
 model_args.wandb_project = 'toxTwentyCast'
-model_args.tokenizer_name=seyonec120K
+model_args.tokenizer_name=seyonec160K
 model_args.save_model_every_epoch=False
 # model_args.evaluate_during_training = True
 model_args.output_dir = todayDir
@@ -52,7 +52,7 @@ model_args.train_batch_size = 128
 
 # Create a ClassificationModel9
 model = ClassificationModel(
-    "roberta", seyonec120K, args=model_args,
+    "roberta", seyonec160K, args=model_args,
 )
 
 # Train the model
