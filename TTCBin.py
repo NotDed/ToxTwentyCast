@@ -30,6 +30,8 @@ train_df, val_df = train_test_split(toxTwentyCastdf, test_size=0.3)
 # Optional model configuration
 model_type = sys.argv[1]
 
+epoch = sys.argv[2]
+
 if model_type == 's120k':
     seyonec = 'seyonec/BPE_SELFIES_PubChem_shard00_120k'
 
@@ -57,10 +59,11 @@ model_args.best_model_dir = todayBestDir
 model_args.reprocess_input_data = True
 model_args.overwrite_output_dir = True
 model_args.max_seq_length = 512
-model_args.num_train_epochs = 15
+model_args.num_train_epochs = epoch
 model_args.train_batch_size = 32
 
 model_args.evaluate_during_training = True
+model_args.evaluate_during_training_steps = 794
 model_args.evaluate_during_training_verbose = True
 model_args.use_cached_eval_features = True
 
