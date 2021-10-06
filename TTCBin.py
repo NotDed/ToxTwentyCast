@@ -84,4 +84,4 @@ model = ClassificationModel(
 )
 
 # Train the model
-model.train_model(train_df, eval_df=val_df, acc=metrics.accuracy_score, aps=metrics.average_precision_score)
+model.train_model(train_df, eval_df=val_df, acc=metrics.accuracy_score)#, aps=metrics.average_precision_score)
