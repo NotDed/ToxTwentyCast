@@ -48,6 +48,7 @@ todayBestDir = now.strftime("outputs/%d-%m-%Y-%H%M/best_model")
 model_args = ClassificationArgs()
 
 model_args.save_model_every_epoch=False
+model_args.save_steps = -1 #794
 model_args.tokenizer_name=seyonec
 model_args.output_dir = todayDir
 model_args.best_model_dir = todayBestDir
@@ -68,7 +69,7 @@ model_args.early_stopping_metric = "eval_loss"
 model_args.early_stopping_metric_minimize = True
 model_args.early_stopping_patience = 3
 
-model_args.wandb_project = 'toxTwentyCast'
+model_args.wandb_project = 'toxTwentyCastBin'
 
 # Create a ClassificationModel
 model = ClassificationModel(
