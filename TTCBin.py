@@ -30,7 +30,7 @@ train_df, val_df = train_test_split(toxTwentyCastdf, test_size=0.3)
 # Optional model configuration
 model_type = sys.argv[1]
 
-epoch = sys.argv[2]
+epoch = int(sys.argv[2])
 
 if model_type == 's120k':
     seyonec = 'seyonec/BPE_SELFIES_PubChem_shard00_120k'
