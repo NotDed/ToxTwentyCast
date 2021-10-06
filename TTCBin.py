@@ -27,9 +27,16 @@ toxTwentyCastdf = pd.read_csv("dataset/toxTwentyCast.csv")
 train_df, val_df = train_test_split(toxTwentyCastdf, test_size=0.3)
 
 # Optional model configuration
-seyonec120K = 'seyonec/BPE_SELFIES_PubChem_shard00_120k'
-seyonec150K = 'seyonec/BPE_SELFIES_PubChem_shard00_150k'
-seyonec160K = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
+model_type = sys.argv[1]
+
+if model_type == 's120k':
+    seyonec = 'seyonec/BPE_SELFIES_PubChem_shard00_120k'
+
+if model_type == 's150k':
+    seyonec = 'seyonec/BPE_SELFIES_PubChem_shard00_150k'
+
+if model_type == 's160k':
+    seyonec = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
 
 
 #data and time for today
@@ -41,7 +48,7 @@ todayBestDir = now.strftime("outputs/%d-%m-%Y-%H%M/best_model")
 model_args = ClassificationArgs()
 
 model_args.save_model_every_epoch=False
-model_args.tokenizer_name=seyonec160K
+model_args.tokenizer_name=seyonec
 model_args.output_dir = todayDir
 model_args.best_model_dir = todayBestDir
 
@@ -65,7 +72,7 @@ model_args.wandb_project = 'toxTwentyCast'
 
 # Create a ClassificationModel
 model = ClassificationModel(
-    "roberta", seyonec160K, args=model_args,
+    "roberta", seyonec, args=model_args,
 )
 
 # Train the model
