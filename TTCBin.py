@@ -8,6 +8,7 @@
 '''
 import pandas as pd
 import sys
+import torch
 
 import selfies
 import logging
@@ -17,6 +18,8 @@ from sklearn.model_selection import train_test_split
 from simpletransformers.classification import ClassificationModel, ClassificationArgs
 
 from datetime import datetime
+
+torch.cuda.empty_cache()
 
 #loggers basic configurations
 logging.basicConfig(level=logging.INFO)
