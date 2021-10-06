@@ -67,7 +67,7 @@ model_args.train_batch_size = 8
 model_args.eval_batch_size = 8
 
 model_args.evaluate_during_training = True
-model_args.evaluate_during_training_steps = 794
+model_args.evaluate_during_training_steps = 618
 model_args.evaluate_during_training_verbose = True
 model_args.use_cached_eval_features = True
 
