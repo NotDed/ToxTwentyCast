@@ -34,7 +34,7 @@
 
 `python TTCBin.py <modelo seyonec> <epochs>`
 
-ex:
+## ex:
 
 `python TTCBin.py s160k 15`
 
@@ -49,3 +49,11 @@ ex:
 `'s150k' == 'seyonec/BPE_SELFIES_PubChem_shard00_150k'`
 
 `'s160k' == 'seyonec/BPE_SELFIES_PubChem_shard00_160k'`
+
+# Execution format for predictions
+
+`python Predicciones.py <selfie mol> <model path>`
+
+## ex:
+
+`python Predicciones.py [C][C][O][C][=C][C][=C][N] /outputs/best_model`
