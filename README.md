@@ -1,21 +1,17 @@
 # ToxTwentyCast
 
-## Crear entorno
-`conda create --name ToxTwentyCast python=3.7`
+## Conda enviroment
 
-## Activar entorno
+`conda create --name ToxTwentyCast python=3.7`
 
 `conda activate ToxTwentyCast `
 
-# Paquetes necesarios
-## Pandas:
+# Required packages
 
 `conda install pandas`
 
-## Sklearn:
 `conda install sklearn`
 
-## Selfies:
 `conda install selfies`
 
 ## Weights and bias:
@@ -34,7 +30,7 @@
 
 `pip install 'transformers==3.3.1'`
 
-# Formato de ejecución para entrenamiento
+# Execution format for training
 
 `python TTCBin.py <modelo seyonec> <epochs>`
 
@@ -42,7 +38,11 @@ ex:
 
 `python TTCBin.py s160k 15`
 
-## Modelos disponibles
+## Available models
+
+`'s50k' == 'seyonec/BPE_SELFIES_PubChem_shard00_50k'`
+
+`'s70k' == 'seyonec/BPE_SELFIES_PubChem_shard00_70k'`
 
 `'s120k' == 'seyonec/BPE_SELFIES_PubChem_shard00_120k'`
 
