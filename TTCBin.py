@@ -35,14 +35,23 @@ model_type = sys.argv[1]
 
 epoch = int(sys.argv[2])
 
-if model_type == 's120k':
+if model_type == 's50k':
+    seyonec = 'seyonec/BPE_SELFIES_PubChem_shard00_50k'
+
+elif model_type == 's70k':
+    seyonec = 'seyonec/BPE_SELFIES_PubChem_shard00_70k'
+
+elif model_type == 's120k':
     seyonec = 'seyonec/BPE_SELFIES_PubChem_shard00_120k'
 
-if model_type == 's150k':
+elif model_type == 's150k':
     seyonec = 'seyonec/BPE_SELFIES_PubChem_shard00_150k'
 
-if model_type == 's160k':
+elif model_type == 's160k':
     seyonec = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
+
+else:
+    seyonec = 'seyonec/BPE_SELFIES_PubChem_shard00_120k'
 
 
 #data and time for today
