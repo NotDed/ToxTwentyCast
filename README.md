@@ -1,6 +1,6 @@
 # ToxTwentyCast
 
-## Conda enviroment
+# Conda enviroment
 
 `conda create --name ToxTwentyCast python=3.7`
 
