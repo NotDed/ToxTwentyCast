@@ -11,7 +11,7 @@ mol = sys.argv[1]
 save = sys.argv[2]
 
 model = ClassificationModel(
-    "roberta", save, args=model_args,
+    "roberta", save
 )
 
 predictions, raw_outputs = model.predict([mol])
