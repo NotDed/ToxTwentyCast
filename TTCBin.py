@@ -53,29 +53,29 @@ todayBestDir = now.strftime("outputs/%d-%m-%Y-%H%M/best_model")
 # Create a ClassificationModel
 model_args = ClassificationArgs()
 
-model_args.save_model_every_epoch=False
-model_args.save_steps = -1 #794
+model_args.save_model_every_epoch=True
+# model_args.save_steps = -1 #794
 model_args.tokenizer_name=seyonec
 model_args.output_dir = todayDir
 model_args.best_model_dir = todayBestDir
 
 model_args.reprocess_input_data = True
 model_args.overwrite_output_dir = True
-model_args.max_seq_length = 512
+model_args.max_seq_length = 128
 model_args.num_train_epochs = epoch
-model_args.train_batch_size = 8
-model_args.eval_batch_size = 8
+model_args.train_batch_size = 16
+model_args.eval_batch_size = 16
 
 model_args.evaluate_during_training = True
-model_args.evaluate_during_training_steps = 618
-model_args.evaluate_during_training_verbose = True
+# model_args.evaluate_during_training_steps = 618
+# model_args.evaluate_during_training_verbose = True
 model_args.use_cached_eval_features = True
 
 model_args.use_early_stopping = True
 model_args.early_stopping_delta = 0.01
 model_args.early_stopping_metric = "eval_loss"
 model_args.early_stopping_metric_minimize = True
-model_args.early_stopping_patience = 3
+model_args.early_stopping_patience = 5
 
 model_args.wandb_project = 'toxTwentyCastBin'
 
@@ -85,4 +85,4 @@ model = ClassificationModel(
 )
 
 # Train the model
-model.train_model(train_df, eval_df=val_df, acc=metrics.accuracy_score, aps=metrics.average_precision_score)
+model.train_model(train_df, eval_df=val_df, acc=metrics.accuracy_score)#, aps=metrics.average_precision_score)
