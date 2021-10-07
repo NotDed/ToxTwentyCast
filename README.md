@@ -33,3 +33,19 @@
 ## Transformers (3.3.1):
 
 `pip install 'transformers==3.3.1'`
+
+# Formato de ejecución para entrenamiento
+
+`python TTCBin.py <modelo seyonec> <epochs>`
+
+ex:
+
+`python TTCBin.py s160k 15`
+
+## Modelos disponibles
+
+`'s120k' == 'seyonec/BPE_SELFIES_PubChem_shard00_120k'`
+
+`'s150k' == 'seyonec/BPE_SELFIES_PubChem_shard00_150k'`
+
+`'s160k' == 'seyonec/BPE_SELFIES_PubChem_shard00_160k'`
