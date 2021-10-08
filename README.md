@@ -10,12 +10,12 @@
 
 `conda install pandas`
 
-`conda install sklearn`
+`pip install sklearn`
 
-`conda install selfies`
+`pip install selfies`
 
 ## Weights and bias:
-`conda install -c conda-forge wandb`
+`pip install wandb`
 
 
 ## Pytorch with CUDA support
