@@ -86,6 +86,8 @@ model_args.early_stopping_metric = "eval_loss"
 model_args.early_stopping_metric_minimize = True
 model_args.early_stopping_patience = 3
 
+model_args.config = {"dropout": 0.2}
+
 model_args.wandb_project = 'toxTwentyCastBin'
 
 # Create a ClassificationModel
