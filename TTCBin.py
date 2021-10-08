@@ -70,7 +70,7 @@ model_args.best_model_dir = todayBestDir
 
 model_args.reprocess_input_data = True
 model_args.overwrite_output_dir = True
-model_args.max_seq_length = 512
+model_args.max_seq_length = 128
 model_args.num_train_epochs = epoch
 model_args.train_batch_size = 16
 model_args.eval_batch_size = 16
@@ -97,7 +97,7 @@ model = ClassificationModel(
 model.train_model(train_df, eval_df=val_df, acc=metrics.accuracy_score)
 
 # accuracy
-result, model_outputs, wrong_predictions = model.eval_model(val_df, acc=sklearn.metrics.accuracy_score)
+result, model_outputs, wrong_predictions = model.eval_model(val_df, acc=metrics.accuracy_score)
 
 # ROC-PRC
-result, model_outputs, wrong_predictions = model.eval_model(val_df, aps=sklearn.metrics.average_precision_score)
+result, model_outputs, wrong_predictions = model.eval_model(val_df, aps=metrics.average_precision_score)
