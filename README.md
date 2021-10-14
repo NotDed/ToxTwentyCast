@@ -54,11 +54,17 @@
 
 # Execution format for predictions
 
-`python Predicciones.py <mode> <selfie mol> <model path>`
+`python Predicciones.py i <selfie mol> <model path>`
+
+`python Predicciones.py f <path to file> <model path>`
 
 ## Modes
-`f` for file testing (.xslx)
 `i` for individual testing
+
+`f` for file testing (.xlsx)
+
 ## ex:
 
-`python Predicciones.py [C][C][O][C][=C][C][=C][N] /outputs/best_model`
+`python Predicciones.py i [C][C][O][C][=C][C][=C][N] /outputs/best_model`
+
+`python Predicciones.py f my_test.xlsx /outputs/best_model`
