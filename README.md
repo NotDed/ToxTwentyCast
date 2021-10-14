@@ -10,6 +10,8 @@
 
 `conda install pandas`
 
+`conda install openpyxl`
+
 `pip install sklearn`
 
 `pip install selfies`
@@ -52,8 +54,11 @@
 
 # Execution format for predictions
 
-`python Predicciones.py <selfie mol> <model path>`
+`python Predicciones.py <mode> <selfie mol> <model path>`
 
+## Modes
+`f` for file testing (.xslx)
+`i` for individual testing
 ## ex:
 
 `python Predicciones.py [C][C][O][C][=C][C][=C][N] /outputs/best_model`
