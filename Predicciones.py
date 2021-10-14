@@ -28,4 +28,13 @@ model = ClassificationModel(
 
 predictions, raw_outputs = model.predict(test)
 
-print(predictions, raw_outputs)
+out_df = {
+    'selfie':test,
+    'real_tox': list(test_df['Toxicidad']),
+    'predictions':predictions,
+    'raw_outputs':raw_outputs
+}
+
+out_df = pd.DataFrame(out_df)
+
+out_df.to_csv('out_df.csv', index=False)
