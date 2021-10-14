@@ -13,7 +13,7 @@ mol = sys.argv[2]
 save = sys.argv[3]
 
 if modo == 'f':
-    test_df = pd.read_excel(mol)
+    test_df = pd.read_excel(mol, header=(0))
     test = list(test_df['selfies'])
 else:
     test = [mol]
