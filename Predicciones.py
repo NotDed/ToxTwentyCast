@@ -6,9 +6,17 @@ from simpletransformers.classification import ClassificationModel, Classificatio
 
 
 # Optional model configuration
-mol = sys.argv[1]
+modo = sys.argv[1] #i: individual f: archivo
 
-save = sys.argv[2]
+mol = sys.argv[2]
+
+save = sys.argv[3]
+
+if modo == 'f':
+    test = [mol]
+else:
+    test_df = pd.read_excel(mol, header=(0))
+    test = list(test_df['selfies'])
 
 # Create a ClassificationModel
 model_args = ClassificationArgs()
@@ -18,6 +26,6 @@ model = ClassificationModel(
     "roberta", save, args=model_args,
 )
 
-predictions, raw_outputs = model.predict([mol])
+predictions, raw_outputs = model.predict(test)
 
 print(predictions, raw_outputs)
