@@ -31,8 +31,8 @@ predictions, raw_outputs = model.predict(test)
 out_df = {
     'selfie':test,
     'real_tox': list(test_df['Toxicidad']),
-    'predictions':predictions,
-    'raw_outputs':raw_outputs
+    'predictions':predictions
+    # 'raw_outputs':raw_outputs[]
 }
 
 out_df = pd.DataFrame(out_df)
