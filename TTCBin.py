@@ -77,7 +77,7 @@ model_args.eval_batch_size = 16
 
 model_args.evaluate_during_training = True
 # model_args.evaluate_during_training_steps = 618
-# model_args.evaluate_during_training_verbose = True
+model_args.evaluate_during_training_verbose = True
 model_args.use_cached_eval_features = True
 
 model_args.use_early_stopping = True
