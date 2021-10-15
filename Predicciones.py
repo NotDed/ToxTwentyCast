@@ -23,7 +23,7 @@ model_args = ClassificationArgs()
 model_args.wandb_project = 'toxTwentyCastBin'
 
 model = ClassificationModel(
-    "roberta", save, args=model_args,
+    "roberta", save, args=model_args, use_cuda = False
 )
 
 predictions, raw_outputs = model.predict(test)
