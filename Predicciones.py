@@ -39,4 +39,4 @@ out_df = pd.DataFrame(out_df)
 
 predictionName = input('Indique el nombre de el archivo de predicciones: ')
 
-out_df.to_csv('predictions/'+predictionName, index=False)
+out_df.to_csv('predictions/'+predictionName+'.csv', index=False)
