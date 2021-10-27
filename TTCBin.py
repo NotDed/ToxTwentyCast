@@ -94,7 +94,6 @@ model_args.max_seq_length = 512
 model_args.adafactor_eps = 1e-12
 model_args.config = {
         "dropout": 0.1,
-        "layer_norm_eps": 1e-12
     }
 
 model_args.wandb_project = 'toxTwentyCastBin'
