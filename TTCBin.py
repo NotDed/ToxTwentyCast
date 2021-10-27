@@ -88,7 +88,7 @@ model_args.early_stopping_metric_minimize = True
 model_args.early_stopping_patience = 3
 
 model_args.learning_rate = 1e-4
-model_args.max_seq_length = 512
+model_args.max_seq_length = 256
 
 
 model_args.adafactor_eps = 1e-12
