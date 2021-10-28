@@ -107,7 +107,7 @@ model = ClassificationModel(
 model.train_model(train_df, eval_df=val_df, acc=metrics.accuracy_score, aps=metrics.average_precision_score, roc = metrics.roc_auc_score)
 
 # accuracy
-, model_outputs, wrong_predictions = model.eval_model(val_df, acc=metrics.accuracy_score)
+result, model_outputs, wrong_predictions = model.eval_model(val_df, acc=metrics.accuracy_score)
 
 # ROC-PRC
 result, model_outputs, wrong_predictions = model.eval_model(val_df, aps=metrics.average_precision_score)
