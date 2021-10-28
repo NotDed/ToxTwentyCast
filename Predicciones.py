@@ -29,6 +29,10 @@ model = ClassificationModel(
 
 predictions, raw_outputs = model.predict(test)
 
+if modo == 'i':
+    print('predictions: ')
+    print(predictions, raw_outputs)
+
 out_df = {
     'selfie':test,
     'real_tox': list(test_df['Toxicidad']),
