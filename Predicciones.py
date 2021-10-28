@@ -16,6 +16,7 @@ if modo == 'f':
     test_df = pd.read_excel(mol, header=(0))
     test = list(test_df['selfies'])
 else:
+    test_df = pd.DataFrame.from_dict({'selfies': [mol], 'Toxicidad': [0]})
     test = [mol]
 
 # Create a ClassificationModel
