@@ -83,7 +83,7 @@ model_args.use_cached_eval_features = True
 
 model_args.use_early_stopping = True
 model_args.early_stopping_delta = 0.01
-model_args.early_stopping_metric = metrics.roc_auc_score
+model_args.early_stopping_metric = 'mcc'
 model_args.early_stopping_metric_minimize = True
 model_args.early_stopping_patience = 3
 
@@ -104,7 +104,7 @@ model = ClassificationModel(
 )
 
 # Train the model
-model.train_model(train_df, eval_df=val_df, acc=metrics.accuracy_score, aps=metrics.average_precision_score, roc = metrics.roc_auc_score)
+model.train_model(train_df, eval_df=val_df, acc=metrics.accuracy_score, aps=metrics.average_precision_score)#, roc = metrics.roc_auc_score)
 
 # accuracy
 # result, model_outputs, wrong_predictions = model.eval_model(val_df, acc=metrics.accuracy_score)
