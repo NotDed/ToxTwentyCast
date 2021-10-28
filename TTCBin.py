@@ -87,7 +87,7 @@ model_args.early_stopping_metric = 'mcc'
 model_args.early_stopping_metric_minimize = True
 model_args.early_stopping_patience = 3
 
-model_args.learning_rate = 1e-4
+model_args.learning_rate = 4e-5
 model_args.max_seq_length = 256
 
 
@@ -104,10 +104,10 @@ model = ClassificationModel(
 )
 
 # Train the model
-model.train_model(train_df, eval_df=val_df, acc=metrics.accuracy_score, aps=metrics.average_precision_score)#, roc = metrics.roc_auc_score)
+model.train_model(train_df, eval_df=val_df, acc=metrics.accuracy_score, aps=metrics.average_precision_score, roc = metrics.roc_auc_score)
 
 # accuracy
-# result, model_outputs, wrong_predictions = model.eval_model(val_df, acc=metrics.accuracy_score)
+, model_outputs, wrong_predictions = model.eval_model(val_df, acc=metrics.accuracy_score)
 
 # ROC-PRC
-# result, model_outputs, wrong_predictions = model.eval_model(val_df, aps=metrics.average_precision_score)
+result, model_outputs, wrong_predictions = model.eval_model(val_df, aps=metrics.average_precision_score)
