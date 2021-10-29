@@ -71,6 +71,7 @@ model_args.best_model_dir = todayBestDir
 
 model_args.reprocess_input_data = True
 model_args.overwrite_output_dir = True
+model_args.auto_weights = True
 # model_args.max_seq_length = 128
 model_args.num_train_epochs = epoch
 model_args.train_batch_size = 16
@@ -87,7 +88,7 @@ model_args.early_stopping_metric = 'mcc'
 model_args.early_stopping_metric_minimize = True
 model_args.early_stopping_patience = 3
 
-model_args.learning_rate = 4e-5
+model_args.learning_rate = 1e-6
 model_args.max_seq_length = 256
 
 
@@ -111,4 +112,3 @@ result, model_outputs, wrong_predictions = model.eval_model(val_df, acc=metrics.
 
 # ROC-PRC
 result, model_outputs, wrong_predictions = model.eval_model(val_df, aps=metrics.average_precision_score)
-#hola
