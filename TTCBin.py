@@ -84,7 +84,7 @@ model_args.use_cached_eval_features = True
 
 model_args.use_early_stopping = True
 model_args.early_stopping_delta = 0.01
-model_args.early_stopping_metric = 'mcc'
+model_args.early_stopping_metric = "eval_loss"
 model_args.early_stopping_metric_minimize = True
 model_args.early_stopping_patience = 3
 
