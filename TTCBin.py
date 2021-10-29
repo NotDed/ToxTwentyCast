@@ -68,14 +68,15 @@ model_args.save_model_every_epoch=True
 model_args.tokenizer_name=seyonec
 model_args.output_dir = todayDir
 model_args.best_model_dir = todayBestDir
-
+model_args.hidden_dropout_prob = 0.1
+model_args.config.layer_norm_eps= 1e-12
 model_args.reprocess_input_data = True
 model_args.overwrite_output_dir = True
 model_args.auto_weights = True
 # model_args.max_seq_length = 128
 model_args.num_train_epochs = epoch
-model_args.train_batch_size = 16
-model_args.eval_batch_size = 16
+model_args.train_batch_size = 32
+model_args.eval_batch_size = 32
 
 model_args.evaluate_during_training = True
 # model_args.evaluate_during_training_steps = 618
@@ -88,13 +89,11 @@ model_args.early_stopping_metric = "eval_loss"
 model_args.early_stopping_metric_minimize = True
 model_args.early_stopping_patience = 3
 
-model_args.learning_rate = 1e-6
+model_args.learning_rate = 4e-5
 model_args.max_seq_length = 256
 
-
-model_args.adafactor_eps = 1e-12
 model_args.config = {
-        "dropout": 0.1,
+        "dropout": 0.25,
     }
 
 model_args.wandb_project = 'toxTwentyCastBin'
