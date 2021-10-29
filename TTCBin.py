@@ -69,7 +69,7 @@ model_args.tokenizer_name=seyonec
 model_args.output_dir = todayDir
 model_args.best_model_dir = todayBestDir
 model_args.hidden_dropout_prob = 0.1
-model_args.config.layer_norm_eps= 1e-12
+model_args.adam_epsilon= 1e-12
 model_args.reprocess_input_data = True
 model_args.overwrite_output_dir = True
 model_args.auto_weights = True
@@ -80,7 +80,7 @@ model_args.eval_batch_size = 32
 
 model_args.evaluate_during_training = True
 # model_args.evaluate_during_training_steps = 618
-# model_args.evaluate_during_training_verbose = True
+model_args.evaluate_during_training_verbose = True
 model_args.use_cached_eval_features = True
 
 model_args.use_early_stopping = True
