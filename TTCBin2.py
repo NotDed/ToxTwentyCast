@@ -30,8 +30,9 @@ import modelFunctions
 
 #-------------------------------------Paths-------------------------------------
 
-data_path = '/dataset/toxTwentyCast.csv'
-output_path = '/outputs/'
+data_path = '~/ToxTwentyCast/dataset/toxTwentyCast.csv'
+output_path = '~/ToxTwentyCast/outputs/'
+
 
 #-------------------------------------Dataset Load------------------------------
 
