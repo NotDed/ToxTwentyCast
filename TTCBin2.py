@@ -25,8 +25,8 @@ warnings.filterwarnings('ignore')
 import logging
 logging.getLogger("transformers.tokenization_utils_base").setLevel(logging.ERROR)
 
-from . import utilityFunctions
-from . import modelFunctions
+from .utilities.utilityFunctions import *
+from .utilities.modelFunctions import *
 
 #-------------------------------------Paths-------------------------------------
 
