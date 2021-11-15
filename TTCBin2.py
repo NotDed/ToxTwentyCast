@@ -104,7 +104,9 @@ pretrain(model=model,
          optimizer=optimizer,
          scheduler=scheduler,
          num_epochs=NUM_EPOCHS,
-         valid_period=927)
+         valid_period=927,
+         PAD_INDEX,
+         UNK_INDEX)
 
 NUM_EPOCHS = 6
 print("======================= Start training =================================")
@@ -119,14 +121,16 @@ train(model=model,
       optimizer=optimizer,
       scheduler=scheduler,
       num_epochs=NUM_EPOCHS,
-         valid_period=927)
+      valid_period=927,
+      PAD_INDEX,
+      UNK_INDEX)
 
 model = ROBERTAClassifier()
 model = model.to(device)
 
 load_checkpoint(output_path + '/model.pkl', model)
 
-evaluate(model, test_iter)
+evaluate(model, test_iter, PAD_INDEX, UNK_INDEX)
 
 print(len(train_data))
 print(len(valid_data))
