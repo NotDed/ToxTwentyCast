@@ -20,7 +20,7 @@ warnings.filterwarnings('ignore')
 import logging
 logging.getLogger("transformers.tokenization_utils_base").setLevel(logging.ERROR)
 
-from .utilityFunctions import *
+import utilityFunctions
 #------------------------------------Pretrain-----------------------------------
 
 def pretrain(model,
