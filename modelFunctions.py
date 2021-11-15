@@ -114,7 +114,7 @@ def train(model,
           valid_iter,
           scheduler = None,
           num_epochs = 5,
-          valid_period = len(train_iter),
+          valid_period = 1854,
           output_path = output_path):
 
     # Initialize losses and loss histories
