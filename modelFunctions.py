@@ -28,7 +28,7 @@ def pretrain(model,
              train_iter,
              valid_iter,
              scheduler = None,
-             valid_period = len(68),
+             valid_period = 1854,
              num_epochs = 1):
 
     # Pretrain linear layers, do not train bert
