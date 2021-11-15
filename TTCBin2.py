@@ -105,8 +105,8 @@ pretrain(model=model,
          scheduler=scheduler,
          num_epochs=NUM_EPOCHS,
          valid_period=927,
-         PAD_INDEX,
-         UNK_INDEX)
+         PAD_INDEX = PAD_INDEX,
+         UNK_INDEX = UNK_INDEX)
 
 NUM_EPOCHS = 6
 print("======================= Start training =================================")
@@ -122,8 +122,8 @@ train(model=model,
       scheduler=scheduler,
       num_epochs=NUM_EPOCHS,
       valid_period=927,
-      PAD_INDEX,
-      UNK_INDEX)
+      PAD_INDEX = PAD_INDEX,
+      UNK_INDEX = UNK_INDEX)
 
 model = ROBERTAClassifier()
 model = model.to(device)
