@@ -88,7 +88,7 @@ test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=Fals
 NUM_EPOCHS = 3
 steps_per_epoch = len(train_iter)
 
-model = ROBERTAClassifier()
+model = ROBERTAClassifier(BERT_MODEL_NAME)
 
 
 optimizer = AdamW(model.parameters(), lr=1e-4)

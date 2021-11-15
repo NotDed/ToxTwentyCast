@@ -24,7 +24,7 @@ import utilityFunctions
 #-------------------------------------ROBERTA Classifier------------------------
 
 class ROBERTAClassifier(torch.nn.Module):
-    def __init__(self):
+    def __init__(self, BERT_MODEL_NAME):
         super(ROBERTAClassifier, self).__init__()
 
         self.roberta = RobertaModel.from_pretrained(BERT_MODEL_NAME, return_dict=False)
