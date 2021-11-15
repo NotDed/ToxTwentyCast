@@ -20,7 +20,7 @@ warnings.filterwarnings('ignore')
 import logging
 logging.getLogger("transformers.tokenization_utils_base").setLevel(logging.ERROR)
 
-from .utiliyFunctions import *
+from .utilityFunctions import *
 #-------------------------------------ROBERTA Classifier------------------------
 
 class ROBERTAClassifier(torch.nn.Module):
