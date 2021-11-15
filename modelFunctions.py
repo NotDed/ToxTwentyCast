@@ -23,8 +23,8 @@ logging.getLogger("transformers.tokenization_utils_base").setLevel(logging.ERROR
 import utilityFunctions
 #-------------------------------------Paths-------------------------------------
 
-data_path = '/dataset/toxTwentyCast.csv'
-output_path = '/outputs/'
+data_path = '~/ToxTwentyCast/dataset/toxTwentyCast.csv'
+output_path = '~/ToxTwentyCast/outputs/'
 
 #------------------------------------Pretrain-----------------------------------
 
