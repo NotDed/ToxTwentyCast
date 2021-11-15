@@ -27,7 +27,8 @@ logging.getLogger("transformers.tokenization_utils_base").setLevel(logging.ERROR
 
 import utilityFunctions
 import modelFunctions
-import clasificadorRoberta
+from clasificadorRoberta import ROBERTAClassifier
+
 
 #-------------------------------------Paths-------------------------------------
 
