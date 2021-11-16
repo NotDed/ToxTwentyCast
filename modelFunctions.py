@@ -32,11 +32,11 @@ def pretrain(model,
              optimizer,
              train_iter,
              valid_iter,
+             PAD_INDEX,
+             UNK_INDEX,
              scheduler = None,
              valid_period = 1854,
-             num_epochs = 1,
-             PAD_INDEX,
-             UNK_INDEX):
+             num_epochs = 1):
 
     # Pretrain linear layers, do not train bert
     wandb.init(project="newTestPretrain")
@@ -119,12 +119,12 @@ def train(model,
           optimizer,
           train_iter,
           valid_iter,
+          PAD_INDEX,
+          UNK_INDEX,
           scheduler = None,
           num_epochs = 5,
           valid_period = 1854,
-          output_path = output_path,
-          PAD_INDEX,
-          UNK_INDEX):
+          output_path = output_path):
 
     # Initialize losses and loss histories
     wandb.init(project="newTestTrain")

@@ -101,12 +101,12 @@ print("======================= Start pretraining =============================="
 pretrain(model=model,
          train_iter=train_iter,
          valid_iter=valid_iter,
+         PAD_INDEX = PAD_INDEX,
+         UNK_INDEX = UNK_INDEX,
          optimizer=optimizer,
          scheduler=scheduler,
          num_epochs=NUM_EPOCHS,
-         valid_period=927,
-         PAD_INDEX = PAD_INDEX,
-         UNK_INDEX = UNK_INDEX)
+         valid_period=927)
 
 NUM_EPOCHS = 6
 print("======================= Start training =================================")
