@@ -73,8 +73,7 @@ def pretrain(model,
             global_step += 1
 
             # Validation loop. Save progress and evaluate model performance.
-            print('a')
-            print(global_step, valid_period)
+            print(global_step, len(train_iter), valid_period)
 
             if global_step % valid_period == 0:
                 model.eval()
@@ -170,6 +169,8 @@ def train(model,
             global_step += 1
 
             # Validation loop. Save progress and evaluate model performance.
+            print(global_step, len(train_iter), valid_period)
+            
             if global_step % valid_period == 0:
                 model.eval()
 
