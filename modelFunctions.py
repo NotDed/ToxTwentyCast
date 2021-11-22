@@ -26,6 +26,32 @@ import utilityFunctions
 data_path = '~/ToxTwentyCast/dataset/toxTwentyCast.csv'
 output_path = '~/ToxTwentyCast/outputs/'
 
+#-------------------------------------Utility Functions-------------------------
+
+def save_checkpoint(path, model, valid_loss):
+    torch.save({'model_state_dict': model.state_dict(),
+                  'valid_loss': valid_loss}, path)
+
+
+def load_checkpoint(path, model):
+    state_dict = torch.load(path, map_location=device)
+    model.load_state_dict(state_dict['model_state_dict'])
+
+    return state_dict['valid_loss']
+
+
+def save_metrics(path, train_loss_list, valid_loss_list, global_steps_list):
+    state_dict = {'train_loss_list': train_loss_list,
+                  'valid_loss_list': valid_loss_list,
+                  'global_steps_list': global_steps_list}
+
+    torch.save(state_dict, path)
+
+
+def load_metrics(path):
+    state_dict = torch.load(path, map_location=device)
+    return state_dict['train_loss_list'], state_dict['valid_loss_list'],
+
 #------------------------------------Pretrain-----------------------------------
 
 def pretrain(model,
@@ -170,7 +196,7 @@ def train(model,
 
             # Validation loop. Save progress and evaluate model performance.
             print(global_step, len(train_iter), valid_period)
-            
+
             if global_step % valid_period == 0:
                 model.eval()
 
