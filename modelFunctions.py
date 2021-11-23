@@ -239,7 +239,7 @@ def train(model,
                 model.train()
 
     wandb.finish()
-    save_metrics(output_path + '/metric.pkl', train_loss_list, valid_loss_list, global_steps_list)
+    save_metrics(output_path + 'metric.pkl', train_loss_list, valid_loss_list, global_steps_list)
     print('Training done!')
 
 #------------------------------------Evaluation---------------------------------
