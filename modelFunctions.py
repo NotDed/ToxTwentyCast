@@ -231,8 +231,8 @@ def train(model,
                 # checkpoint
                 if best_valid_loss > valid_loss:
                     best_valid_loss = valid_loss
-                    save_checkpoint(output_path + '/model.pkl', model, best_valid_loss)
-                    save_metrics(output_path + '/metric.pkl', train_loss_list, valid_loss_list, global_steps_list)
+                    save_checkpoint(output_path + 'model.pkl', model, best_valid_loss)
+                    save_metrics(output_path + 'metric.pkl', train_loss_list, valid_loss_list, global_steps_list)
 
                 train_loss = 0.0
                 valid_loss = 0.0
