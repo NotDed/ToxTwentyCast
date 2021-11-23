@@ -85,7 +85,7 @@ train_iter, valid_iter = BucketIterator.splits((train_data, valid_data),
 test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=False, sort=False)
 
 #-------------------------------------Main training loop------------------------
-NUM_EPOCHS = 6
+NUM_EPOCHS = 3
 steps_per_epoch = len(train_iter)
 
 model = ROBERTAClassifier(BERT_MODEL_NAME)
