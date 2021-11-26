@@ -39,6 +39,7 @@ output_path = 'outputs/'
 #-------------------------------------Dataset Load------------------------------
 
 df = pd.read_csv(data_path)
+df = df.head(1000)
 
 #-------------------------------------Wandb login-------------------------------
 
@@ -96,21 +97,21 @@ scheduler = get_linear_schedule_with_warmup(optimizer,
                                             num_warmup_steps=steps_per_epoch*1,
                                             num_training_steps=steps_per_epoch*NUM_EPOCHS)
 
-print("======================= Start pretraining ==============================")
-
-pretrain(model=model,
-         train_iter=train_iter,
-         valid_iter=valid_iter,
-         PAD_INDEX = PAD_INDEX,
-         UNK_INDEX = UNK_INDEX,
-         optimizer=optimizer,
-         scheduler=scheduler,
-         num_epochs=NUM_EPOCHS,
-         valid_period=len(train_iter))
+# print("======================= Start pretraining ==============================")
+#
+# pretrain(model=model,
+#          train_iter=train_iter,
+#          valid_iter=valid_iter,
+#          PAD_INDEX = PAD_INDEX,
+#          UNK_INDEX = UNK_INDEX,
+#          optimizer=optimizer,
+#          scheduler=scheduler,
+#          num_epochs=NUM_EPOCHS,
+#          valid_period=len(train_iter))
 
 NUM_EPOCHS = 12
 print("======================= Start training =================================")
-optimizer = AdamW(model.parameters(), lr=2e-6)
+optimizer = AdamW(model.parameters(), lr=2e-5)
 scheduler = get_linear_schedule_with_warmup(optimizer,
                                             num_warmup_steps=steps_per_epoch*2,
                                             num_training_steps=steps_per_epoch*NUM_EPOCHS)

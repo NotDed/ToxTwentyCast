@@ -153,6 +153,8 @@ def train(model,
 
     # Initialize losses and loss histories
     wandb.init(project="newTestTrain")
+    for param in model.roberta.parameters():
+        param.requires_grad = False
 
     train_loss = 0.0
     valid_loss = 0.0
