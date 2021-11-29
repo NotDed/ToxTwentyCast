@@ -32,16 +32,17 @@ from clasificadorRoberta import ROBERTAClassifier
 
 #-------------------------------------Paths-------------------------------------
 
-data_path = '~/ToxTwentyCast/dataset/toxTwentyCast.csv'
+# data_path = '~/ToxTwentyCast/dataset/toxTwentyCast.csv'
+data_path = '~/ToxTwentyCast/dataset/toxTwentyCastShort.csv'
 output_path = 'outputs/'
 
 
 #-------------------------------------Dataset Load------------------------------
 
-df = pd.read_csv(data_path)
-df = df.head(5000)
-
-df.to_csv('~/ToxTwentyCast/dataset/toxTwentyCastShort.csv')
+# df = pd.read_csv(data_path)
+# df = df.head(5000)
+#
+# df.to_csv('~/ToxTwentyCast/dataset/toxTwentyCastShort.csv')
 
 #-------------------------------------Wandb login-------------------------------
 
