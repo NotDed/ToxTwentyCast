@@ -126,7 +126,7 @@ train(model=model,
       PAD_INDEX = PAD_INDEX,
       UNK_INDEX = UNK_INDEX)
 
-model = ROBERTAClassifier()
+model = ROBERTAClassifier(BERT_MODEL_NAME)
 model = model.to(device)
 
 load_checkpoint(output_path + '/model.pkl', model)
