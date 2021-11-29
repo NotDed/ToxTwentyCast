@@ -98,6 +98,7 @@ scheduler = get_linear_schedule_with_warmup(optimizer,
                                             num_training_steps=steps_per_epoch*NUM_EPOCHS)
 
 print("======================= Start pretraining ==============================")
+wandb.init(project="newTestTrain")
 
 pretrain(model=model,
          train_iter=train_iter,
@@ -111,6 +112,7 @@ pretrain(model=model,
 
 NUM_EPOCHS = 12
 print("======================= Start training =================================")
+
 optimizer = AdamW(model.parameters(), lr=2e-5)
 scheduler = get_linear_schedule_with_warmup(optimizer,
                                             num_warmup_steps=steps_per_epoch*2,
@@ -133,6 +135,4 @@ load_checkpoint(output_path + '/model.pkl', model)
 
 evaluate(model, test_iter, PAD_INDEX, UNK_INDEX)
 
-print(len(train_data))
-print(len(valid_data))
-print(len(test_data))
+wandb.finish()

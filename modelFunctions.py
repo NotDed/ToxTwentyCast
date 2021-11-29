@@ -65,7 +65,6 @@ def pretrain(model,
              num_epochs = 1):
 
     # Pretrain linear layers, do not train bert
-    wandb.init(project="newTestPretrain")
     for param in model.roberta.parameters():
         param.requires_grad = False
 
@@ -83,6 +82,8 @@ def pretrain(model,
 
             y_pred = model(input_ids=source,
                            attention_mask=mask)
+
+            print('source: ',source.shape(), ' target: ',target.shape(), ' y_pred: ',y_pred.shape())
 
             loss = torch.nn.CrossEntropyLoss()(y_pred, target)
 
@@ -106,13 +107,13 @@ def pretrain(model,
                 print(len(valid_iter))
                 with torch.no_grad():
                     for (source, target), _ in valid_iter:
-                        print(source, target)
                         mask = (source != PAD_INDEX).type(torch.uint8)
 
                         y_pred = model(input_ids=source,
                                        attention_mask=mask)
 
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
+                        acc = accuracy_score(target, y_pred)
 
                         valid_loss += loss.item()
 
@@ -123,7 +124,7 @@ def pretrain(model,
                 model.train()
 
                 # print summary
-                wandb.log({'epoch': epoch, 'global_step': global_step, 'train_loss': train_loss, 'valid_loss': valid_loss})
+                wandb.log({'epoch': epoch, 'global_step': global_step, 'accuracy': acc, 'train_loss': train_loss, 'valid_loss': valid_loss})
                 print('Epoch [{}/{}], global step [{}/{}], PT Loss: {:.4f}, Val Loss: {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
                               train_loss, valid_loss))
@@ -135,7 +136,6 @@ def pretrain(model,
     for param in model.roberta.parameters():
         param.requires_grad = True
 
-    wandb.finish()
     print('Pre-training done!')
 
 #------------------------------------Train--------------------------------------
@@ -152,7 +152,6 @@ def train(model,
           output_path = output_path):
 
     # Initialize losses and loss histories
-    wandb.init(project="newTestTrain")
     for param in model.roberta.parameters():
         param.requires_grad = False
 
@@ -175,6 +174,10 @@ def train(model,
 
             y_pred = model(input_ids=source,
                            attention_mask=mask)
+
+
+
+            print('source: ',source.shape(), ' target: ',target.shape(), ' y_pred: ',y_pred.shape())
             #output = model(input_ids=source,
             #              labels=target,
             #              attention_mask=mask)
@@ -213,6 +216,7 @@ def train(model,
                         #               attention_mask=mask)
 
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
+                        acc = accuracy_score(target, y_pred)
                         #loss = output[0]
 
                         valid_loss += loss.item()
@@ -225,7 +229,7 @@ def train(model,
                 global_steps_list.append(global_step)
 
                 # print summary
-                wandb.log({'epoch': epoch, 'global_step': global_step, 'train_loss': train_loss, 'valid_loss': valid_loss})
+                wandb.log({'epoch': epoch, 'global_step': global_step, ,'accuracy': acc, 'train_loss': train_loss, 'valid_loss': valid_loss})
                 print('Epoch [{}/{}], global step [{}/{}], Train Loss: {:.4f}, Valid Loss: {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
                               train_loss, valid_loss))
@@ -240,7 +244,6 @@ def train(model,
                 valid_loss = 0.0
                 model.train()
 
-    wandb.finish()
     save_metrics(output_path + 'metric.pkl', train_loss_list, valid_loss_list, global_steps_list)
     print('Training done!')
 
@@ -264,6 +267,9 @@ def evaluate(model, test_loader, PAD_INDEX, UNK_INDEX):
     print(classification_report(y_true, y_pred, labels=[1,0], digits=4))
 
     cm = confusion_matrix(y_true, y_pred, labels=[1,0])
+
+    wandb.log({'confusion_matrix': cm})
+
     ax = plt.subplot()
 
     sns.heatmap(cm, annot=True, ax = ax, cmap='Blues', fmt="d")
