@@ -113,7 +113,7 @@ pretrain(model=model,
 NUM_EPOCHS = 12
 print("======================= Start training =================================")
 
-optimizer = AdamW(model.parameters(), lr=2e-5)
+optimizer = AdamW(model.parameters(), lr=2e-6)
 scheduler = get_linear_schedule_with_warmup(optimizer,
                                             num_warmup_steps=steps_per_epoch*2,
                                             num_training_steps=steps_per_epoch*NUM_EPOCHS)
