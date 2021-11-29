@@ -41,6 +41,8 @@ output_path = 'outputs/'
 df = pd.read_csv(data_path)
 df = df.head(5000)
 
+df.to_csv('~/ToxTwentyCast/dataset/toxTwentyCastShort.csv')
+
 #-------------------------------------Wandb login-------------------------------
 
 wandb.login()
