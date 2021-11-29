@@ -229,7 +229,7 @@ def train(model,
                 global_steps_list.append(global_step)
 
                 # print summary
-                wandb.log({'epoch': epoch, 'global_step': global_step, ,'accuracy': acc, 'train_loss': train_loss, 'valid_loss': valid_loss})
+                wandb.log({'epoch': epoch, 'global_step': global_step, 'accuracy': acc, 'train_loss': train_loss, 'valid_loss': valid_loss})
                 print('Epoch [{}/{}], global step [{}/{}], Train Loss: {:.4f}, Valid Loss: {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
                               train_loss, valid_loss))
