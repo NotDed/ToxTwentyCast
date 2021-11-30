@@ -114,7 +114,7 @@ def pretrain(model,
                         y_pred = model(input_ids=source,
                                        attention_mask=mask)
 
-                        loss = torch.nn.CrossEntropyLoss(y_pred, target)
+                        loss = torch.nn.CrossEntropyLoss()(y_pred, target)
                         acc = accuracy_score(target, y_pred)
 
                         valid_loss += loss.item()
@@ -184,7 +184,7 @@ def train(model,
             #              labels=target,
             #              attention_mask=mask)
 
-            loss = torch.nn.CrossEntropyLoss(y_pred, target)
+            loss = torch.nn.CrossEntropyLoss()(y_pred, target)
             #loss = output[0]
 
             loss.backward()
