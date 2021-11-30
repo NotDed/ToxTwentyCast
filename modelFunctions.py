@@ -21,6 +21,7 @@ import logging
 logging.getLogger("transformers.tokenization_utils_base").setLevel(logging.ERROR)
 
 import utilityFunctions
+from utilityFunctions import load_metrics, load_checkpoint, save_metrics, save_checkpoint
 #-------------------------------------Paths-------------------------------------
 
 data_path = '~/ToxTwentyCast/dataset/toxTwentyCast.csv'
@@ -87,7 +88,7 @@ def pretrain(model,
             print('y_pred: ',y_pred)
             print('source: ',source.shape, ' target: ',target.shape, ' y_pred: ',y_pred.shape)
 
-            loss = torch.nn.CrossEntropyLoss()(y_pred, target)
+            loss = torch.nn.CrossEntropyLoss(y_pred, target)
 
             loss.backward()
 
@@ -114,8 +115,8 @@ def pretrain(model,
                         y_pred = model(input_ids=source,
                                        attention_mask=mask)
 
-                        loss = torch.nn.CrossEntropyLoss()(y_pred, target)
-                        # acc = accuracy_score(target, y_pred)
+                        loss = torch.nn.CrossEntropyLoss(y_pred, target)
+                        acc = accuracy_score(target, y_pred)
 
                         valid_loss += loss.item()
 
@@ -126,7 +127,7 @@ def pretrain(model,
                 model.train()
 
                 # print summary
-                wandb.log({'epoch': epoch, 'global_step': global_step, 'train_loss': train_loss, 'valid_loss': valid_loss})
+                wandb.log({'epoch': epoch, 'global_step': global_step, 'accuracy': acc, 'train_loss': train_loss, 'valid_loss': valid_loss})
                 print('Epoch [{}/{}], global step [{}/{}], PT Loss: {:.4f}, Val Loss: {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
                               train_loss, valid_loss))
@@ -154,8 +155,8 @@ def train(model,
           output_path = output_path):
 
     # Initialize losses and loss histories
-    for param in model.roberta.parameters():
-        param.requires_grad = False
+    #for param in model.roberta.parameters():
+    #    param.requires_grad = False
 
     train_loss = 0.0
     valid_loss = 0.0
@@ -180,12 +181,12 @@ def train(model,
 
             print('target: ',target)
             print('y_pred: ',y_pred)
-            print('source: ',source.shape, ' target: ',target.shape, ' y_pred: ',y_pred.shape)
+            print('source: ',source.shape(), ' target: ',target.shape(), ' y_pred: ',y_pred.shape())
             #output = model(input_ids=source,
             #              labels=target,
             #              attention_mask=mask)
 
-            loss = torch.nn.CrossEntropyLoss()(y_pred, target)
+            loss = torch.nn.CrossEntropyLoss(y_pred, target)
             #loss = output[0]
 
             loss.backward()
@@ -218,8 +219,8 @@ def train(model,
                         #               labels=target,
                         #               attention_mask=mask)
 
-                        loss = torch.nn.CrossEntropyLoss()(y_pred, target)
-                        # acc = accuracy_score(target, y_pred)
+                        loss = torch.nn.CrossEntropyLoss(y_pred, target)
+                        acc = accuracy_score(target, y_pred)
                         #loss = output[0]
 
                         valid_loss += loss.item()
@@ -232,7 +233,7 @@ def train(model,
                 global_steps_list.append(global_step)
 
                 # print summary
-                wandb.log({'epoch': epoch, 'global_step': global_step, 'train_loss': train_loss, 'valid_loss': valid_loss})
+                wandb.log({'epoch': epoch, 'global_step': global_step, 'accuracy': acc, 'train_loss': train_loss, 'valid_loss': valid_loss})
                 print('Epoch [{}/{}], global step [{}/{}], Train Loss: {:.4f}, Valid Loss: {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
                               train_loss, valid_loss))
