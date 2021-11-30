@@ -21,7 +21,6 @@ import logging
 logging.getLogger("transformers.tokenization_utils_base").setLevel(logging.ERROR)
 
 import utilityFunctions
-from utilityFunctions import load_metrics, load_checkpoint, save_metrics, save_checkpoint
 #-------------------------------------Paths-------------------------------------
 
 data_path = '~/ToxTwentyCast/dataset/toxTwentyCast.csv'
@@ -81,7 +80,8 @@ def pretrain(model,
         for (source, target), _ in train_iter:
             mask = (source != PAD_INDEX).type(torch.uint8)
 
-            y_pred = model(input_ids=source, attention_mask=mask)
+            y_pred = model(input_ids=source,
+                           attention_mask=mask)
 
             print('target: ',target)
             print('y_pred: ',y_pred)
@@ -154,8 +154,8 @@ def train(model,
           output_path = output_path):
 
     # Initialize losses and loss histories
-    #for param in model.roberta.parameters():
-    #    param.requires_grad = False
+    for param in model.roberta.parameters():
+        param.requires_grad = False
 
     train_loss = 0.0
     valid_loss = 0.0
@@ -174,12 +174,13 @@ def train(model,
         for (source, target), _ in train_iter:
             mask = (source != PAD_INDEX).type(torch.uint8)
 
-            y_pred = model(input_ids=source, attention_mask=mask)
+            y_pred = model(input_ids=source,
+                           attention_mask=mask)
 
 
             print('target: ',target)
             print('y_pred: ',y_pred)
-            print('source: ',source.shape(), ' target: ',target.shape(), ' y_pred: ',y_pred.shape())
+            print('source: ',source.shape, ' target: ',target.shape, ' y_pred: ',y_pred.shape)
             #output = model(input_ids=source,
             #              labels=target,
             #              attention_mask=mask)
