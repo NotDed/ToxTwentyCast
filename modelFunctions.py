@@ -81,8 +81,7 @@ def pretrain(model,
         for (source, target), _ in train_iter:
             mask = (source != PAD_INDEX).type(torch.uint8)
 
-            y_pred = model(input_ids=source,
-                           attention_mask=mask)
+            y_pred = model(input_ids=source, attention_mask=mask)
 
             print('target: ',target)
             print('y_pred: ',y_pred)
@@ -175,8 +174,7 @@ def train(model,
         for (source, target), _ in train_iter:
             mask = (source != PAD_INDEX).type(torch.uint8)
 
-            y_pred = model(input_ids=source,
-                           attention_mask=mask)
+            y_pred = model(input_ids=source, attention_mask=mask)
 
 
             print('target: ',target)
