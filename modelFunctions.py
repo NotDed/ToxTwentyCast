@@ -87,7 +87,7 @@ def pretrain(model,
             print('y_pred: ',y_pred)
             print('source: ',source.shape, ' target: ',target.shape, ' y_pred: ',y_pred.shape)
 
-            loss = torch.nn.CrossEntropyLoss(y_pred, target)
+            loss = torch.nn.CrossEntropyLoss()(y_pred, target)
 
             loss.backward()
 
@@ -217,7 +217,7 @@ def train(model,
                         #               labels=target,
                         #               attention_mask=mask)
 
-                        loss = torch.nn.CrossEntropyLoss(y_pred, target)
+                        loss = torch.nn.CrossEntropyLoss()(y_pred, target)
                         acc = accuracy_score(target, y_pred)
                         #loss = output[0]
 
