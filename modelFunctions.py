@@ -180,7 +180,7 @@ def train(model,
 
             print('target: ',target)
             print('y_pred: ',y_pred)
-            print('source: ',source.shape(), ' target: ',target.shape(), ' y_pred: ',y_pred.shape())
+            print('source: ',source.shape, ' target: ',target.shape, ' y_pred: ',y_pred.shape)
             #output = model(input_ids=source,
             #              labels=target,
             #              attention_mask=mask)
