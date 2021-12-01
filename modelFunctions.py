@@ -61,8 +61,8 @@ def pretrain(model,
              PAD_INDEX,
              UNK_INDEX,
              scheduler = None,
-             valid_period = 1854,
-             num_epochs = 1):
+             valid_period,
+             num_epochs):
 
     # Pretrain linear layers, do not train bert
     for param in model.roberta.parameters():
@@ -87,7 +87,7 @@ def pretrain(model,
             print('y_pred: ',y_pred)
             print('source: ',source.shape, ' target: ',target.shape, ' y_pred: ',y_pred.shape)
 
-            loss = torch.nn.CrossEntropyLoss()(y_pred, target)
+            loss = torch.nn.CrossEntropyLoss(y_pred, target)
 
             loss.backward()
 
@@ -114,7 +114,7 @@ def pretrain(model,
                         y_pred = model(input_ids=source,
                                        attention_mask=mask)
 
-                        loss = torch.nn.CrossEntropyLoss()(y_pred, target)
+                        loss = torch.nn.CrossEntropyLoss(y_pred, target)
                         # acc = accuracy_score(target, y_pred)
 
                         valid_loss += loss.item()
@@ -149,13 +149,13 @@ def train(model,
           PAD_INDEX,
           UNK_INDEX,
           scheduler = None,
-          num_epochs = 5,
-          valid_period = 1854,
+          num_epochs,
+          valid_period = valid_period,
           output_path = output_path):
 
     # Initialize losses and loss histories
-    for param in model.roberta.parameters():
-        param.requires_grad = False
+    #for param in model.roberta.parameters():
+    #    param.requires_grad = False
 
     train_loss = 0.0
     valid_loss = 0.0
@@ -185,7 +185,7 @@ def train(model,
             #              labels=target,
             #              attention_mask=mask)
 
-            loss = torch.nn.CrossEntropyLoss()(y_pred, target)
+            loss = torch.nn.CrossEntropyLoss(y_pred, target)
             #loss = output[0]
 
             loss.backward()
@@ -218,7 +218,7 @@ def train(model,
                         #               labels=target,
                         #               attention_mask=mask)
 
-                        loss = torch.nn.CrossEntropyLoss()(y_pred, target)
+                        loss = torch.nn.CrossEntropyLoss(y_pred, target)
                         # acc = accuracy_score(target, y_pred)
                         #loss = output[0]
 
