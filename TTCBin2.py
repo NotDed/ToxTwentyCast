@@ -26,6 +26,7 @@ import logging
 logging.getLogger("transformers.tokenization_utils_base").setLevel(logging.ERROR)
 
 import utilityFunctions
+from utilityfunctions import save_checkpoint, load_checkpoint, save_metrics, load_metrics
 from modelFunctions import pretrain, train, evaluate
 from clasificadorRoberta import ROBERTAClassifier
 
