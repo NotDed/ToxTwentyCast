@@ -10,7 +10,7 @@ import torch
 import torchtext
 from torchtext import data
 from torchtext.legacy.data import Field, TabularDataset, BucketIterator, Iterator
-from transformers import RobertaTokenizer, RobertaModel, AdamW, get_linear_schedule_with_warmup, AutoTokenizer, AutoModelForMaskedLM, RobertaForSequenceClassification
+from transformers import RobertaTokenizer, RobertaModel, AdamW, get_linear_schedule_with_warmup, AutoTokenizer, AutoModelForMaskedLM
 
 import wandb
 
@@ -27,7 +27,7 @@ class ROBERTAClassifier(torch.nn.Module):
     def __init__(self, BERT_MODEL_NAME):
         super(ROBERTAClassifier, self).__init__()
 
-        self.roberta = RobertaForSequenceClassification.from_pretrained(BERT_MODEL_NAME, return_dict=False)
+        self.roberta = RobertaModel.from_pretrained(BERT_MODEL_NAME, return_dict=False)
         self.d1 = torch.nn.Dropout(p = 0.3, inplace=False)
         self.l1 = torch.nn.Linear(768, 256)
         self.bn1 = torch.nn.LayerNorm(256)
@@ -36,7 +36,7 @@ class ROBERTAClassifier(torch.nn.Module):
         self.act3 = torch.nn.Softmax(dim=1)
 
     def forward(self, input_ids, attention_mask):
-        x = self.roberta(input_ids=input_ids, attention_mask=attention_mask)
+        _, x = self.roberta(input_ids=input_ids, attention_mask=attention_mask)
         x = self.d1(x)
         x = self.l1(x)
         x = self.bn1(x)
