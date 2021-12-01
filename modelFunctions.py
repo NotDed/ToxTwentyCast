@@ -34,7 +34,7 @@ def save_checkpoint(path, model, valid_loss):
 
 
 def load_checkpoint(path, model):
-    state_dict = torch.load(path, map_location=device)
+    state_dict = torch.load(path)
     model.load_state_dict(state_dict['model_state_dict'])
 
     return state_dict['valid_loss']
@@ -49,7 +49,7 @@ def save_metrics(path, train_loss_list, valid_loss_list, global_steps_list):
 
 
 def load_metrics(path):
-    state_dict = torch.load(path, map_location=device)
+    state_dict = torch.load(path)
     return state_dict['train_loss_list'], state_dict['valid_loss_list'],
 
 #------------------------------------Pretrain-----------------------------------
@@ -61,7 +61,7 @@ def pretrain(model,
              PAD_INDEX,
              UNK_INDEX,
              scheduler = None,
-             valid_period,
+             valid_period = len(train_iter),
              num_epochs):
 
     # Pretrain linear layers, do not train bert
@@ -150,7 +150,7 @@ def train(model,
           UNK_INDEX,
           scheduler = None,
           num_epochs,
-          valid_period = valid_period,
+          valid_period=len(train_iter),
           output_path = output_path):
 
     # Initialize losses and loss histories
