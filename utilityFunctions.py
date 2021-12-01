@@ -7,7 +7,7 @@ def save_checkpoint(path, model, valid_loss):
 
 
 def load_checkpoint(path, model):
-    state_dict = torch.load(path, map_location=device)
+    state_dict = torch.load(path)
     model.load_state_dict(state_dict['model_state_dict'])
 
     return state_dict['valid_loss']
@@ -22,5 +22,5 @@ def save_metrics(path, train_loss_list, valid_loss_list, global_steps_list):
 
 
 def load_metrics(path):
-    state_dict = torch.load(path, map_location=device)
+    state_dict = torch.load(path)
     return state_dict['train_loss_list'], state_dict['valid_loss_list'],

@@ -10,7 +10,7 @@ import torch
 import torchtext
 from torchtext import data
 from torchtext.legacy.data import Field, TabularDataset, BucketIterator, Iterator
-from transformers import RobertaTokenizer, RobertaModel, AdamW, get_linear_schedule_with_warmup, AutoTokenizer, AutoModelForMaskedLM
+from transformers import RobertaTokenizer, RobertaModel, AdamW, get_linear_schedule_with_warmup, AutoTokenizer, AutoModelForMaskedLM, RobertaForSequenceClassification
 
 import wandb
 
@@ -27,12 +27,12 @@ class ROBERTAClassifier(torch.nn.Module):
     def __init__(self, BERT_MODEL_NAME):
         super(ROBERTAClassifier, self).__init__()
 
-        self.roberta = RobertaModel.from_pretrained(BERT_MODEL_NAME, return_dict=False)
+        self.roberta = RobertaForSequenceClassification.from_pretrained(BERT_MODEL_NAME, return_dict=False)
         self.d1 = torch.nn.Dropout(p = 0.3, inplace=False)
-        self.l1 = torch.nn.Linear(768, 256)
-        self.bn1 = torch.nn.LayerNorm(256)
+        self.l1 = torch.nn.Linear(768, 64)
+        self.bn1 = torch.nn.LayerNorm(64)
         self.d2 = torch.nn.Dropout(p=0.3, inplace=False)
-        self.l2 = torch.nn.Linear(256, 2)
+        self.l2 = torch.nn.Linear(64, 2)
         self.act3 = torch.nn.Softmax(dim=1)
 
     def forward(self, input_ids, attention_mask):
@@ -40,7 +40,7 @@ class ROBERTAClassifier(torch.nn.Module):
         x = self.d1(x)
         x = self.l1(x)
         x = self.bn1(x)
-        x = torch.nn.Tanh()(x)
+        x = torch.nn.Tanh(x)
         x = self.d2(x)
         x = self.l2(x)
         x = self.act3(x)

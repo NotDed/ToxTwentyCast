@@ -90,13 +90,13 @@ train_iter, valid_iter = BucketIterator.splits((train_data, valid_data),
 test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=False, sort=False)
 
 #-------------------------------------Main training loop------------------------
-NUM_EPOCHS = 3
+NUM_EPOCHS = 5
 steps_per_epoch = len(train_iter)
 
 model = ROBERTAClassifier(BERT_MODEL_NAME)
 
 
-optimizer = AdamW(model.parameters(), lr=1e-4)
+optimizer = AdamW(model.parameters(), lr=1e-4,eps=1e-6)
 scheduler = get_linear_schedule_with_warmup(optimizer,
                                             num_warmup_steps=steps_per_epoch*1,
                                             num_training_steps=steps_per_epoch*NUM_EPOCHS)
@@ -114,10 +114,10 @@ pretrain(model=model,
          num_epochs=NUM_EPOCHS,
          valid_period=len(train_iter))
 
-NUM_EPOCHS = 12
+NUM_EPOCHS = 15
 print("======================= Start training =================================")
 
-optimizer = AdamW(model.parameters(), lr=2e-6)
+optimizer = AdamW(model.parameters(), lr=2e-6,eps=1e-6)
 scheduler = get_linear_schedule_with_warmup(optimizer,
                                             num_warmup_steps=steps_per_epoch*2,
                                             num_training_steps=steps_per_epoch*NUM_EPOCHS)
