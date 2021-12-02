@@ -27,7 +27,7 @@ class ROBERTAClassifier(torch.nn.Module):
     def __init__(self, BERT_MODEL_NAME):
         super(ROBERTAClassifier, self).__init__()
 
-        self.roberta = RobertaForSequenceClassification.from_pretrained(BERT_MODEL_NAME, return_dict=False)
+        self.roberta = RobertaModel.from_pretrained(BERT_MODEL_NAME, return_dict=False)
         self.d1 = torch.nn.Dropout(p = 0.3, inplace=False)
         self.l1 = torch.nn.Linear(768, 64)
         self.bn1 = torch.nn.LayerNorm(64)
