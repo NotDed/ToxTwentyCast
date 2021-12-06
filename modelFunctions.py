@@ -62,7 +62,7 @@ def pretrain(model,
              UNK_INDEX,
              scheduler = None,
              valid_period = len(train_iter),
-             num_epochs):
+             num_epochs = 1):
 
     # Pretrain linear layers, do not train bert
     for param in model.roberta.parameters():
@@ -148,7 +148,7 @@ def train(model,
           PAD_INDEX,
           UNK_INDEX,
           scheduler = None,
-          num_epochs,
+          num_epochs = 1,
           valid_period=len(train_iter),
           output_path = output_path):
 
