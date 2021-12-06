@@ -115,8 +115,7 @@ def pretrain(model,
 
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
                         acc = accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist())
-                        wandb.log({'roc' : wandb.plot.roc_curve( target, y_pred, labels=None, classes_to_plot=None)})
-                        wandb.log({'acc': acc})
+                        roc = wandb.plot.roc_curve( target, y_pred, labels=None, classes_to_plot=None)}
                         print(acc)
 
                         valid_loss += loss.item()
@@ -128,7 +127,7 @@ def pretrain(model,
                 model.train()
 
                 # print summary
-                wandb.log({'epoch': epoch, 'global_step': global_step, 'train_loss': train_loss, 'valid_loss': valid_loss})
+                wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'auc_roc': roc, 'train_loss': train_loss, 'valid_loss': valid_loss})
                 print('Epoch [{}/{}], global step [{}/{}], PT Loss: {:.4f}, Val Loss: {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
                               train_loss, valid_loss))
@@ -223,8 +222,7 @@ def train(model,
 
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
                         acc = accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist())
-                        wandb.log({'roc' : wandb.plot.roc_curve( target, y_pred, labels=None, classes_to_plot=None)})
-                        wandb.log({'acc': acc})
+                        roc = wandb.plot.roc_curve( target, y_pred, labels=None, classes_to_plot=None)}
                         print(acc)
                         #loss = output[0]
 
@@ -238,7 +236,7 @@ def train(model,
                 global_steps_list.append(global_step)
 
                 # print summary
-                wandb.log({'epoch': epoch, 'global_step': global_step, 'train_loss': train_loss, 'valid_loss': valid_loss})
+                wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'auc_roc': roc, 'train_loss': train_loss, 'valid_loss': valid_loss})
                 print('Epoch [{}/{}], global step [{}/{}], Train Loss: {:.4f}, Valid Loss: {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
                               train_loss, valid_loss))
