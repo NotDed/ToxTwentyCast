@@ -40,7 +40,7 @@ class ROBERTAClassifier(torch.nn.Module):
         x = self.d1(x)
         x = self.l1(x)
         x = self.bn1(x)
-        x = torch.nn.Tanh(x)
+        x = torch.nn.Tanh()(x)
         x = self.d2(x)
         x = self.l2(x)
         x = self.act3(x)
