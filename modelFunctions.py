@@ -115,6 +115,7 @@ def pretrain(model,
 
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
                         acc = accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist())
+                        print(acc)
 
                         valid_loss += loss.item()
 
@@ -125,7 +126,7 @@ def pretrain(model,
                 model.train()
 
                 # print summary
-                wandb.log({'epoch': epoch, 'global_step': global_step, 'train_loss': train_loss, 'acc': acc, 'valid_loss': valid_loss})
+                wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss, 'valid_loss': valid_loss})
                 print('Epoch [{}/{}], global step [{}/{}], PT Loss: {:.4f}, Val Loss: {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
                               train_loss, valid_loss))
@@ -220,6 +221,7 @@ def train(model,
 
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
                         acc = accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist())
+                        print(acc)
                         #loss = output[0]
 
                         valid_loss += loss.item()
@@ -232,7 +234,7 @@ def train(model,
                 global_steps_list.append(global_step)
 
                 # print summary
-                wandb.log({'epoch': epoch, 'global_step': global_step, 'train_loss': train_loss, 'valid_loss': valid_loss})
+                wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss, 'valid_loss': valid_loss})
                 print('Epoch [{}/{}], global step [{}/{}], Train Loss: {:.4f}, Valid Loss: {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
                               train_loss, valid_loss))
