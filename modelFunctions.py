@@ -121,7 +121,7 @@ def pretrain(model,
 
                         acc.append(accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist()))
 
-                        wandb.log({wandb.plot.roc_curve( target, y_pred, labels=None, classes_to_plot=None)})
+                        wandb.log({'roc' : wandb.plot.roc_curve( target, y_pred, labels=None, classes_to_plot=None)})
 
                         print(acc, loss.item())
 
@@ -233,7 +233,7 @@ def train(model,
 
                         acc.append(accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist()))
 
-                        wandb.log({wandb.plot.roc_curve( target, y_pred, labels=None, classes_to_plot=None)})
+                        wandb.log({'roc' : wandb.plot.roc_curve( target, y_pred, labels=None, classes_to_plot=None)})
 
                         print(acc, loss.item())
 
