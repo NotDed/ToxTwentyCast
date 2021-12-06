@@ -112,10 +112,10 @@ pretrain(model=model,
          optimizer = optimizer,
          scheduler = scheduler,
          num_epochs = NUM_EPOCHS,
-         valid_period = 2)
+         valid_period = len(train_iter))
 
-NUM_EPOCHS = 15
 print("======================= Start training =================================")
+NUM_EPOCHS = 15
 
 optimizer = AdamW(model.parameters(), lr=2e-6,eps=1e-6)
 scheduler = get_linear_schedule_with_warmup(optimizer,
@@ -128,7 +128,7 @@ train(model=model,
       optimizer=optimizer,
       scheduler=scheduler,
       num_epochs=NUM_EPOCHS,
-      valid_period= 2,
+      valid_period= len(train_iter),
       PAD_INDEX = PAD_INDEX,
       UNK_INDEX = UNK_INDEX)
 
