@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, roc_auc_score
 
 import torch
 import torchtext
@@ -115,6 +115,7 @@ def pretrain(model,
 
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
                         acc = accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist())
+                        wandb.log(﻿{'roc' : wandb.plot.roc_curve( target, y_pred, labels=﻿None﻿, classes_to_plot=﻿None﻿)﻿}﻿)
                         print(acc)
 
                         valid_loss += loss.item()
@@ -221,6 +222,7 @@ def train(model,
 
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
                         acc = accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist())
+                        wandb.log(﻿{'roc' : wandb.plot.roc_curve( target, y_pred, labels=﻿None﻿, classes_to_plot=﻿None﻿)﻿}﻿)
                         print(acc)
                         #loss = output[0]
 
