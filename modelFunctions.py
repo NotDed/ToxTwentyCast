@@ -61,7 +61,7 @@ def pretrain(model,
              PAD_INDEX,
              UNK_INDEX,
              scheduler = None,
-             valid_period = len(train_iter),
+             valid_period = 1600,
              num_epochs = 1):
 
     # Pretrain linear layers, do not train bert
@@ -149,7 +149,7 @@ def train(model,
           UNK_INDEX,
           scheduler = None,
           num_epochs = 1,
-          valid_period=len(train_iter),
+          valid_period= 1600,
           output_path = output_path):
 
     # Initialize losses and loss histories
