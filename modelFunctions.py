@@ -87,7 +87,7 @@ def pretrain(model,
             print('y_pred: ',y_pred)
             print('source: ',source.shape, ' target: ',target.shape, ' y_pred: ',y_pred.shape)
 
-            loss = torch.nn.CrossEntropyLoss(y_pred, target)
+            loss = torch.nn.CrossEntropyLoss()(y_pred, target)
 
             loss.backward()
 
@@ -111,11 +111,10 @@ def pretrain(model,
                     for (source, target), _ in valid_iter:
                         mask = (source != PAD_INDEX).type(torch.uint8)
 
-                        y_pred = model(input_ids=source,
-                                       attention_mask=mask)
+                        y_pred = model(input_ids=source, attention_mask=mask)
 
-                        loss = torch.nn.CrossEntropyLoss(y_pred, target)
-                        # acc = accuracy_score(target, y_pred)
+                        loss = torch.nn.CrossEntropyLoss()(y_pred, target)
+                        acc = accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist())
 
                         valid_loss += loss.item()
 
@@ -126,7 +125,7 @@ def pretrain(model,
                 model.train()
 
                 # print summary
-                wandb.log({'epoch': epoch, 'global_step': global_step, 'train_loss': train_loss, 'valid_loss': valid_loss})
+                wandb.log({'epoch': epoch, 'global_step': global_step, 'train_loss': train_loss, 'acc': acc, 'valid_loss': valid_loss})
                 print('Epoch [{}/{}], global step [{}/{}], PT Loss: {:.4f}, Val Loss: {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
                               train_loss, valid_loss))
@@ -174,8 +173,7 @@ def train(model,
         for (source, target), _ in train_iter:
             mask = (source != PAD_INDEX).type(torch.uint8)
 
-            y_pred = model(input_ids=source,
-                           attention_mask=mask)
+            y_pred = model(input_ids=source, attention_mask=mask)
 
 
             print('target: ',target)
@@ -185,8 +183,10 @@ def train(model,
             #              labels=target,
             #              attention_mask=mask)
 
-            loss = torch.nn.CrossEntropyLoss(y_pred, target)
+            loss = torch.nn.CrossEntropyLoss()(y_pred, target)
             #loss = output[0]
+
+            acc = accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist())
 
             loss.backward()
 
@@ -218,8 +218,8 @@ def train(model,
                         #               labels=target,
                         #               attention_mask=mask)
 
-                        loss = torch.nn.CrossEntropyLoss(y_pred, target)
-                        # acc = accuracy_score(target, y_pred)
+                        loss = torch.nn.CrossEntropyLoss()(y_pred, target)
+                        acc = accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist())
                         #loss = output[0]
 
                         valid_loss += loss.item()

@@ -109,10 +109,10 @@ pretrain(model=model,
          valid_iter=valid_iter,
          PAD_INDEX = PAD_INDEX,
          UNK_INDEX = UNK_INDEX,
-         optimizer=optimizer,
-         scheduler=scheduler,
-         num_epochs=NUM_EPOCHS,
-         valid_period=len(train_iter))
+         optimizer = optimizer,
+         scheduler = scheduler,
+         num_epochs = NUM_EPOCHS,
+         valid_period = 2)
 
 NUM_EPOCHS = 15
 print("======================= Start training =================================")
@@ -128,7 +128,7 @@ train(model=model,
       optimizer=optimizer,
       scheduler=scheduler,
       num_epochs=NUM_EPOCHS,
-      valid_period=len(train_iter),
+      valid_period= 2,
       PAD_INDEX = PAD_INDEX,
       UNK_INDEX = UNK_INDEX)
 
