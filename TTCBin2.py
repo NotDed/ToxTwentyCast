@@ -33,8 +33,8 @@ from clasificadorRoberta import ROBERTAClassifier
 
 #-------------------------------------Paths-------------------------------------
 
-# data_path = '~/ToxTwentyCast/dataset/toxTwentyCast.csv'
-data_path = '~/ToxTwentyCast/dataset/toxTwentyCastShort.csv'
+data_path = '~/ToxTwentyCast/dataset/toxTwentyCast.csv'
+# data_path = '~/ToxTwentyCast/dataset/toxTwentyCastShort.csv'
 output_path = 'outputs/'
 
 

@@ -283,9 +283,9 @@ def evaluate(model, test_loader, PAD_INDEX, UNK_INDEX):
                 y_true.extend(target.tolist())
 
     print('Classification Report:')
-    print(classification_report(y_true, y_pred, labels=[1,0], digits=4))
+    print(classification_report(y_true, y_pred, labels=[0,1], digits=4))
 
-    cm = confusion_matrix(y_true, y_pred, labels=[1,0])
+    cm = confusion_matrix(y_true, y_pred, labels=[0,1])
 
     wandb.log({'confusion_matrix': cm})
 
