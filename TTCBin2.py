@@ -90,19 +90,12 @@ train_iter, valid_iter = BucketIterator.splits((train_data, valid_data),
 test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=False, sort=False)
 
 
-#-------------------------------------device-----------
-device = torch.device("cuda:0")
 
 #-------------------------------------Main training loop------------------------
 NUM_EPOCHS = 5
 steps_per_epoch = len(train_iter)
 
 model = ROBERTAClassifier(BERT_MODEL_NAME)
-model = model(input_size, output_size)
-if torch.cuda.device_count() > 1:
-  print("Let's use", torch.cuda.device_count(), "GPUs!")
-  # dim = 0 [30, xxx] -> [10, ...], [10, ...], [10, ...] on 3 GPUs
-  model = nn.DataParallel(model)
 
 model.to(device)
 
