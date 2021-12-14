@@ -55,7 +55,7 @@ BERT_MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_120k'
 tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL_NAME)
 
 MAX_SEQ_LEN = 256
-BATCH_SIZE = 16
+BATCH_SIZE = 32
 
 PAD_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.pad_token)
 UNK_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.unk_token)
@@ -89,14 +89,24 @@ train_iter, valid_iter = BucketIterator.splits((train_data, valid_data),
 
 test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=False, sort=False)
 
+
+#-------------------------------------device-----------
+device = torch.device("cuda:0")
+
 #-------------------------------------Main training loop------------------------
 NUM_EPOCHS = 5
 steps_per_epoch = len(train_iter)
 
 model = ROBERTAClassifier(BERT_MODEL_NAME)
+model = model(input_size, output_size)
+if torch.cuda.device_count() > 1:
+  print("Let's use", torch.cuda.device_count(), "GPUs!")
+  # dim = 0 [30, xxx] -> [10, ...], [10, ...], [10, ...] on 3 GPUs
+  model = nn.DataParallel(model)
 
+model.to(device)
 
-optimizer = AdamW(model.parameters(), lr=1e-4,eps=1e-6)
+optimizer = AdamW(model.parameters(), lr=1e-4)
 scheduler = get_linear_schedule_with_warmup(optimizer,
                                             num_warmup_steps=steps_per_epoch*1,
                                             num_training_steps=steps_per_epoch*NUM_EPOCHS)
