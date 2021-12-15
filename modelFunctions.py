@@ -60,7 +60,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 def pretrain(model,
              optimizer,
-             device = device
+             device = device,
              train_iter,
              valid_iter,
              PAD_INDEX,
