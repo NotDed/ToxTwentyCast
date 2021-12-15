@@ -100,7 +100,7 @@ steps_per_epoch = len(train_iter)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = ROBERTAClassifier(BERT_MODEL_NAME)
-model1 = torch.nn.DataParallel(model).to(device)
+model1 = torch.nn.DataParallel(model, device_ids=[0]).to(device)
 optimizer = AdamW(model.parameters(), lr=1e-4)
 scheduler = get_linear_schedule_with_warmup(optimizer,
                                             num_warmup_steps=steps_per_epoch*1,
