@@ -133,7 +133,7 @@ def pretrain(model,
 
                 acc =  avg(acc[:-1])
                 print(acc)
-                auc= roc_auc_score(target, y_pred, sample_weight=None, max_fpr=None, multi_class='raise', labels=None)
+                auc= roc_auc_score(target, y_pred, sample_weight=None, max_fpr=None, multi_class=None, labels=None)
                 print(auc)
                 train_loss = train_loss / valid_period
                 valid_loss = valid_loss / len(valid_iter)
