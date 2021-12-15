@@ -72,7 +72,7 @@ def pretrain(model,
     # Pretrain linear layers, do not train bert
     for param in model.roberta.parameters():
         param.requires_grad = False
-
+    model = torch.nn.DataParallel(model)
     model.train()
 
     # Initialize losses and loss histories
@@ -181,8 +181,10 @@ def train(model,
     global_step = 0
     global_steps_list = []
 
-    model.train()
 
+    model = torch.nn.DataParallel(model)
+    model.train()
+    
     # Train loop
     for epoch in range(num_epochs):
         print(epoch)

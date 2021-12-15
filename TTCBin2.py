@@ -109,7 +109,7 @@ scheduler = get_linear_schedule_with_warmup(optimizer,
 print("======================= Start pretraining ==============================")
 wandb.init(project="newTestTrain")
 
-model = torch.nn.DataParallel(model)
+
 
 pretrain(model=model,
          train_iter=train_iter,
@@ -129,7 +129,7 @@ scheduler = get_linear_schedule_with_warmup(optimizer,
                                             num_warmup_steps=steps_per_epoch*2,
                                             num_training_steps=steps_per_epoch*NUM_EPOCHS)
 
-model = torch.nn.DataParallel(model)
+
 train(model=model,
       train_iter=train_iter,
       valid_iter=valid_iter,
@@ -141,7 +141,6 @@ train(model=model,
       UNK_INDEX = UNK_INDEX)
 
 model = ROBERTAClassifier(BERT_MODEL_NAME)
-
 
 load_checkpoint(output_path + '/model.pkl', model)
 
