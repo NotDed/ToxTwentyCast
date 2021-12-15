@@ -61,7 +61,9 @@ BATCH_SIZE = 32
 PAD_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.pad_token)
 UNK_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.unk_token)
 
-print(torch.cuda.device_count)
+
+available_gpus = [torch.cuda.device(i) for i in range(torch.cuda.device_count())]
+print(available_gpus)
 input()
 #-------------------------------------Dataloaders-------------------------------
 
