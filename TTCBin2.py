@@ -99,7 +99,7 @@ NUM_EPOCHS = 5
 steps_per_epoch = len(train_iter)
 
 model = ROBERTAClassifier(BERT_MODEL_NAME)
-model = torch.nn.DataParallel(model)
+
 
 optimizer = AdamW(model.parameters(), lr=1e-4)
 scheduler = get_linear_schedule_with_warmup(optimizer,
@@ -108,6 +108,8 @@ scheduler = get_linear_schedule_with_warmup(optimizer,
 
 print("======================= Start pretraining ==============================")
 wandb.init(project="newTestTrain")
+
+model = torch.nn.DataParallel(model)
 
 pretrain(model=model,
          train_iter=train_iter,
@@ -122,11 +124,12 @@ pretrain(model=model,
 print("======================= Start training =================================")
 NUM_EPOCHS = 15
 
-optimizer = AdamW(model.parameters(), lr=2e-6,eps=1e-6)
+optimizer = AdamW(model.parameters(), lr=2e-5)
 scheduler = get_linear_schedule_with_warmup(optimizer,
                                             num_warmup_steps=steps_per_epoch*2,
                                             num_training_steps=steps_per_epoch*NUM_EPOCHS)
 
+model = torch.nn.DataParallel(model)
 train(model=model,
       train_iter=train_iter,
       valid_iter=valid_iter,
