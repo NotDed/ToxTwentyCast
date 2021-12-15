@@ -62,9 +62,7 @@ PAD_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.pad_token)
 UNK_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.unk_token)
 
 CUDA_VISIBLE_DEVICES=0,1
-available_gpus = [torch.cuda.device(i) for i in range(torch.cuda.device_count())]
-print(available_gpus)
-input()
+
 #-------------------------------------Dataloaders-------------------------------
 
 label_field = torchtext.legacy.data.Field(sequential=False, use_vocab=False, batch_first=True)
