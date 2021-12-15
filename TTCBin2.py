@@ -25,7 +25,6 @@ warnings.filterwarnings('ignore')
 import logging
 logging.getLogger("transformers.tokenization_utils_base").setLevel(logging.ERROR)
 
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 import utilityFunctions
 from utilityFunctions import save_checkpoint, load_checkpoint, save_metrics, load_metrics
