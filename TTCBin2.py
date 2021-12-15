@@ -25,6 +25,8 @@ warnings.filterwarnings('ignore')
 import logging
 logging.getLogger("transformers.tokenization_utils_base").setLevel(logging.ERROR)
 
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 import utilityFunctions
 from utilityFunctions import save_checkpoint, load_checkpoint, save_metrics, load_metrics
 from modelFunctions import pretrain, train, evaluate
@@ -53,7 +55,6 @@ wandb.login()
 
 BERT_MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_120k'
 tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL_NAME)
-
 MAX_SEQ_LEN = 256
 BATCH_SIZE = 32
 
