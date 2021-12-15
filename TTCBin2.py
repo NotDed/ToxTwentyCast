@@ -5,6 +5,7 @@
 
 #------------------------------------Imports------------------------------------
 
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
@@ -59,7 +60,8 @@ BATCH_SIZE = 32
 
 PAD_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.pad_token)
 UNK_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.unk_token)
-
+print(torch.cuda.current_device())
+input()
 #-------------------------------------Dataloaders-------------------------------
 
 label_field = torchtext.legacy.data.Field(sequential=False, use_vocab=False, batch_first=True)
