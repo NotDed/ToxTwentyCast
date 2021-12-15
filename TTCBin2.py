@@ -90,14 +90,13 @@ train_iter, valid_iter = BucketIterator.splits((train_data, valid_data),
 test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=False, sort=False)
 
 
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 #-------------------------------------Main training loop------------------------
 NUM_EPOCHS = 5
 steps_per_epoch = len(train_iter)
 
 model = ROBERTAClassifier(BERT_MODEL_NAME)
 
-model.to(device)
 
 optimizer = AdamW(model.parameters(), lr=1e-4)
 scheduler = get_linear_schedule_with_warmup(optimizer,
@@ -136,7 +135,7 @@ train(model=model,
       UNK_INDEX = UNK_INDEX)
 
 model = ROBERTAClassifier(BERT_MODEL_NAME)
-model = model.to(device)
+
 
 load_checkpoint(output_path + '/model.pkl', model)
 
