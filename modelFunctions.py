@@ -57,8 +57,10 @@ def load_metrics(path):
 
 #------------------------------------Pretrain-----------------------------------
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 def pretrain(model,
              optimizer,
+             device = device
              train_iter,
              valid_iter,
              PAD_INDEX,
@@ -120,8 +122,8 @@ def pretrain(model,
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
 
                         acc.append(accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist()))
-
-                        wandb.log({'roc' : wandb.plot.roc_curve( target, y_pred, labels=None, classes_to_plot=None)})
+                        
+                        #wandb.log({'roc' : wandb.plot.roc_curve( target, y_pred, labels=None, classes_to_plot=None)})
 
                         print(acc, loss.item())
 
@@ -131,13 +133,15 @@ def pretrain(model,
 
                 acc =  avg(acc[:-1])
                 print(acc)
+                auc= sklearn.metrics.roc_auc_score(target, y_pred, sample_weight=None, max_fpr=None, multi_class='raise', labels=None
+                print(auc)
                 train_loss = train_loss / valid_period
                 valid_loss = valid_loss / len(valid_iter)
 
                 model.train()
 
                 # print summary
-                wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss, 'valid_loss': valid_loss})
+                wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss, 'valid_loss': valid_loss, 'auc': auc})
                 print('Epoch [{}/{}], global step [{}/{}], PT Loss: {:.4f}, Val Loss: {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
                               train_loss, valid_loss))
@@ -155,6 +159,7 @@ def pretrain(model,
 
 def train(model,
           optimizer,
+          device = device
           train_iter,
           valid_iter,
           PAD_INDEX,
