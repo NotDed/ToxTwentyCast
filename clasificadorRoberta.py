@@ -26,8 +26,8 @@ import utilityFunctions
 class ROBERTAClassifier(torch.nn.Module):
     def __init__(self, BERT_MODEL_NAME):
         super(ROBERTAClassifier, self).__init__()
+
         self.roberta = RobertaModel.from_pretrained(BERT_MODEL_NAME, return_dict=False)
-        self.pl = torch.nn.DataParallel(self.roberta)
         self.d1 = torch.nn.Dropout(p = 0.2, inplace=False)
         self.l1 = torch.nn.Linear(768, 64)
         self.bn1 = torch.nn.LayerNorm(64)
@@ -37,7 +37,6 @@ class ROBERTAClassifier(torch.nn.Module):
 
     def forward(self, input_ids, attention_mask):
         _, x = self.roberta(input_ids=input_ids, attention_mask=attention_mask)
-        x = self.pl(x)
         x = self.d1(x)
         x = self.l1(x)
         x = self.bn1(x)

@@ -98,7 +98,7 @@ test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=Fals
 NUM_EPOCHS = 5
 steps_per_epoch = len(train_iter)
 
-model = ROBERTAClassifier(BERT_MODEL_NAME)
+model = torch.nn.DataParallel(ROBERTAClassifier(BERT_MODEL_NAME))
 
 optimizer = AdamW(model.parameters(), lr=1e-4)
 scheduler = get_linear_schedule_with_warmup(optimizer,
