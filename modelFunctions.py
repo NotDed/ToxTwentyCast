@@ -61,7 +61,6 @@ def load_metrics(path):
 
 def pretrain(model,
              optimizer,
-             device,
              train_iter,
              valid_iter,
              PAD_INDEX,
@@ -157,10 +156,9 @@ def pretrain(model,
     print('Pre-training done!')
 
 #------------------------------------Train--------------------------------------
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 def train(model,
           optimizer,
-          device,
           train_iter,
           valid_iter,
           PAD_INDEX,
