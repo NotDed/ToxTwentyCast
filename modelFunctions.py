@@ -56,11 +56,11 @@ def load_metrics(path):
     return state_dict['train_loss_list'], state_dict['valid_loss_list'],
 
 #------------------------------------Pretrain-----------------------------------
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 
 def pretrain(model,
              optimizer,
-             device = device,
+             device,
              train_iter,
              valid_iter,
              PAD_INDEX,
@@ -159,7 +159,7 @@ def pretrain(model,
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 def train(model,
           optimizer,
-          device = device,
+          device,
           train_iter,
           valid_iter,
           PAD_INDEX,

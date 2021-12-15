@@ -109,6 +109,7 @@ wandb.init(project="newTestTrain")
 
 pretrain(model=model,
          train_iter=train_iter,
+         device=device,
          valid_iter=valid_iter,
          PAD_INDEX = PAD_INDEX,
          UNK_INDEX = UNK_INDEX,
@@ -127,6 +128,7 @@ scheduler = get_linear_schedule_with_warmup(optimizer,
 
 train(model=model,
       train_iter=train_iter,
+      device=device,
       valid_iter=valid_iter,
       optimizer=optimizer,
       scheduler=scheduler,
