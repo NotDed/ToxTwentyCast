@@ -28,12 +28,12 @@ class ROBERTAClassifier(torch.nn.Module):
         super(ROBERTAClassifier, self).__init__()
 
         self.roberta = RobertaModel.from_pretrained(BERT_MODEL_NAME, return_dict=False)
-        self.d1 = torch.nn.DataParallel.Dropout(p = 0.2, inplace=False)
-        self.l1 = torch.nn.DataParallel.Linear(768, 64)
-        self.bn1 = torch.nn.DataParallel.LayerNorm(64)
-        self.d2 = torch.nn.DataParallel.Dropout(p=0.3, inplace=False)
-        self.l2 = torch.nn.DataParallel.Linear(64, 2)
-        self.act3 = torch.nn.DataParallel.Softmax(dim=1)
+        self.d1 = torch.nn.Dropout(p = 0.2, inplace=False)
+        self.l1 = torch.nn.Linear(768, 64)
+        self.bn1 = torch.nn.LayerNorm(64)
+        self.d2 = torch.nn.Dropout(p=0.3, inplace=False)
+        self.l2 = torch.nn.Linear(64, 2)
+        self.act3 = torch.nn.Softmax(dim=1)
 
     def forward(self, input_ids, attention_mask):
         _, x = self.roberta(input_ids=input_ids, attention_mask=attention_mask)
