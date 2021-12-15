@@ -60,10 +60,8 @@ BATCH_SIZE = 32
 
 PAD_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.pad_token)
 UNK_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.unk_token)
-print(torch.cuda.current_device())
-print(torch.cuda.get_device_name(device=None))
-print(torch.cuda.get_device_name(device=0))
-print(torch.cuda.get_device_name(device=1))
+
+print(torch.cuda.device_count)
 input()
 #-------------------------------------Dataloaders-------------------------------
 
@@ -101,7 +99,7 @@ NUM_EPOCHS = 5
 steps_per_epoch = len(train_iter)
 
 model = ROBERTAClassifier(BERT_MODEL_NAME)
-
+model = nn.DataParallel(model)
 
 optimizer = AdamW(model.parameters(), lr=1e-4)
 scheduler = get_linear_schedule_with_warmup(optimizer,
