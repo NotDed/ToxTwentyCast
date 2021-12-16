@@ -70,7 +70,9 @@ def pretrain(model,
              num_epochs = 1):
 
     # Pretrain linear layers, do not train bert
-    for param in model.roberta.parameters():
+    #for param in model.roberta.parameters():
+        #param.requires_grad = False
+    for param in model.parameters():
         param.requires_grad = False
     
     model.train()
