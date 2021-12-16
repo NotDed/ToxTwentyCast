@@ -98,12 +98,9 @@ test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=Fals
 NUM_EPOCHS = 5
 steps_per_epoch = len(train_iter)
 
-
+device = torch.device('cuda:0' if torch.cuda.is_available())
 model = ROBERTAClassifier(BERT_MODEL_NAME)
-if torch.cuda.device_count() > 1:
-  print("Let's use", torch.cuda.device_count(), "GPUs!")
-  # dim = 0 [30, xxx] -> [10, ...], [10, ...], [10, ...] on 3 GPUs
-  model = torch.nn.DataParallel(model)
+model = torch.nn.DataParallel(model)
 model.to(device)
 
 optimizer = AdamW(model.parameters(), lr=1e-4)
