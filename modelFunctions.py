@@ -85,7 +85,8 @@ def pretrain(model,
     # Train loop
     for epoch in range(num_epochs):
         for (source, target), _ in train_iter:
-            mask = (source != PAD_INDEX).type(torch.uint8)
+            #
+            mask = (source != PAD_INDEX).type(torch.cuda.ByteTensor)
 
             y_pred = model(input_ids=source,
                            attention_mask=mask)
