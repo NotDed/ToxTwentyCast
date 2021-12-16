@@ -100,7 +100,11 @@ steps_per_epoch = len(train_iter)
 
 device = torch.device("cuda:0")
 model = ROBERTAClassifier(BERT_MODEL_NAME)
-model = torch.nn.DataParallel(model).to(device)
+if torch.cuda.device_count() > 1:
+  print("Let's use", torch.cuda.device_count(), "GPUs!")
+  # dim = 0 [30, xxx] -> [10, ...], [10, ...], [10, ...] on 3 GPUs
+  model = torch.nn.DataParallel(model)
+model.to(device)
 
 optimizer = AdamW(model.parameters(), lr=1e-4)
 scheduler = get_linear_schedule_with_warmup(optimizer,
