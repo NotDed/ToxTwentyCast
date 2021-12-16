@@ -98,9 +98,10 @@ test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=Fals
 NUM_EPOCHS = 5
 steps_per_epoch = len(train_iter)
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda:0")
 model = ROBERTAClassifier(BERT_MODEL_NAME)
-model1 = torch.nn.DataParallel(model, device_ids=[0]).to(device)
+model = torch.nn.DataParallel(model).to(device)
+
 optimizer = AdamW(model.parameters(), lr=1e-4)
 scheduler = get_linear_schedule_with_warmup(optimizer,
                                             num_warmup_steps=steps_per_epoch*1,
