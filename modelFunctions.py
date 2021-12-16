@@ -98,7 +98,7 @@ def pretrain(model,
             loss = torch.nn.CrossEntropyLoss()(y_pred, target)
 
             loss.backward()
-
+            loss.device
             # Optimizer and scheduler step
             optimizer.step()
             scheduler.step()
