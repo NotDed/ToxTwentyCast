@@ -61,7 +61,7 @@ BATCH_SIZE = 32
 PAD_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.pad_token)
 UNK_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.unk_token)
 
-CUDA_VISIBLE_DEVICES=0,1
+
 
 #-------------------------------------Dataloaders-------------------------------
 
