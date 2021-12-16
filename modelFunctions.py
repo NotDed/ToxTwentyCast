@@ -121,7 +121,7 @@ def pretrain(model,
                         mask = (source != PAD_INDEX).type(torch.uint8)
 
                         y_pred = model(input_ids=source, attention_mask=mask)
-
+                        input()
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
 
                         acc.append(accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist()))
