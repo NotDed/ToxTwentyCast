@@ -86,7 +86,7 @@ def pretrain(model,
     for epoch in range(num_epochs):
         for (source, target), _ in train_iter:
             #
-            mask = (source != PAD_INDEX).type(torch.cuda.ByteTensor)
+            mask = (source != PAD_INDEX).type(torch.uint8)
 
             y_pred = model(input_ids=source,
                            attention_mask=mask)
@@ -118,7 +118,7 @@ def pretrain(model,
                 acc = []
                 with torch.no_grad():
                     for (source, target), _ in valid_iter:
-                        mask = (source != PAD_INDEX).type(torch.cuda.ByteTensor)
+                        mask = (source != PAD_INDEX).type(torch.uint8)
 
                         y_pred = model(input_ids=source, attention_mask=mask)
                         
@@ -191,7 +191,7 @@ def train(model,
     for epoch in range(num_epochs):
         print(epoch)
         for (source, target), _ in train_iter:
-            mask = (source != PAD_INDEX).type(torch.cuda.ByteTensor)
+            mask = (source != PAD_INDEX).type(torch.uint8)
 
             y_pred = model(input_ids=source, attention_mask=mask)
 
@@ -229,7 +229,7 @@ def train(model,
                 with torch.no_grad():
 
                     for (source, target), _ in valid_iter:
-                        mask = (source != PAD_INDEX).type(torch.cuda.ByteTensor)
+                        mask = (source != PAD_INDEX).type(torch.uint8)
 
                         y_pred = model(input_ids=source,
                                        attention_mask=mask)
@@ -283,7 +283,7 @@ def evaluate(model, test_loader, PAD_INDEX, UNK_INDEX):
     model.eval()
     with torch.no_grad():
         for (source, target), _ in test_loader:
-                mask = (source != PAD_INDEX).type(torch.cuda.ByteTensor)
+                mask = (source != PAD_INDEX).type(torch.uint8)
 
                 output = model(source, attention_mask=mask)
 

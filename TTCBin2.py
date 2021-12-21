@@ -49,7 +49,7 @@ output_path = 'outputs/'
 
 #-------------------------------------Wandb login-------------------------------
 
-wandb.login()
+#wandb.login()
 
 #-------------------------------------Tokenizer definition----------------------
 
@@ -98,7 +98,7 @@ test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=Fals
 NUM_EPOCHS = 5
 steps_per_epoch = len(train_iter)
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = torch.device('cuda')
 model = ROBERTAClassifier(BERT_MODEL_NAME)
 model = torch.nn.DataParallel(model)
 model.to(device)
@@ -148,4 +148,4 @@ load_checkpoint(output_path + '/model.pkl', model)
 
 evaluate(model, test_iter, PAD_INDEX, UNK_INDEX)
 
-wandb.finish()
+#wandb.finish()
