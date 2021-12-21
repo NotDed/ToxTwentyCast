@@ -122,7 +122,7 @@ pretrain(model=model,
          optimizer = optimizer,
          scheduler = scheduler,
          num_epochs = NUM_EPOCHS,
-         valid_period = len(train_iter))
+         valid_period = 2#len(train_iter))
 
 print("======================= Start training =================================")
 NUM_EPOCHS = 15

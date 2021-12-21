@@ -134,7 +134,7 @@ def pretrain(model,
                         
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
 
-                        acc.append(accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist()))
+                        acc.append(accuracy_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
                         #wandb.log({'roc' : wandb.plot.roc_curve( target, y_pred, labels=None, classes_to_plot=None)})
 
