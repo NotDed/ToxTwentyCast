@@ -74,6 +74,9 @@ def pretrain(model,
         #param.requires_grad = False
     for param in model.parameters():
         param.requires_grad = True
+        
+    for param in model.module.parameters():
+        param.requires_grad = False
     
     model.train()
 
@@ -162,7 +165,7 @@ def pretrain(model,
                 valid_loss = 0.0
 
     # Set bert parameters back to trainable
-    for param in model.roberta.parameters():
+    for param in model.module.roberta.parameters():
         param.requires_grad = True
 
     print('Pre-training done!')
@@ -181,8 +184,8 @@ def train(model,
           output_path = output_path):
 
     # Initialize losses and loss histories
-    #for param in model.roberta.parameters():
-    #    param.requires_grad = False
+    for param in model.module.roberta.parameters():
+       param.requires_grad = False
 
     train_loss = 0.0
     valid_loss = 0.0
