@@ -120,7 +120,8 @@ def pretrain(model,
                 with torch.no_grad():
                     for (source, target), _ in valid_iter:
                         
-                        target.cuda()
+                        target = target.to(device)
+
                         
                         mask = (source != PAD_INDEX).type(torch.uint8)
 
