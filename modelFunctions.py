@@ -74,7 +74,7 @@ def pretrain(model,
     #for param in model.roberta.parameters():
         #param.requires_grad = False
     for param in model.parameters():
-        param.requires_grad = False
+        param.requires_grad = True
     
     model.train()
 
