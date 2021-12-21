@@ -90,7 +90,9 @@ def pretrain(model,
             mask = (source != PAD_INDEX).type(torch.uint8)
 
             y_pred = model(input_ids=source,
-                           attention_mask=mask)
+                           attention_mask=mask).cuda()
+            
+            target = target.cuda()
 
             print('target: ',target)
             print('y_pred: ',y_pred)
