@@ -65,7 +65,6 @@ def pretrain(model,
              valid_iter,
              PAD_INDEX,
              UNK_INDEX,
-             #device,
              scheduler = None,
              valid_period = 1600,
              num_epochs = 1):
@@ -146,7 +145,7 @@ def pretrain(model,
 
                 acc =  avg(acc[:-1])
                 print(acc)
-                auc= roc_auc_score(target, y_pred, sample_weight=None, max_fpr=None, multi_class=None, labels=None)
+                auc = roc_auc_score(target.cpu(), y_pred.cpu())
                 print(auc)
                 train_loss = train_loss / valid_period
                 valid_loss = valid_loss / len(valid_iter)
@@ -252,9 +251,9 @@ def train(model,
 
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
 
-                        acc.append(accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist()))
+                        acc.append(accuracy_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
 
-                        wandb.log({'roc' : wandb.plot.roc_curve( target, y_pred, labels=None, classes_to_plot=None)})
+                        wandb.log({'roc' : wandb.plot.roc_curve(target.cpu(), y_pred.cpu(), labels=None, classes_to_plot=None)})
 
                         print(acc, loss.item())
 
