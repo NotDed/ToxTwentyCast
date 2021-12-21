@@ -145,7 +145,7 @@ def pretrain(model,
 
                 acc =  avg(acc[:-1])
                 print(acc)
-                auc = roc_auc_score(target.cpu(), y_pred.cpu())
+                auc = roc_auc_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist())
                 print(auc)
                 train_loss = train_loss / valid_period
                 valid_loss = valid_loss / len(valid_iter)
