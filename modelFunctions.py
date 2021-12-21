@@ -200,9 +200,10 @@ def train(model,
         for (source, target), _ in train_iter:
             mask = (source != PAD_INDEX).type(torch.uint8)
 
-            y_pred = model(input_ids=source, attention_mask=mask)
+            y_pred = model(input_ids=source, attention_mask=mask).cuda() 
 
-
+            target = target.cuda()
+             
             print('target: ',target)
             print('y_pred: ',y_pred)
             print('source: ',source.shape, ' target: ',target.shape, ' y_pred: ',y_pred.shape)
@@ -291,8 +292,9 @@ def evaluate(model, test_loader, PAD_INDEX, UNK_INDEX):
     with torch.no_grad():
         for (source, target), _ in test_loader:
                 mask = (source != PAD_INDEX).type(torch.uint8)
-
-                output = model(source, attention_mask=mask)
+                
+                output = model(source, attention_mask=mask).cuda() 
+                target = target.cuda()
 
                 y_pred.extend(torch.argmax(output, axis=-1).tolist())
                 y_true.extend(target.tolist())
