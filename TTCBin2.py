@@ -49,7 +49,7 @@ output_path = 'outputs/'
 
 #-------------------------------------Wandb login-------------------------------
 
-#wandb.login()
+wandb.login()
 
 #-------------------------------------Tokenizer definition----------------------
 
@@ -109,7 +109,7 @@ scheduler = get_linear_schedule_with_warmup(optimizer,
                                             num_training_steps=steps_per_epoch*NUM_EPOCHS)
 
 print("======================= Start pretraining ==============================")
-# wandb.init(project="newTestTrain")
+wandb.init(project="newTestTrain")
 
 
 
@@ -149,4 +149,4 @@ load_checkpoint(output_path + '/model.pkl', model)
 
 evaluate(model, test_iter, PAD_INDEX, UNK_INDEX)
 
-#wandb.finish()
+wandb.finish()

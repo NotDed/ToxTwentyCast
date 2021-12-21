@@ -151,7 +151,7 @@ def pretrain(model,
                 model.train()
 
                 # print summary
-                # wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss, 'valid_loss': valid_loss, 'auc': auc})
+                wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss, 'valid_loss': valid_loss, 'auc': auc})
                 print('Epoch [{}/{}], global step [{}/{}], PT Loss: {:.4f}, Val Loss: {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
                               train_loss, valid_loss))
@@ -249,7 +249,7 @@ def train(model,
 
                         acc.append(accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist()))
 
-                        # wandb.log({'roc' : wandb.plot.roc_curve( target, y_pred, labels=None, classes_to_plot=None)})
+                        wandb.log({'roc' : wandb.plot.roc_curve( target, y_pred, labels=None, classes_to_plot=None)})
 
                         print(acc, loss.item())
 
@@ -264,7 +264,7 @@ def train(model,
                 global_steps_list.append(global_step)
 
                 # print summary
-                # wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss, 'valid_loss': valid_loss})
+                wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss, 'valid_loss': valid_loss})
                 print('Epoch [{}/{}], global step [{}/{}], Train Loss: {:.4f}, Valid Loss: {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
                               train_loss, valid_loss))
@@ -304,7 +304,7 @@ def evaluate(model, test_loader, PAD_INDEX, UNK_INDEX):
 
     cm = confusion_matrix(y_true, y_pred, labels=[0,1])
 
-    # wandb.log({'confusion_matrix': cm})
+    wandb.log({'confusion_matrix': cm})
 
     ax = plt.subplot()
 
