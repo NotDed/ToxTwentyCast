@@ -95,7 +95,7 @@ def pretrain(model,
             print('y_pred: ',y_pred)
             print('source: ',source.shape, ' target: ',target.shape, ' y_pred: ',y_pred.shape)
 
-            loss = torch.nn.CrossEntropyLoss()(y_pred, target)
+            loss = torch.nn.CrossEntropyLoss()(y_pred, target).cuda()
 
             loss.backward()
             loss.device
@@ -122,7 +122,7 @@ def pretrain(model,
 
                         y_pred = model(input_ids=source, attention_mask=mask)
                         
-                        loss = torch.nn.CrossEntropyLoss()(y_pred, target)
+                        loss = torch.nn.CrossEntropyLoss()(y_pred, target).cuda()
 
                         acc.append(accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist()))
                         
@@ -203,7 +203,7 @@ def train(model,
             #              labels=target,
             #              attention_mask=mask)
 
-            loss = torch.nn.CrossEntropyLoss()(y_pred, target)
+            loss = torch.nn.CrossEntropyLoss()(y_pred, target).cuda()
             #loss = output[0]
 
             loss.backward()
@@ -237,7 +237,7 @@ def train(model,
                         #               labels=target,
                         #               attention_mask=mask)
 
-                        loss = torch.nn.CrossEntropyLoss()(y_pred, target)
+                        loss = torch.nn.CrossEntropyLoss()(y_pred, target).cuda()
 
                         acc.append(accuracy_score(target, torch.argmax(y_pred, axis=-1).tolist()))
 
