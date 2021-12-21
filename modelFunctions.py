@@ -65,6 +65,7 @@ def pretrain(model,
              valid_iter,
              PAD_INDEX,
              UNK_INDEX,
+             device,
              scheduler = None,
              valid_period = 1600,
              num_epochs = 1):
@@ -118,6 +119,9 @@ def pretrain(model,
                 acc = []
                 with torch.no_grad():
                     for (source, target), _ in valid_iter:
+                        
+                        target.to(device)
+                        
                         mask = (source != PAD_INDEX).type(torch.uint8)
 
                         y_pred = model(input_ids=source, attention_mask=mask)
