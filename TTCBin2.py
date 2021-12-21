@@ -98,10 +98,10 @@ test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=Fals
 NUM_EPOCHS = 5
 steps_per_epoch = len(train_iter)
 
-device = torch.device('cuda')
+#device = torch.device('cuda')
 model = ROBERTAClassifier(BERT_MODEL_NAME)
-model = torch.nn.DataParallel(model)
-model.to(device)
+#model = torch.nn.DataParallel(model)
+#model.to(device)
 
 optimizer = AdamW(model.parameters(), lr=1e-4)
 scheduler = get_linear_schedule_with_warmup(optimizer,
@@ -118,7 +118,7 @@ pretrain(model=model,
          valid_iter=valid_iter,
          PAD_INDEX = PAD_INDEX,
          UNK_INDEX = UNK_INDEX,
-         device =  device,
+         #device =  device,
          optimizer = optimizer,
          scheduler = scheduler,
          num_epochs = NUM_EPOCHS,
