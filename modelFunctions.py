@@ -138,18 +138,16 @@ def pretrain(model,
 
                         acc.append(accuracy_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
-                        #wandb.log({'roc' : wandb.plot.roc_curve( target, y_pred, labels=None, classes_to_plot=None)})
-
-                        print(acc, loss.item())
+                        wandb.log({'roc' : wandb.plot.roc_curve(target, torch.argmax(y_pred.cpu(), axis=-1).tolist())})
 
                         valid_loss += loss.item()
 
                 # Store train and validation loss history
 
                 acc =  avg(acc[:-1])
-                print(acc)
+                
                 auc = roc_auc_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist())
-                print(auc)
+                
                 train_loss = train_loss / valid_period
                 valid_loss = valid_loss / len(valid_iter)
 
@@ -234,7 +232,7 @@ def train(model,
             global_step += 1
 
             # Validation loop. Save progress and evaluate model performance.
-            print(global_step, len(train_iter), valid_period)
+            print(global_step, len(train_iter), valid_period * (epoch+1))
 
             if global_step % valid_period == 0:
                 model.eval()
@@ -255,11 +253,9 @@ def train(model,
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
 
                         acc.append(accuracy_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
-
-                        wandb.log({'roc' : wandb.plot.roc_curve(target.cpu(), y_pred.cpu(), labels=None, classes_to_plot=None)})
-
-                        print(acc, loss.item())
-
+                        
+                        wandb.log({'roc' : wandb.plot.roc_curve( target, torch.argmax(y_pred.cpu(), axis=-1).tolist())})
+                        
                         valid_loss += loss.item()
 
                 # Store train and validation loss history
