@@ -121,6 +121,9 @@ def pretrain(model,
                 model.eval()
                 print(len(valid_iter))
                 acc = []
+                auc = []
+                psc = []
+                recall = []
                 with torch.no_grad():
                     for (source, target), _ in valid_iter:
                         
@@ -138,6 +141,12 @@ def pretrain(model,
 
                         acc.append(accuracy_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
+                        auc.append(roc_auc_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist()))
+                        
+                        psc.append(precision_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist()))
+                        
+                        recall.append(recall_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist()))
+                        
                         wandb.log({'roc' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu())})
 
                         valid_loss += loss.item()
@@ -147,12 +156,10 @@ def pretrain(model,
                 # Store train and validation loss history
 
                 acc =  avg(acc[:-1])
+                auc = avg(auc[:-1])
+                psc = avg(psc[:-1])
+                recall = avg(recall[:-1])
                 
-                auc = roc_auc_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist())
-                
-                psc = precision_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist())
-                
-                recall = recall_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist())
                 
                 train_loss = train_loss / valid_period
                 valid_loss = valid_loss / len(valid_iter)
