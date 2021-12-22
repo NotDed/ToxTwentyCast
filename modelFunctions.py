@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, roc_auc_score
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, roc_auc_score, precision_score, recall_score
 
 import torch
 import torchtext
@@ -141,6 +141,8 @@ def pretrain(model,
                         wandb.log({'roc' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu())})
 
                         valid_loss += loss.item()
+                        
+                        print(valid_loss)
 
                 # Store train and validation loss history
 
@@ -148,13 +150,18 @@ def pretrain(model,
                 
                 auc = roc_auc_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist())
                 
+                psc = precision_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist())
+                
+                recall = recall_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist())
+                
                 train_loss = train_loss / valid_period
                 valid_loss = valid_loss / len(valid_iter)
 
                 model.train()
 
                 # print summary
-                wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss, 'valid_loss': valid_loss, 'auc': auc})
+                wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss,
+                           'valid_loss': valid_loss, 'auc': auc, 'recall':recall, 'psc':psc})
                 print('Epoch [{}/{}], global step [{}/{}], PT Loss: {:.4f}, Val Loss: {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
                               train_loss, valid_loss))
@@ -257,6 +264,8 @@ def train(model,
                         wandb.log({'roc' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu())})
                         
                         valid_loss += loss.item()
+                        
+                        print(valid_loss)
 
                 # Store train and validation loss history
                 acc =  avg(acc[:-1])
@@ -265,9 +274,17 @@ def train(model,
                 train_loss_list.append(train_loss)
                 valid_loss_list.append(valid_loss)
                 global_steps_list.append(global_step)
+                
+                auc = roc_auc_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist())
+                
+                psc = precision_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist())
+                
+                recall = recall_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist())
 
                 # print summary
-                wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss, 'valid_loss': valid_loss})
+                
+                wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss,
+                           'valid_loss': valid_loss, 'auc': auc, 'recall':recall, 'psc':psc})
                 print('Epoch [{}/{}], global step [{}/{}], Train Loss: {:.4f}, Valid Loss: {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
                               train_loss, valid_loss))
