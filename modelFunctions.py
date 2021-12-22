@@ -138,7 +138,7 @@ def pretrain(model,
 
                         acc.append(accuracy_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
-                        wandb.log({'roc' : wandb.plot.roc_curve(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist())})
+                        wandb.log({'roc' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu())})
 
                         valid_loss += loss.item()
 
@@ -254,7 +254,7 @@ def train(model,
 
                         acc.append(accuracy_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
-                        wandb.log({'roc' : wandb.plot.roc_curve(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist())})
+                        wandb.log({'roc' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu())})
                         
                         valid_loss += loss.item()
 
