@@ -8,7 +8,7 @@ def save_checkpoint(path, model, valid_loss):
 
 def load_checkpoint(path, model):
     state_dict = torch.load(path)
-    model.module.load_state_dict(state_dict['model_state_dict'])
+    model.load_state_dict(state_dict['model_state_dict'])
 
     return state_dict['valid_loss']
 
