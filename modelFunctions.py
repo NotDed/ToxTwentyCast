@@ -166,7 +166,6 @@ def pretrain(model,
                 valid_loss = valid_loss / len(valid_iter)
 
                 model.train()
-                pbd.set_trace()
                 # print summary
                 wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss,
                            'valid_loss': valid_loss, 'auc': auc, 'recall':recall, 'psc':psc})
