@@ -139,7 +139,7 @@ def pretrain(model,
                         
 
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
-                        
+                        pdb.set_trace()
                         acc.append(accuracy_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
                         auc.append(roc_auc_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist()))
@@ -166,10 +166,9 @@ def pretrain(model,
                 valid_loss = valid_loss / len(valid_iter)
 
                 model.train()
-                pdb.set_trace()
                 # print summary
                 wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss,
-                           'valid_loss': valid_loss, 'auc': auc, 'recall':recall, 'psc':psc})
+                'valid_loss': valid_loss, 'auc': auc, 'recall':recall, 'psc':psc})
                 print('Epoch [{}/{}], global step [{}/{}], PT Loss: {:.4f}, Val Loss: {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
                               train_loss, valid_loss))
