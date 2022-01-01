@@ -3,7 +3,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
-
+import pbd
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, roc_auc_score, precision_score, recall_score
 
 import torch
@@ -136,9 +136,10 @@ def pretrain(model,
                         
                         
                         target = target.cuda()
-                        
-                        loss = torch.nn.CrossEntropyLoss()(y_pred, target)
+                        pbd.set_trace()
 
+                        loss = torch.nn.CrossEntropyLoss()(y_pred, target)
+                        
                         acc.append(accuracy_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
                         auc.append(roc_auc_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist()))
