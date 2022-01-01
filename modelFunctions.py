@@ -3,7 +3,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
-import pbd
+import pdb
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, roc_auc_score, precision_score, recall_score
 
 import torch
@@ -166,6 +166,7 @@ def pretrain(model,
                 valid_loss = valid_loss / len(valid_iter)
 
                 model.train()
+                pdb.set_trace()
                 # print summary
                 wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss,
                            'valid_loss': valid_loss, 'auc': auc, 'recall':recall, 'psc':psc})
