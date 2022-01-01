@@ -142,13 +142,13 @@ def pretrain(model,
                         pdb.set_trace()
                         acc.append(accuracy_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
-                        auc.append(roc_auc_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist()))
+                        auc.append(roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
-                        psc.append(precision_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist()))
+                        psc.append(precision_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
-                        recall.append(recall_score(target.cpu(), torch.argmax(y_pred, axis=-1).tolist()))
+                        recall.append(recall_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
-                        wandb.log({'roc' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu())})
+                        #wandb.log({'roc' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu())})
 
                         valid_loss += loss.item()
                         
