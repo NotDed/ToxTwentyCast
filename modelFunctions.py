@@ -350,8 +350,8 @@ def evaluate(model, test_loader, PAD_INDEX, UNK_INDEX):
 
     cm = confusion_matrix(y_true, y_pred, labels=[0,1])
     Acc = accuracy_score(y_true, y_pred)
-    wandb.log({'AUC-ROC' : wandb.plot.roc_curve(y_true.cpu(),y_pred.cpu(), labels=[0, 1])})
-    wandb.log({'Precision_recall' : wandb.plot.pr_curve(y_true.cpu(),y_pred.cpu(), labels=[0, 1])})
+    wandb.log({'AUC-ROC' : wandb.plot.roc_curve(y_true,y_pred)})
+    wandb.log({'Precision_recall' : wandb.plot.pr_curve(y_true,y_pred)})
     wandb.log({'confusion_matrix': cm})
     wandb.log({'ACCURACY': acc})
 
