@@ -277,12 +277,16 @@ def train(model,
 
                         acc.append(accuracy_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
-                        auc = auc.append.roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist())
+                        try:
+                            lol=(roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
+                        except ValueError:
+                            lol=0
+
+                        auc.append(roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
+                        psc.append(precision_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                 
-                        psc = psc.append.precision_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist())
-                
-                        recall = recall.append.recall_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist())
-                        #wandb.log({'roc' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu())})
+                        recall.append(recall_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
+                        wandb.log({'roc' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu())})
                         
                         valid_loss += loss.item()
                         
