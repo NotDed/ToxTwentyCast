@@ -160,14 +160,14 @@ def pretrain(model,
                         
                         print(valid_loss)
 
-                # Store train and validation loss history
+                
 
                 acc =  avg(acc[:-1])
                 auc = avg(auc[:-1])
                 psc = avg(psc[:-1])
                 recall = avg(recall[:-1])
                 
-                
+                # Store train and validation loss history
                 train_loss = train_loss / valid_period
                 valid_loss = valid_loss / len(valid_iter)
 
@@ -256,10 +256,10 @@ def train(model,
 
             if global_step % valid_period == 0:
                 model.eval()
-                acc = []
-                auc = []
-                psc = []
-                recall = []
+                #acc = []
+                #auc = []
+                #psc = []
+                #recall = []
                 with torch.no_grad():
 
                     for (source, target), _ in valid_iter:
