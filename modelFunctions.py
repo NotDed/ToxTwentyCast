@@ -349,9 +349,9 @@ def evaluate(model, test_loader, PAD_INDEX, UNK_INDEX):
     print(classification_report(y_true, y_pred, labels=[0,1], digits=4))
 
     cm = confusion_matrix(y_true, y_pred, labels=[0,1])
-    acc = accuracy_score(y_true, y_pred)
-    wandb.log({'AUC-ROC' : wandb.plot.roc_curve(y_true ,y_pred, labels=[0, 1])})
-    wandb.log({'Precision_recall' : wandb.plot.pr_curve(y_true, y_pred, labels=[0, 1])})
+    Acc = accuracy_score(y_true, y_pred)
+    wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target ,y_pred, labels=[0, 1])})
+    wandb.log({'Precision_recall' : wandb.plot.pr_curve(target, y_pred, labels=[0, 1])})
     wandb.log({'confusion_matrix': cm})
     wandb.log({'ACCURACY': acc})
 
