@@ -135,7 +135,7 @@ def pretrain(model,
                         y_pred = model(input_ids=source, attention_mask=mask).cuda()
                         
                         
-                        target = append(target.cuda())
+                        target = target.cuda()
                         
 
                         loss = torch.nn.CrossEntropyLoss()(pred, targ)
