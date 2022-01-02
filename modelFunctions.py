@@ -75,7 +75,7 @@ def pretrain(model,
     for param in model.parameters():
         param.requires_grad = True
         
-    
+
     
     model.train()
 
@@ -153,8 +153,8 @@ def pretrain(model,
                         
                         recall.append(recall_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
-                        wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu(), labels=[no-toxic, toxic])})
-                        wandb.log({'Precision_recall' : wandb.plot.pr_curve(target.cpu(),y_pred.cpu(), labels=[no-toxic, toxic])})
+                        wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
+                        wandb.log({'Precision_recall' : wandb.plot.pr_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
 
                         valid_loss += loss.item()
                         
@@ -287,8 +287,8 @@ def train(model,
                 
                         recall.append(recall_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
 
-                        wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu(), labels=[no-toxic, toxic])})
-                        wandb.log({'Precision_recall' : wandb.plot.pr_curve(target.cpu(),y_pred.cpu(), labels=[no-toxic, toxic])})
+                        wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
+                        wandb.log({'Precision_recall' : wandb.plot.pr_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
 
                         valid_loss += loss.item()
                         
