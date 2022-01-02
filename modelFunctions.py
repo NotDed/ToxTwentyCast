@@ -136,10 +136,10 @@ def pretrain(model,
                         mask = (source != PAD_INDEX).type(torch.uint8)
 
                         y_pred = model(input_ids=source, attention_mask=mask).cuda()
-                        predictions.extend(y_pred.toList())
+                        predictions.extend(y_pred.tolist())
                         
                         target = target.cuda()
-                        truePred.append(target.toList())
+                        truePred.append(target.tolist())
                         
 
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
