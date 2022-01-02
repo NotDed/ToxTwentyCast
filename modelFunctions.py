@@ -83,6 +83,8 @@ def pretrain(model,
     train_loss = 0.0
     valid_loss = 0.0
     global_step = 0
+    predictions = []
+    truePred = []
 
     # Train loop
     for epoch in range(num_epochs):
@@ -120,8 +122,6 @@ def pretrain(model,
                 model.eval()
                 print(len(valid_iter))
                 
-                predictions = []
-                truePred = []
 
                 acc = []
                 auc = []
@@ -162,8 +162,6 @@ def pretrain(model,
                         
 
                         valid_loss += loss.item()
-                        
-                        print(valid_loss)
 
                 wandb.log({'AUC-ROC' : wandb.plot.roc_curve(truePred, predictions, labels=[0, 1])})
                 wandb.log({'Precision_recall' : wandb.plot.pr_curve(truePred, predictions, labels=[0, 1])})
