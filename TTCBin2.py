@@ -56,7 +56,7 @@ wandb.login()
 BERT_MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_120k'
 tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL_NAME)
 MAX_SEQ_LEN = 256
-BATCH_SIZE = 16
+BATCH_SIZE = 32
 
 PAD_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.pad_token)
 UNK_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.unk_token)
