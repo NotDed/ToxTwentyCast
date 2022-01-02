@@ -342,14 +342,15 @@ def evaluate(model, test_loader, PAD_INDEX, UNK_INDEX):
                 output = model(source, attention_mask=mask).cuda() 
                 target = target.cuda()
 
-                y_pred.extend(torch.argmax(output, axis=-1).tolist())
-                y_true.extend(target.tolist())
+                y_pred.extend(torch.argmax(output.cuda(), axis=-1).tolist())
+                y_true.extend(target.cuda().tolist())
 
     print('Classification Report:')
     print(classification_report(y_true, y_pred, labels=[0,1], digits=4))
 
     cm = confusion_matrix(y_true, y_pred, labels=[0,1])
-
+    wandb.log({'AUC-ROC' : wandb.plot.roc_curve(y_true.cpu(),y_pred.cpu(), labels=[0, 1])})
+    wandb.log({'Precision_recall' : wandb.plot.pr_curve(y_true.cpu(),y_pred.cpu(), labels=[0, 1])})
     wandb.log({'confusion_matrix': cm})
 
     ax = plt.subplot()

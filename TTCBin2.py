@@ -144,6 +144,9 @@ train(model=model,
       UNK_INDEX = UNK_INDEX)
 
 model = ROBERTAClassifier(BERT_MODEL_NAME)
+model = torch.nn.DataParallel(model)
+model.to(device)
+model = ROBERTAClassifier(BERT_MODEL_NAME)
 
 load_checkpoint(output_path + '/model.pkl', model)
 
