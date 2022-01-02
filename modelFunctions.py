@@ -73,7 +73,7 @@ def pretrain(model,
     #for param in model.roberta.parameters():
         #param.requires_grad = False
     for param in model.parameters():
-        param.requires_grad = True
+        param.requires_grad = False
         
     #for param in model.module.parameters():
     #    param.requires_grad = False
@@ -154,7 +154,8 @@ def pretrain(model,
                         
                         recall.append(recall_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
-                        wandb.log({'roc' : wandb.plot.roc_curve(target.cpu(), y_pred[:, 1].cpu())})
+                        wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu(), labels=[no-toxic, toxic])})
+                        wandb.log({'Precision_recall' : wandb.plot.pr_curve(target.cpu(),y_pred.cpu(), labels=[no-toxic, toxic])})
 
                         valid_loss += loss.item()
                         
@@ -202,8 +203,8 @@ def train(model,
           output_path = output_path):
 
     # Initialize losses and loss histories
-    for param in model.module.roberta.parameters():
-       param.requires_grad = False
+    #for param in model.module.roberta.parameters():
+    #   param.requires_grad = False
 
     train_loss = 0.0
     valid_loss = 0.0
@@ -286,8 +287,10 @@ def train(model,
                         psc.append(precision_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                 
                         recall.append(recall_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
-                        wandb.log({'roc' : wandb.plot.roc_curve(target.cpu(),y_pred[:, 1].cpu())})
-                        
+
+                        wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu(), labels=[no-toxic, toxic])})
+                        wandb.log({'Precision_recall' : wandb.plot.pr_curve(target.cpu(),y_pred.cpu(), labels=[no-toxic, toxic])})
+
                         valid_loss += loss.item()
                         
                         print(valid_loss)
