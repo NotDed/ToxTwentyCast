@@ -135,7 +135,7 @@ def pretrain(model,
                         y_pred = model(input_ids=source, attention_mask=mask).cuda()
                         
                         
-                        target = targ.append(target.cuda())
+                        target = append(target.cuda())
                         
 
                         loss = torch.nn.CrossEntropyLoss()(pred, targ)
@@ -290,8 +290,8 @@ def train(model,
                 
                         recall.append(recall_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
 
-                        #wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
-                        #wandb.log({'Precision_recall' : wandb.plot.pr_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
+                        wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
+                        wandb.log({'Precision_recall' : wandb.plot.pr_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
 
                         valid_loss += loss.item()
                         
