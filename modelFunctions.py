@@ -256,9 +256,9 @@ def train(model,
 
             if global_step % valid_period == 0:
                 model.eval()
-                #acc = []
-                #auc = []
-                #psc = []
+                acc = []
+                auc = []
+                psc = []
                 recall = []
                 with torch.no_grad():
 
