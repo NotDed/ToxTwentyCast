@@ -139,7 +139,7 @@ def pretrain(model,
                         predictions.extend(y_pred.tolist())
                         
                         target = target.cuda()
-                        truePred.append(target.tolist())
+                        truePred.extend(target.tolist())
                         
 
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
