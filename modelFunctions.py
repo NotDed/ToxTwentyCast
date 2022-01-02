@@ -354,7 +354,7 @@ def evaluate(model, test_loader, PAD_INDEX, UNK_INDEX):
     wandb.log({'AUC-ROCV' : wandb.plot.roc_curve(target.cpu(),output.cpu(), labels=[0, 1])})
     wandb.log({'Precision_recallV' : wandb.plot.pr_curve(target.cpu(),output.cpu(), labels=[0, 1])})
     wandb.log({'confusion_matrix': cm})
-    wandb.log({'ACCURACY': acc})
+    #wandb.log({'ACCURACY': acc})
 
     ax = plt.subplot()
 
