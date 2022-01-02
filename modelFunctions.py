@@ -148,10 +148,10 @@ def pretrain(model,
                         
                         #auc.append(roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
-                        try:
-                            lol=(roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
-                        except ValueError:
-                            lol=0
+                        #try:
+                        #   lol=(roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
+                        #except ValueError:
+                        #    lol=0
 
                         auc.append(roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         psc.append(precision_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
@@ -188,8 +188,8 @@ def pretrain(model,
 
     # Set bert parameters back to trainable
     
-    wandb.log({'AUC-ROC' : wandb.plot.roc_curve(truePred, predictions, labels=[0, 1])})
-    wandb.log({'Precision_recall' : wandb.plot.pr_curve(truePred, predictions, labels=[0, 1])})
+    wandb.log({'PRE-AUC-ROC' : wandb.plot.roc_curve(truePred, predictions, labels=[0, 1])})
+    wandb.log({'PRE-Precision_recall' : wandb.plot.pr_curve(truePred, predictions, labels=[0, 1])})
     
     for param in model.module.roberta.parameters():
         param.requires_grad = True
@@ -221,6 +221,9 @@ def train(model,
 
     global_step = 0
     global_steps_list = []
+    
+    predictions = []
+    truePred = []
 
 
     model.train()
@@ -272,11 +275,12 @@ def train(model,
 
                     for (source, target), _ in valid_iter:
                         mask = (source != PAD_INDEX).type(torch.uint8)
-
-                        y_pred = model(input_ids=source,
-                                       attention_mask=mask).cuda()
+                        
+                        y_pred = model(input_ids=source, attention_mask=mask).cuda()
+                        predictions.extend(y_pred.tolist())
                         
                         target = target.cuda()
+                        truePred.extend(target.tolist())
                         #output = model(input_ids=source,
                         #               labels=target,
                         #               attention_mask=mask)
@@ -295,12 +299,9 @@ def train(model,
                 
                         recall.append(recall_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
 
-                        wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
-                        wandb.log({'Precision_recall' : wandb.plot.pr_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
-
                         valid_loss += loss.item()
                         
-                        print(valid_loss)
+                        #print(valid_loss)
 
                 # Store train and validation loss history
                 acc =  avg(acc[:-1])
@@ -332,6 +333,11 @@ def train(model,
                 train_loss = 0.0
                 valid_loss = 0.0
                 model.train()
+                
+    
+    
+    wandb.log({'AUC-ROC' : wandb.plot.roc_curve(truePred, predictions, labels=[0, 1])})
+    wandb.log({'Precision_recall' : wandb.plot.pr_curve(truePred, predictions, labels=[0, 1])})
 
     save_metrics(output_path + 'metric.pkl', train_loss_list, valid_loss_list, global_steps_list)
     print('Training done!')
