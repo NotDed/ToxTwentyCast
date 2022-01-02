@@ -73,10 +73,9 @@ def pretrain(model,
     #for param in model.roberta.parameters():
         #param.requires_grad = False
     for param in model.parameters():
-        param.requires_grad = False
+        param.requires_grad = True
         
-    #for param in model.module.parameters():
-    #    param.requires_grad = False
+    
     
     model.train()
 
@@ -104,7 +103,7 @@ def pretrain(model,
 
             loss.backward()
             #loss.device
-            # Optimizer and scheduler step
+            #Optimizer and scheduler step
             optimizer.step()
             scheduler.step()
 
