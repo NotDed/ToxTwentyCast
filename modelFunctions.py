@@ -138,7 +138,7 @@ def pretrain(model,
                         target = target.cuda()
                         
 
-                        loss = torch.nn.CrossEntropyLoss()(pred, targ)
+                        loss = torch.nn.CrossEntropyLoss()(y_pred, target)
                         #pdb.set_trace()
                         acc.append(accuracy_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
