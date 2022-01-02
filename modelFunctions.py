@@ -356,8 +356,8 @@ def evaluate(model, test_loader, PAD_INDEX, UNK_INDEX):
     #pdb.set_trace()
     
     wandb.log({'confusion_matrix': cm})
-    wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target,output, labels=[0, 1])})
-    wandb.log({'Precision_recall' : wandb.plot.pr_curve(target,output, labels=[0, 1])})
+    #wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target,output, labels=[0, 1])})
+    #wandb.log({'Precision_recall' : wandb.plot.pr_curve(target,output, labels=[0, 1])})
     
 
     ax = plt.subplot()
