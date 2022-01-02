@@ -259,7 +259,7 @@ def train(model,
                 #acc = []
                 #auc = []
                 #psc = []
-                #recall = []
+                recall = []
                 with torch.no_grad():
 
                     for (source, target), _ in valid_iter:
@@ -350,9 +350,9 @@ def evaluate(model, test_loader, PAD_INDEX, UNK_INDEX):
 
     cm = confusion_matrix(y_true, y_pred, labels=[0,1])
     Acc = accuracy_score(y_true, y_pred)
-    pdb.set_trace()
-    wandb.log({'AUC-ROC' : wandb.plot.roc_curve(y_true,y_pred)})
-    wandb.log({'Precision_recall' : wandb.plot.pr_curve(y_true,y_pred)})
+    #pdb.set_trace()
+    wandb.log({'AUC-ROCV' : wandb.plot.roc_curve(target.cpu(),output.cpu(), labels=[0, 1])})
+    wandb.log({'Precision_recallV' : wandb.plot.pr_curve(target.cpu(),output.cpu(), labels=[0, 1])})
     wandb.log({'confusion_matrix': cm})
     wandb.log({'ACCURACY': acc})
 
