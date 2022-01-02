@@ -163,8 +163,7 @@ def pretrain(model,
 
                         valid_loss += loss.item()
 
-                wandb.log({'AUC-ROC' : wandb.plot.roc_curve(truePred, predictions, labels=[0, 1])})
-                wandb.log({'Precision_recall' : wandb.plot.pr_curve(truePred, predictions, labels=[0, 1])})
+                
                 
                 acc =  avg(acc[:-1])
                 auc = avg(auc[:-1])
@@ -188,6 +187,10 @@ def pretrain(model,
                 valid_loss = 0.0
 
     # Set bert parameters back to trainable
+    
+    wandb.log({'AUC-ROC' : wandb.plot.roc_curve(truePred, predictions, labels=[0, 1])})
+    wandb.log({'Precision_recall' : wandb.plot.pr_curve(truePred, predictions, labels=[0, 1])})
+    
     for param in model.module.roberta.parameters():
         param.requires_grad = True
 

@@ -95,7 +95,7 @@ test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=Fals
 
 
 #-------------------------------------Main training loop------------------------
-NUM_EPOCHS = 3
+NUM_EPOCHS = 1
 steps_per_epoch = len(train_iter)
 
 device = torch.device('cuda')
