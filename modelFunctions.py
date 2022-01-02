@@ -119,6 +119,8 @@ def pretrain(model,
             if global_step % valid_period == 0:
                 model.eval()
                 print(len(valid_iter))
+                pred = []
+                targ = []
                 acc = []
                 auc = []
                 psc = []
@@ -131,10 +133,10 @@ def pretrain(model,
                         
                         mask = (source != PAD_INDEX).type(torch.uint8)
 
-                        y_pred = model(input_ids=source, attention_mask=mask).cuda()
+                        y_pred = pred.append(model(input_ids=source, attention_mask=mask).cuda().tolist())
                         
                         
-                        target = target.cuda()
+                        target = targ.append(target.cuda().tolist())
                         
 
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
@@ -153,15 +155,15 @@ def pretrain(model,
                         
                         recall.append(recall_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
-                        #wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
-                        #wandb.log({'Precision_recall' : wandb.plot.pr_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
+                        
 
                         valid_loss += loss.item()
                         
                         print(valid_loss)
 
                 
-
+                pred = (pred[:-1])
+                targ = (targ[:-1])
                 acc =  avg(acc[:-1])
                 auc = avg(auc[:-1])
                 psc = avg(psc[:-1])
@@ -173,6 +175,8 @@ def pretrain(model,
 
                 model.train()
                 # print summary
+                wandb.log({'AUC-ROC' : wandb.plot.roc_curve(targ.cpu(),pred.cpu(), labels=[0, 1])})
+                wandb.log({'Precision_recall' : wandb.plot.pr_curve(targ.cpu(),pred.cpu(), labels=[0, 1])})
                 wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss,
                 'valid_loss': valid_loss, 'auc': auc, 'recall':recall, 'psc':psc})
                 print('Epoch [{}/{}], global step [{}/{}], PT Loss: {:.4f}, Val Loss: {:.4f}'
@@ -351,8 +355,7 @@ def evaluate(model, test_loader, PAD_INDEX, UNK_INDEX):
     cm = confusion_matrix(y_true, y_pred, labels=[0,1])
     Acc = accuracy_score(y_true, y_pred)
     #pdb.set_trace()
-    wandb.log({'AUC-ROCV' : wandb.plot.roc_curve(target.cpu(),output.cpu(), labels=[0, 1])})
-    wandb.log({'Precision_recallV' : wandb.plot.pr_curve(target.cpu(),output.cpu(), labels=[0, 1])})
+    
     wandb.log({'confusion_matrix': cm})
     #wandb.log({'ACCURACY': acc})
 
