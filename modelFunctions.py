@@ -153,8 +153,8 @@ def pretrain(model,
                         
                         recall.append(recall_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
-                        wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
-                        wandb.log({'Precision_recall' : wandb.plot.pr_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
+                        #wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
+                        #wandb.log({'Precision_recall' : wandb.plot.pr_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
 
                         valid_loss += loss.item()
                         
@@ -287,8 +287,8 @@ def train(model,
                 
                         recall.append(recall_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
 
-                        wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
-                        wandb.log({'Precision_recall' : wandb.plot.pr_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
+                        #wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
+                        #wandb.log({'Precision_recall' : wandb.plot.pr_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
 
                         valid_loss += loss.item()
                         
@@ -349,9 +349,11 @@ def evaluate(model, test_loader, PAD_INDEX, UNK_INDEX):
     print(classification_report(y_true, y_pred, labels=[0,1], digits=4))
 
     cm = confusion_matrix(y_true, y_pred, labels=[0,1])
-    wandb.log({'AUC-ROC' : wandb.plot.roc_curve(y_true.cpu(),y_pred.cpu(), labels=[0, 1])})
-    wandb.log({'Precision_recall' : wandb.plot.pr_curve(y_true.cpu(),y_pred.cpu(), labels=[0, 1])})
+    acc = accuracy_score(y_true, y_pred, labels=[0,1])
+    wandb.log({'AUC-ROC' : wandb.plot.roc_curve(y_true ,y_pred, labels=[0, 1])})
+    wandb.log({'Precision_recall' : wandb.plot.pr_curve(y_true, y_pred, labels=[0, 1])})
     wandb.log({'confusion_matrix': cm})
+    wandb.log({'ACCURACY': acc})
 
     ax = plt.subplot()
 
