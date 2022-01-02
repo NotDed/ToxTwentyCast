@@ -148,13 +148,13 @@ def pretrain(model,
                             lol=(roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         except ValueError:
                             lol=0
-                            
+
                         auc.append(roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         psc.append(precision_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
                         recall.append(recall_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         
-                        #wandb.log({'roc' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu())})
+                        wandb.log({'roc' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu())})
 
                         valid_loss += loss.item()
                         

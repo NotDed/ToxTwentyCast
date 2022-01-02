@@ -95,7 +95,7 @@ test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=Fals
 
 
 #-------------------------------------Main training loop------------------------
-NUM_EPOCHS = 5
+NUM_EPOCHS = 2
 steps_per_epoch = len(train_iter)
 
 device = torch.device('cuda')
@@ -125,7 +125,7 @@ pretrain(model=model,
          valid_period = len(train_iter))
 
 print("======================= Start training =================================")
-NUM_EPOCHS = 15
+NUM_EPOCHS = 4
 
 optimizer = AdamW(model.parameters(), lr=2e-5)
 scheduler = get_linear_schedule_with_warmup(optimizer,
