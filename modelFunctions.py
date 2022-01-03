@@ -363,7 +363,7 @@ def evaluate(model, test_loader, PAD_INDEX, UNK_INDEX):
     print(classification_report(y_true, y_pred, labels=[0,1], digits=4))
 
     cm = confusion_matrix(y_true, y_pred, labels=[0,1])
-    Acc = accuracy_score(y_true, y_pred)
+    #Acc = accuracy_score(y_true, y_pred)
     #pdb.set_trace()
     
     wandb.log({'confusion_matrix': cm})
