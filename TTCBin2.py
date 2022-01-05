@@ -9,7 +9,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
-
+import optuna
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 import torch
@@ -53,7 +53,7 @@ wandb.login()
 
 #-------------------------------------Tokenizer definition----------------------
 
-BERT_MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_120k'
+BERT_MODEL_NAME = 'BPE_SELFIES_PubChem_shard00_160k/pytorch_model.bin'
 tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL_NAME)
 MAX_SEQ_LEN = 256
 BATCH_SIZE = 32
@@ -95,8 +95,8 @@ test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=Fals
 
 
 #-------------------------------------Main training loop------------------------
-NUM_EPOCHS = 5
-steps_per_epoch = len(train_iter)
+#NUM_EPOCHS = 5
+#steps_per_epoch = len(train_iter)
 
 device = torch.device('cuda')
 model = ROBERTAClassifier(BERT_MODEL_NAME)
@@ -146,8 +146,8 @@ train(model=model,
 
 
 
-load_checkpoint(output_path + '/model.pkl', model)
+#load_checkpoint(output_path + '/model.pkl', model)
 
-evaluate(model, test_iter, PAD_INDEX, UNK_INDEX)
+#evaluate(model, test_iter, PAD_INDEX, UNK_INDEX)
 
-wandb.finish()
+#wandb.finish()
