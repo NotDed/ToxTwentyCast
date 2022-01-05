@@ -191,10 +191,10 @@ def pretrain(model,
     wandb.log({'PRE-AUC-ROC' : wandb.plot.roc_curve(truePred, predictions, labels=[0, 1])})
     wandb.log({'PRE-Precision_recall' : wandb.plot.pr_curve(truePred, predictions, labels=[0, 1])})
     
-    for param in model.module.roberta.parameters():
-        param.requires_grad = True
+    #for param in model.module.roberta.parameters():
+    #    param.requires_grad = True
 
-    print('Pre-training done!')
+    #print('Pre-training done!')
 
 #------------------------------------Train--------------------------------------
 
@@ -210,8 +210,8 @@ def train(model,
           output_path = output_path):
 
     # Initialize losses and loss histories
-    #for param in model.module.roberta.parameters():
-    #   param.requires_grad = False
+    for param in model.module.roberta.parameters():
+       param.requires_grad = False
 
     train_loss = 0.0
     valid_loss = 0.0

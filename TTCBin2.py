@@ -108,21 +108,22 @@ scheduler = get_linear_schedule_with_warmup(optimizer,
                                             num_warmup_steps=steps_per_epoch*1,
                                             num_training_steps=steps_per_epoch*NUM_EPOCHS)
 
-print("======================= Start pretraining ==============================")
-wandb.init(project="newTestTrain")
+#print("======================= Start pretraining ==============================")
+#wandb.init(project="newTestTrain")
 
 
 
-pretrain(model=model,
-         train_iter=train_iter,
-         valid_iter=valid_iter,
-         PAD_INDEX = PAD_INDEX,
-         UNK_INDEX = UNK_INDEX,
-         #device =  device,
-         optimizer = optimizer,
-         scheduler = scheduler,
-         num_epochs = NUM_EPOCHS,
-         valid_period = len(train_iter))
+#"pretrain(model=model,
+#         train_iter=train_iter,
+#         valid_iter=valid_iter,
+#         PAD_INDEX = PAD_INDEX,
+#        UNK_INDEX = UNK_INDEX,
+#         #device =  device,
+#         optimizer = optimizer,
+#         scheduler = scheduler,
+#         num_epochs = NUM_EPOCHS,
+#         valid_period = len(train_iter))
+
 
 print("======================= Start training =================================")
 NUM_EPOCHS = 20
