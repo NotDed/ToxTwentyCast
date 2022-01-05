@@ -9,7 +9,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
-import optuna
+#import optuna
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 import torch
