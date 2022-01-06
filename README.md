@@ -13,7 +13,7 @@
 # Required packages
 
 
-## PyTorch
+## PyTorch and Torchtext
 `pip install -U torch==1.8.0 torchtext==0.9.0`
 
 ## PyTorchLightning
