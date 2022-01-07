@@ -1,5 +1,5 @@
 #------------------------------------Imports------------------------------------
-
+# conda install -c conda-forge optuna
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
@@ -341,6 +341,7 @@ def train(model,
 
     save_metrics(output_path + 'metric.pkl', train_loss_list, valid_loss_list, global_steps_list)
     print('Training done!')
+    return auc
 
 #------------------------------------Evaluation---------------------------------
 

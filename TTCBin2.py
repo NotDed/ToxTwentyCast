@@ -32,6 +32,9 @@ from utilityFunctions import save_checkpoint, load_checkpoint, save_metrics, loa
 from modelFunctions import pretrain, train, evaluate
 from clasificadorRoberta import ROBERTAClassifier
 
+#-------------------------------------Optuna import-----------------------------
+
+import optuna
 
 #-------------------------------------Paths-------------------------------------
 
@@ -51,7 +54,18 @@ output_path = 'outputs/'
 
 wandb.login()
 
+#-------------------------------------Optuna objective--------------------------
+
+def objective(trial):
+      params = {
+            "MAX_SEQ_LEN": trial.suggest_int ("MAX_SEQ_LEN", 16, 256),
+            "BATCH_SIZE": trial.suggest_int ("BATCH_SIZE", 16, 64),
+            "lr": trial.suggest_loguniform("lr", 1e-6, 1e-3)
+      }
+
 #-------------------------------------Tokenizer definition----------------------
+
+
 
 BERT_MODEL_NAME = 'BPE_SELFIES_PubChem_shard00_160k/pytorch_model.bin'
 tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL_NAME)
@@ -71,7 +85,7 @@ text_field = torchtext.legacy.data.Field(use_vocab=False,
                    include_lengths=False,
                    batch_first=True,
                    fix_length=MAX_SEQ_LEN,
-                   pad_token=PAD_INDEX,
+                   pad_token=PAD_INDEX, 
                    )
 
 fields = {'text' : ('text', text_field), 'labels' : ('labels', label_field)}
