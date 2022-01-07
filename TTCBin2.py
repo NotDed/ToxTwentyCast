@@ -62,49 +62,113 @@ def objective(trial):
             "BATCH_SIZE": trial.suggest_int ("BATCH_SIZE", 16, 64),
             "lr": trial.suggest_loguniform("lr", 1e-6, 1e-3)
       }
+      all_auc = []
+      
+      #-------------------------------------Training block----------------------
+      
+      BERT_MODEL_NAME = 'BPE_SELFIES_PubChem_shard00_160k/pytorch_model.bin'
+      tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL_NAME)
+      MAX_SEQ_LEN = params['MAX_SEQ_LEN']
+      BATCH_SIZE = params['BATCH_SIZE']
+      
+      PAD_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.pad_token)
+      UNK_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.unk_token)
+      
+      label_field = torchtext.legacy.data.Field(sequential=False, use_vocab=False, batch_first=True)
+      text_field = torchtext.legacy.data.Field(
+                              use_vocab=False,
+                              tokenize=tokenizer.encode,
+                              include_lengths=False,
+                              batch_first=True,
+                              fix_length=MAX_SEQ_LEN,
+                              pad_token=PAD_INDEX, 
+                              )
+      fields = {'text' : ('text', text_field), 'labels' : ('labels', label_field)}
+
+      train_data, valid_data, test_data = torchtext.legacy.data.TabularDataset(data_path,
+                                                      format='CSV',
+                                                      fields=fields,
+                                                      skip_header=False).split(split_ratio=[0.70, 0.2, 0.1],
+                                                                              stratified=True,
+                                                                              strata_field='labels')
+
+      train_iter, valid_iter = BucketIterator.splits((train_data, valid_data),
+                                                batch_size=BATCH_SIZE,
+                                                shuffle=True,
+                                                sort_key=lambda x: len(x.text),
+                                                sort=True,
+                                                sort_within_batch=False)
+
+      test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=False, sort=False)
+      
+      device = torch.device('cuda')
+      model = ROBERTAClassifier(BERT_MODEL_NAME)
+      model = torch.nn.DataParallel(model)
+      model.to(device)
+      
+      NUM_EPOCHS = 20
+
+      optimizer = AdamW(model.parameters(), lr=2e-6)
+      scheduler = get_linear_schedule_with_warmup(optimizer,
+                                                num_warmup_steps=steps_per_epoch*2,
+                                                num_training_steps=steps_per_epoch*NUM_EPOCHS)
+
+
+      temp_auc = train(model=model,
+            train_iter=train_iter,
+            valid_iter=valid_iter,
+            optimizer=optimizer,
+            scheduler=scheduler,
+            num_epochs=NUM_EPOCHS,
+            valid_period= len(train_iter),
+            PAD_INDEX = PAD_INDEX,
+            UNK_INDEX = UNK_INDEX)
+      
+      return temp_auc
+      #-------------------------------------Training block----------------------
 
 #-------------------------------------Tokenizer definition----------------------
 
 
 
-BERT_MODEL_NAME = 'BPE_SELFIES_PubChem_shard00_160k/pytorch_model.bin'
-tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL_NAME)
-MAX_SEQ_LEN = 256
-BATCH_SIZE = 32
+# BERT_MODEL_NAME = 'BPE_SELFIES_PubChem_shard00_160k/pytorch_model.bin'
+# tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL_NAME)
+# MAX_SEQ_LEN = 256
+# BATCH_SIZE = 32
 
-PAD_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.pad_token)
-UNK_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.unk_token)
+# PAD_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.pad_token)
+# UNK_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.unk_token)
 
 
 
 #-------------------------------------Dataloaders-------------------------------
 
-label_field = torchtext.legacy.data.Field(sequential=False, use_vocab=False, batch_first=True)
-text_field = torchtext.legacy.data.Field(use_vocab=False,
-                   tokenize=tokenizer.encode,
-                   include_lengths=False,
-                   batch_first=True,
-                   fix_length=MAX_SEQ_LEN,
-                   pad_token=PAD_INDEX, 
-                   )
+# label_field = torchtext.legacy.data.Field(sequential=False, use_vocab=False, batch_first=True)
+# text_field = torchtext.legacy.data.Field(use_vocab=False,
+#                    tokenize=tokenizer.encode,
+#                    include_lengths=False,
+#                    batch_first=True,
+#                    fix_length=MAX_SEQ_LEN,
+#                    pad_token=PAD_INDEX, 
+#                    )
 
-fields = {'text' : ('text', text_field), 'labels' : ('labels', label_field)}
+# fields = {'text' : ('text', text_field), 'labels' : ('labels', label_field)}
 
-train_data, valid_data, test_data = torchtext.legacy.data.TabularDataset(data_path,
-                                                   format='CSV',
-                                                   fields=fields,
-                                                   skip_header=False).split(split_ratio=[0.70, 0.2, 0.1],
-                                                                            stratified=True,
-                                                                            strata_field='labels')
+# train_data, valid_data, test_data = torchtext.legacy.data.TabularDataset(data_path,
+#                                                    format='CSV',
+#                                                    fields=fields,
+#                                                    skip_header=False).split(split_ratio=[0.70, 0.2, 0.1],
+#                                                                             stratified=True,
+#                                                                             strata_field='labels')
 
-train_iter, valid_iter = BucketIterator.splits((train_data, valid_data),
-                                               batch_size=BATCH_SIZE,
-                                               shuffle=True,
-                                               sort_key=lambda x: len(x.text),
-                                               sort=True,
-                                               sort_within_batch=False)
+# train_iter, valid_iter = BucketIterator.splits((train_data, valid_data),
+#                                                batch_size=BATCH_SIZE,
+#                                                shuffle=True,
+#                                                sort_key=lambda x: len(x.text),
+#                                                sort=True,
+#                                                sort_within_batch=False)
 
-test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=False, sort=False)
+# test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=False, sort=False)
 
 
 
@@ -112,15 +176,15 @@ test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=Fals
 #NUM_EPOCHS = 5
 #steps_per_epoch = len(train_iter)
 
-device = torch.device('cuda')
-model = ROBERTAClassifier(BERT_MODEL_NAME)
-model = torch.nn.DataParallel(model)
-model.to(device)
+# device = torch.device('cuda')
+# model = ROBERTAClassifier(BERT_MODEL_NAME)
+# model = torch.nn.DataParallel(model)
+# model.to(device)
 
-optimizer = AdamW(model.parameters(), lr=1e-4)
-scheduler = get_linear_schedule_with_warmup(optimizer,
-                                            num_warmup_steps=steps_per_epoch*1,
-                                            num_training_steps=steps_per_epoch*NUM_EPOCHS)
+# optimizer = AdamW(model.parameters(), lr=1e-4)
+# scheduler = get_linear_schedule_with_warmup(optimizer,
+#                                             num_warmup_steps=steps_per_epoch*1,
+#                                             num_training_steps=steps_per_epoch*NUM_EPOCHS)
 
 #print("======================= Start pretraining ==============================")
 #wandb.init(project="newTestTrain")
@@ -139,24 +203,24 @@ scheduler = get_linear_schedule_with_warmup(optimizer,
 #         valid_period = len(train_iter))
 
 
-print("======================= Start training =================================")
-NUM_EPOCHS = 20
+# print("======================= Start training =================================")
+# NUM_EPOCHS = 20
 
-optimizer = AdamW(model.parameters(), lr=2e-6)
-scheduler = get_linear_schedule_with_warmup(optimizer,
-                                            num_warmup_steps=steps_per_epoch*2,
-                                            num_training_steps=steps_per_epoch*NUM_EPOCHS)
+# optimizer = AdamW(model.parameters(), lr=2e-6)
+# scheduler = get_linear_schedule_with_warmup(optimizer,
+#                                             num_warmup_steps=steps_per_epoch*2,
+#                                             num_training_steps=steps_per_epoch*NUM_EPOCHS)
 
 
-train(model=model,
-      train_iter=train_iter,
-      valid_iter=valid_iter,
-      optimizer=optimizer,
-      scheduler=scheduler,
-      num_epochs=NUM_EPOCHS,
-      valid_period= len(train_iter),
-      PAD_INDEX = PAD_INDEX,
-      UNK_INDEX = UNK_INDEX)
+# train(model=model,
+#       train_iter=train_iter,
+#       valid_iter=valid_iter,
+#       optimizer=optimizer,
+#       scheduler=scheduler,
+#       num_epochs=NUM_EPOCHS,
+#       valid_period= len(train_iter),
+#       PAD_INDEX = PAD_INDEX,
+#       UNK_INDEX = UNK_INDEX)
 
 
 
@@ -165,3 +229,13 @@ train(model=model,
 #evaluate(model, test_iter, PAD_INDEX, UNK_INDEX)
 
 #wandb.finish()
+
+if __name__ == '__main__':
+      study = optuna.create_study(direction="maximize")
+      study.optimize(objective, n_trials = 10)
+      
+      print("best trial: ")
+      trial_ = study.best_trial
+      
+      print(trial_.values)
+      print(trial_.params)
