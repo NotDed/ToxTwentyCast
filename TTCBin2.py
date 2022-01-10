@@ -70,6 +70,7 @@ def objective(trial):
       tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL_NAME)
       MAX_SEQ_LEN = params['MAX_SEQ_LEN']
       BATCH_SIZE = params['BATCH_SIZE']
+      steps_per_epoch = len(train_iter)
       
       PAD_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.pad_token)
       UNK_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.unk_token)
@@ -108,7 +109,7 @@ def objective(trial):
       
       NUM_EPOCHS = 20
 
-      optimizer = AdamW(model.parameters(), lr=2e-6)
+      optimizer = AdamW(model.parameters(), params['lr'])
       scheduler = get_linear_schedule_with_warmup(optimizer,
                                                 num_warmup_steps=steps_per_epoch*2,
                                                 num_training_steps=steps_per_epoch*NUM_EPOCHS)
