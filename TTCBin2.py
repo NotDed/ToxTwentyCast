@@ -66,7 +66,7 @@ def objective(trial):
       
       #-------------------------------------Training block----------------------
       
-      BERT_MODEL_NAME = 'BPE_SELFIES_PubChem_shard00_160k'
+      BERT_MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
       tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL_NAME)
       MAX_SEQ_LEN = params['MAX_SEQ_LEN']
       BATCH_SIZE = params['BATCH_SIZE']
