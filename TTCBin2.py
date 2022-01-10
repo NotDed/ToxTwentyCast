@@ -66,7 +66,7 @@ def objective(trial):
       
       #-------------------------------------Training block----------------------
       
-      BERT_MODEL_NAME = 'BPE_SELFIES_PubChem_shard00_160k/pytorch_model.bin'
+      BERT_MODEL_NAME = 'BPE_SELFIES_PubChem_shard00_160k/pytorch_model'
       tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL_NAME)
       MAX_SEQ_LEN = params['MAX_SEQ_LEN']
       BATCH_SIZE = params['BATCH_SIZE']
