@@ -65,6 +65,16 @@ def objective(trial):
       all_auc = []
       
       #-------------------------------------Training block----------------------
+      
+      BERT_MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
+      tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL_NAME)
+      MAX_SEQ_LEN = params['MAX_SEQ_LEN']
+      BATCH_SIZE = params['BATCH_SIZE']
+      
+      
+      PAD_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.pad_token)
+      UNK_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.unk_token)
+      
       label_field = torchtext.legacy.data.Field(sequential=False, use_vocab=False, batch_first=True)
       text_field = torchtext.legacy.data.Field(
                               use_vocab=False,
@@ -91,18 +101,6 @@ def objective(trial):
                                                 sort_within_batch=False)
 
       test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=False, sort=False)
-
-
-      BERT_MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
-      tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL_NAME)
-      MAX_SEQ_LEN = params['MAX_SEQ_LEN']
-      BATCH_SIZE = params['BATCH_SIZE']
-      steps_per_epoch = len(train_iter)
-      
-      PAD_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.pad_token)
-      UNK_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.unk_token)
-      
-      
       
       device = torch.device('cuda')
       model = ROBERTAClassifier(BERT_MODEL_NAME)
@@ -110,7 +108,7 @@ def objective(trial):
       model.to(device)
       
       NUM_EPOCHS = 20
-
+      steps_per_epoch = len(train_iter)
       optimizer = AdamW(model.parameters(), params['lr'])
       scheduler = get_linear_schedule_with_warmup(optimizer,
                                                 num_warmup_steps=steps_per_epoch*2,
