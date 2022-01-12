@@ -29,7 +29,7 @@ class ROBERTAClassifier(torch.nn.Module):
         self.roberta = RobertaModel.from_pretrained(BERT_MODEL_NAME, return_dict=False)
         self.pre_classifier = torch.nn.Linear(768, 768)
         self.dropout = torch.nn.Dropout(0.3)
-        self.classifier = torch.nn.Linear(768, 1)
+        self.classifier = torch.nn.Linear(768, 2)
 
     def forward(self, input_ids, attention_mask):
         output_1 = self.roberta(input_ids=input_ids, attention_mask=attention_mask)
