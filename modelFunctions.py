@@ -211,7 +211,7 @@ def train(model,
 
     # Initialize losses and loss histories
     for param in model.module.roberta.parameters():
-       param.requires_grad = False
+       param.requires_grad = True
 
     train_loss = 0.0
     valid_loss = 0.0
@@ -238,9 +238,9 @@ def train(model,
 
             target = target.cuda()
              
-            print('target: ',target)
-            print('y_pred: ',y_pred)
-            print('source: ',source.shape, ' target: ',target.shape, ' y_pred: ',y_pred.shape)
+            #print('target: ',target)
+            #print('y_pred: ',y_pred)
+            #print('source: ',source.shape, ' target: ',target.shape, ' y_pred: ',y_pred.shape)
             #output = model(input_ids=source,
             #              labels=target,
             #              attention_mask=mask)
