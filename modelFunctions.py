@@ -341,7 +341,7 @@ def train(model,
 
     save_metrics(output_path + 'metric.pkl', train_loss_list, valid_loss_list, global_steps_list)
     print('Training done!')
-    return auc
+    return acc
 
 #------------------------------------Evaluation---------------------------------
 

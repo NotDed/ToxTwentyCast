@@ -62,7 +62,7 @@ def objective(trial):
             "BATCH_SIZE": trial.suggest_int ("BATCH_SIZE", 16, 128),
             "lr": trial.suggest_loguniform("lr", 1e-6, 1e-3)
       }
-      all_auc = []
+      all_acc = []
       
       #-------------------------------------Training block----------------------
       
@@ -115,7 +115,7 @@ def objective(trial):
                                                 num_training_steps=steps_per_epoch*NUM_EPOCHS)
 
 
-      temp_auc = train(model=model,
+      temp_acc = train(model=model,
             train_iter=train_iter,
             valid_iter=valid_iter,
             optimizer=optimizer,
@@ -125,7 +125,7 @@ def objective(trial):
             PAD_INDEX = PAD_INDEX,
             UNK_INDEX = UNK_INDEX)
       
-      return temp_auc
+      return temp_acc
       #-------------------------------------Training block----------------------
 
 #-------------------------------------Tokenizer definition----------------------
