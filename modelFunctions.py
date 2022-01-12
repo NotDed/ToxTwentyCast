@@ -230,7 +230,7 @@ def train(model,
     
     # Train loop
     for epoch in range(num_epochs):
-        print(epoch)
+        #print(epoch)
         for (source, target), _ in train_iter:
             mask = (source != PAD_INDEX).type(torch.uint8)
 
@@ -263,7 +263,7 @@ def train(model,
             global_step += 1
 
             # Validation loop. Save progress and evaluate model performance.
-            print(global_step, len(train_iter), valid_period * (epoch+1))
+            #print(global_step, len(train_iter), valid_period * (epoch+1))
 
             if global_step % valid_period == 0:
                 model.eval()
