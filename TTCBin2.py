@@ -107,7 +107,7 @@ def objective(trial):
       model = torch.nn.DataParallel(model)
       model.to(device)
       
-      NUM_EPOCHS = 20
+      NUM_EPOCHS = 1
       steps_per_epoch = len(train_iter)
       optimizer = AdamW(model.parameters(), params['lr'])
       scheduler = get_linear_schedule_with_warmup(optimizer,
@@ -233,7 +233,7 @@ wandb.init(project="newTestTrain")
 
 if __name__ == '__main__':
       study = optuna.create_study(direction="maximize")
-      study.optimize(objective, n_trials = 10)
+      study.optimize(objective, n_trials = 2)
       
       print("best trial: ")
       trial_ = study.best_trial
