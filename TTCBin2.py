@@ -188,7 +188,7 @@ def objective(trial):
 #                                             num_training_steps=steps_per_epoch*NUM_EPOCHS)
 
 #print("======================= Start pretraining ==============================")
-#wandb.init(project="newTestTrain")
+wandb.init(project="newTestTrain")
 
 
 
