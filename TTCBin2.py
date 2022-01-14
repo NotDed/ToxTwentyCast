@@ -51,8 +51,8 @@ output_path = 'outputs/'
 # df.to_csv('~/ToxTwentyCast/dataset/toxTwentyCastShort.csv')
 
 #-------------------------------------Wandb login-------------------------------
-
 wandb.login()
+wandb.init(project="newTestTrain")
 
 #-------------------------------------Optuna objective--------------------------
 
