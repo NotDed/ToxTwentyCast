@@ -232,7 +232,7 @@ def objective(trial):
 
 if __name__ == '__main__':
       study = optuna.create_study(direction="maximize")
-      study.optimize(objective, n_trials = 15)
+      study.optimize(objective, n_trials = 4)
       
       print("best trial: ")
       trial_ = study.best_trial
