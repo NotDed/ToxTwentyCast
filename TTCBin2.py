@@ -58,15 +58,14 @@ wandb.login()
 
 def objective(trial):
       params = {
-            "MAX_SEQ_LEN": trial.suggest_int ("MAX_SEQ_LEN", 16, 256),
-            "BATCH_SIZE": trial.suggest_int ("BATCH_SIZE", 16, 64),
+            "MAX_SEQ_LEN": trial.suggest_int ("MAX_SEQ_LEN", 128, 256),
+            "BATCH_SIZE": trial.suggest_int ("BATCH_SIZE", 16, 128),
             "lr": trial.suggest_loguniform("lr", 1e-6, 1e-3)
       }
-      all_auc = []
       
       #-------------------------------------Training block----------------------
       
-      BERT_MODEL_NAME = 'BPE_SELFIES_PubChem_shard00_160k/pytorch_model.bin'
+      BERT_MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
       tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL_NAME)
       MAX_SEQ_LEN = params['MAX_SEQ_LEN']
       BATCH_SIZE = params['BATCH_SIZE']
@@ -108,7 +107,7 @@ def objective(trial):
       
       NUM_EPOCHS = 20
 
-      optimizer = AdamW(model.parameters(), lr=2e-6)
+      optimizer = AdamW(model.parameters(), lr=params['lr'])
       scheduler = get_linear_schedule_with_warmup(optimizer,
                                                 num_warmup_steps=steps_per_epoch*2,
                                                 num_training_steps=steps_per_epoch*NUM_EPOCHS)
