@@ -98,14 +98,15 @@ def objective(trial):
                                                 sort=True,
                                                 sort_within_batch=False)
 
-      test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=False, sort=False)
+      # test_iter = Iterator(test_data, batch_size=BATCH_SIZE, train=False, shuffle=False, sort=False)
       
       device = torch.device('cuda')
       model = ROBERTAClassifier(BERT_MODEL_NAME)
       model = torch.nn.DataParallel(model)
       model.to(device)
       
-      NUM_EPOCHS = 20
+      NUM_EPOCHS = 15
+      steps_per_epoch = len(train_iter)
 
       optimizer = AdamW(model.parameters(), lr=params['lr'])
       scheduler = get_linear_schedule_with_warmup(optimizer,
