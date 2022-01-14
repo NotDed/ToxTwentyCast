@@ -38,8 +38,8 @@ import optuna
 
 #-------------------------------------Paths-------------------------------------
 
-#data_path = '~/ToxTwentyCast/dataset/toxTwentyCast.csv'
-data_path = '~/ToxTwentyCast/dataset/toxTwentyCastShort.csv'
+data_path = '~/ToxTwentyCast/dataset/toxTwentyCast.csv'
+#data_path = '~/ToxTwentyCast/dataset/toxTwentyCastShort.csv'
 output_path = 'outputs/'
 
 
@@ -58,19 +58,18 @@ wandb.login()
 
 def objective(trial):
       params = {
-            "MAX_SEQ_LEN": trial.suggest_int ("MAX_SEQ_LEN", 128, 256),
-            "BATCH_SIZE": trial.suggest_int ("BATCH_SIZE", 16, 128),
+            "MAX_SEQ_LEN": trial.suggest_int ("MAX_SEQ_LEN", 16, 256),
+            "BATCH_SIZE": trial.suggest_int ("BATCH_SIZE", 16, 64),
             "lr": trial.suggest_loguniform("lr", 1e-6, 1e-3)
       }
-      all_acc = []
+      all_auc = []
       
       #-------------------------------------Training block----------------------
       
-      BERT_MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
+      BERT_MODEL_NAME = 'BPE_SELFIES_PubChem_shard00_160k/pytorch_model.bin'
       tokenizer = AutoTokenizer.from_pretrained(BERT_MODEL_NAME)
       MAX_SEQ_LEN = params['MAX_SEQ_LEN']
       BATCH_SIZE = params['BATCH_SIZE']
-      
       
       PAD_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.pad_token)
       UNK_INDEX = tokenizer.convert_tokens_to_ids(tokenizer.unk_token)
@@ -108,14 +107,14 @@ def objective(trial):
       model.to(device)
       
       NUM_EPOCHS = 20
-      steps_per_epoch = len(train_iter)
-      optimizer = AdamW(model.parameters(), params['lr'])
+
+      optimizer = AdamW(model.parameters(), lr=2e-6)
       scheduler = get_linear_schedule_with_warmup(optimizer,
                                                 num_warmup_steps=steps_per_epoch*2,
                                                 num_training_steps=steps_per_epoch*NUM_EPOCHS)
 
 
-      temp_acc = train(model=model,
+      temp_auc = train(model=model,
             train_iter=train_iter,
             valid_iter=valid_iter,
             optimizer=optimizer,
@@ -125,7 +124,7 @@ def objective(trial):
             PAD_INDEX = PAD_INDEX,
             UNK_INDEX = UNK_INDEX)
       
-      return temp_acc
+      return temp_auc
       #-------------------------------------Training block----------------------
 
 #-------------------------------------Tokenizer definition----------------------
@@ -188,7 +187,7 @@ def objective(trial):
 #                                             num_training_steps=steps_per_epoch*NUM_EPOCHS)
 
 #print("======================= Start pretraining ==============================")
-wandb.init(project="newTestTrain")
+#wandb.init(project="newTestTrain")
 
 
 
@@ -233,10 +232,10 @@ wandb.init(project="newTestTrain")
 
 if __name__ == '__main__':
       study = optuna.create_study(direction="maximize")
-      study.optimize(objective, n_trials = 6)
+      study.optimize(objective, n_trials = 15)
       
       print("best trial: ")
       trial_ = study.best_trial
       
       print(trial_.values)
-      print(trial_.params)
+      print(trial_.params) 
