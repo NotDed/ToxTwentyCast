@@ -105,7 +105,7 @@ def objective(trial):
       model = torch.nn.DataParallel(model)
       model.to(device)
       
-      NUM_EPOCHS = 15
+      NUM_EPOCHS = 40
       steps_per_epoch = len(train_iter)
 
       optimizer = AdamW(model.parameters(), lr=params['lr'])
