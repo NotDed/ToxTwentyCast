@@ -23,16 +23,12 @@ def run():
         test_size=0.1,
         random_state=42,
         stratify=dfx.labels#.values
-    )
-           
+    ) 
 
     df_train = df_train.reset_index(drop=True)
     df_valid = df_valid.reset_index(drop=True)
     
     df_train = df_train.dropna()
-    
-    print(df_train.labels.values)
-    input()
 
     train_dataset = dataset.BERTDataset(
         text = df_train.text.values,

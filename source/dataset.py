@@ -20,10 +20,10 @@ class BERTDataset:
             text,
             None,
             add_special_tokens = True,
-            is_split_into_words = True
+            is_split_into_words = False
             # max_length = self.max_len
         )
-        ids=inputs["inputs_ids"]
+        ids=inputs[0]
         mask = inputs["attention_mask"]
         token_type_ids = inputs["token_type_ids"]
 
