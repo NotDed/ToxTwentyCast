@@ -29,6 +29,8 @@ def run():
     df_train = df_train.reset_index(drop=True)
     df_valid = df_valid.reset_index(drop=True)
     
+    df_train = df_train.dropna()
+    
     print(df_train.labels.values)
     input()
 
