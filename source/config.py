@@ -5,7 +5,7 @@ TRAIN_BATCH_SIZE = 16
 VALID_BATCH_SIZE = 8
 EPOCHS = 10
 BERT_PATH = "seyonec/BPE_SELFIES_PubChem_shard00_160k"
-# MODEL_PATH = "pytorch_model.bin"
+MODEL_PATH = "seyonec/BPE_SELFIES_PubChem_shard00_160k"
 TRAINING_FILE = "../input/toxTwentyCast.csv"
 TOKENIZER = AutoTokenizer.from_pretrained(
     BERT_PATH,
