@@ -9,12 +9,12 @@ class BERTDataset:
         self.tokenizer = config.TOKENIZER
         self.max_len = config.MAX_LEN
 
-        def __len__(self):
-            return len(self.text)
+    def __len__(self):
+        return len(self.text)
 
-        def __getitem__(self,item):
-            text = str(self.text)
-            text = " ".join(text.split())
+    def __getitem__(self,item):
+        text = str(self.text)
+        text = " ".join(text.split())
 
         inputs = self.tokenizer.encode(
             text,
@@ -25,6 +25,7 @@ class BERTDataset:
         print(inputs)
         print(type(inputs))
         input()
+        
         ids=inputs["inputs_ids"]
         mask = inputs["attention_mask"]
         token_type_ids = inputs["token_type_ids"]
