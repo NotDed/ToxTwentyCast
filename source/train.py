@@ -46,7 +46,7 @@ def run():
         labels=df_valid.labels.values
     )
 
-    valid_data_loader = torch.utils.data.dataloader = torch.utils.DataLoader(
+    valid_data_loader = torch.utils.data.DataLoader(
         valid_dataset, 
         batch_size=config.VALID_BATCH_SIZE, 
         num_workers = 1
@@ -79,7 +79,7 @@ def run():
         engine.train_fn(train_data_loader, model, optimizer, device)
         outputs, targets = engine.eval_fn(valid_data_loader, model, device)
         outputs = np.array(outputs) >= 0.5
-        accuray = metrics.accuracy_score(targets, outputs)
+        accuracy = metrics.accuracy_score(targets, outputs)
         print(f"Acuracy Score = {accuracy}")
         if accuracy > best_accuracy:
             torch.save(model.state_dict(), config.MODEL_PATH)
