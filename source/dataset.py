@@ -23,8 +23,6 @@ class BERTDataset:
             max_length = self.max_len
         )
         
-        print(inputs)
-        
         ids=inputs["input_ids"]
         mask = inputs["attention_mask"]
         token_type_ids = inputs["token_type_ids"]
