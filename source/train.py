@@ -23,7 +23,7 @@ def run():
         test_size=0.1,
         random_state=42,
         #same %of  positive and negative values
-        stratify=dfx.labels#.values
+        #stratify=dfx.labels#.values
     ) 
 
     df_train = df_train.reset_index(drop=True)
