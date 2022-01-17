@@ -19,7 +19,7 @@ def train_fn(data_loader, model, optimizer, device, scheduler):
         mask = mask.to(device, dtype=torch.float)
         targets = targets.to(device, dtype=torch.float)
 
-        optimizer.zero_gra()
+        optimizer.zero_grad()
         outputs = model(
             ids=ids,
             mask=mask,
@@ -37,7 +37,7 @@ def eval_fn(data_loader, model, device):
     fin_targets = []
     fin_outouts =[]
     with torch.no_grad():
-        for bi,d in tqdm(enumerate(data_loader), total=len(data_loader)):
+        for bi, d in tqdm(enumerate(data_loader), total=len(data_loader)):
             ids = d["ids"]
             token_type_ids = d["token_type_ids"]
             mask = d["mask"]

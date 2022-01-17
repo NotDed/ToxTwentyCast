@@ -22,6 +22,7 @@ def run():
         dfx,
         test_size=0.1,
         random_state=42,
+        #same %of  positive and negative values
         stratify=dfx.labels#.values
     ) 
 
@@ -55,12 +56,12 @@ def run():
 
     device = torch.device("cuda")
     model = ROBERTAClassifier()
-    model.to_device()
+    model.to(device)
 
     param_optimizer = list (model.named_parameters())
     no_decay = ["bias", "LayerNorm.bias", "LayerNorm.weight"]
     optimizer_parameters  =[
-        {'params': [p for n, p in param_optimizer if not any (nd in n for nd in no_decay)], 'weight_decay':0.001},
+        {'params': [p for n, p in param_optimizer if not any(nd in n for nd in no_decay)], 'weight_decay':0.001},
         {'params': [p for n, p in param_optimizer if any (nd in n for nd in no_decay)], 'weight_decay':0.0},
     ]
 
