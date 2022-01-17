@@ -9,7 +9,7 @@ class ROBERTAClassifier(nn.Module):
         self.roberta_drop = nn.Dropout(0.2)
         self.l1 = torch.nn.Linear(768, 1)
         
-     def forward(self, ids, attention_mask, token_type_ids):
+    def forward(self, ids, attention_mask, token_type_ids):
         #_ = lasthiddenstate,o2pooler output
         _, o2 = self.roberta(
             ids,
