@@ -19,8 +19,8 @@ class BERTDataset:
         inputs = self.tokenizer.encode(
             text,
             None,
-            add_special_tokens = True,
-            max_length = self.max_len
+            add_special_tokens = True
+            # max_length = self.max_len
         )
         ids=inputs["inputs_ids"]
         mask = inputs["attention_mask"]
