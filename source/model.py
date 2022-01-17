@@ -13,7 +13,7 @@ class ROBERTAClassifier(nn.Module):
         _, o2 = self.roberta(
             ids,
             attention_mask = mask,
-            token_type_ids = token_type_ids
+            #token_type_ids = token_type_ids
         )
         #robertoutput
         bo =  self.roberta_drop(o2)

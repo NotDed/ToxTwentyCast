@@ -25,7 +25,7 @@ class BERTDataset:
         
         ids=inputs["input_ids"]
         mask = inputs["attention_mask"]
-        token_type_ids = inputs["token_type_ids"]
+        #token_type_ids = inputs["token_type_ids"]
 
 
         #padding_length = self.max_len - len(ids)
@@ -36,7 +36,7 @@ class BERTDataset:
         return{
             'ids': torch.tensor(ids, dytype=torch.long),
             'mask': torch.tensor(mask, dtype=torch.long),
-            'token_type_ids': torch.tensor(token_type_ids, dtype=torch.long),
+            #'token_type_ids': torch.tensor(token_type_ids, dtype=torch.long),
             'targets': torch.tensor(self.targets[item], dtype=torch.float),
 
         }
