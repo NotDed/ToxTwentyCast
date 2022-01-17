@@ -55,7 +55,7 @@ def run():
     )
 
     
-    device = torch.device("cuda")
+    device = torch.device('cuda')
     model = ROBERTAClassifier()
     model.to(device)
 
