@@ -53,10 +53,9 @@ def run():
         num_workers = 1
     )
 
-
+    
     device = torch.device("cuda")
     model = ROBERTAClassifier()
-    model = nn.DataParallel(model)
     model.to(device)
 
     param_optimizer = list (model.named_parameters())
