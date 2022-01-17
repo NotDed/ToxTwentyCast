@@ -16,7 +16,7 @@ def train_fn(data_loader, model, optimizer, device, scheduler):
 
         ids = ids.to(device, dtype=torch.long)
         token_type_ids = token_type_ids.to(device, dtype=torch.long)
-        mask = mask.to(device, dtype=torch.float)
+        mask = mask.to(device, dtype=torch.long)
         targets = targets.to(device, dtype=torch.float)
 
         optimizer.zero_grad()
@@ -57,5 +57,5 @@ def eval_fn(data_loader, model, device):
             fin_targets.extend(targets.cpu().detach().numpy().tolist())
             fin_outputs.extend(torch.sigmoid(outputs).cpu().detach().numpy().tolist())
 
-        return fin_outputs, fin_targets
+    return fin_outputs, fin_targets
         

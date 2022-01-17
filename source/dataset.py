@@ -13,14 +13,14 @@ class BERTDataset:
         return len(self.text)
 
     def __getitem__(self,item):
-        text = str(self.text)
+        text = str(self.text[item])
         text = " ".join(text.split())
 
         inputs = self.tokenizer.encode_plus(
             text,
             None,
             add_special_tokens = True,
-            max_length = self.max_len
+            max_length = self.max_len,
         )
         
         ids=inputs["input_ids"]
@@ -37,6 +37,6 @@ class BERTDataset:
             'ids': torch.tensor(ids, dytype=torch.long),
             'mask': torch.tensor(mask, dtype=torch.long),
             'token_type_ids': torch.tensor(token_type_ids, dtype=torch.long),
-            'targets': torch.tensor(self.targets[item], dtype=torch.float)
+            'targets': torch.tensor(self.targets[item], dtype=torch.float),
 
         }
