@@ -20,8 +20,7 @@ class BERTDataset:
             text,
             None,
             add_special_tokens = True,
-            is_split_into_words = False
-            # max_length = self.max_len
+            max_length = self.max_len
         )
         ids=inputs["inputs_ids"]
         mask = inputs["attention_mask"]
