@@ -16,7 +16,7 @@ class BERTDataset:
         text = str(self.text)
         text = " ".join(text.split())
 
-        inputs = self.tokenizer.encode(
+        inputs = self.tokenizer.encode_plus(
             text,
             None,
             add_special_tokens = True,
