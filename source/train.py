@@ -28,6 +28,9 @@ def run():
 
     df_train = df_train.reset_index(drop=True)
     df_valid = df_valid.reset_index(drop=True)
+    
+    print(df_train.labels.values)
+    input()
 
     train_dataset = dataset.BERTDataset(
         text = df_train.text.values,
