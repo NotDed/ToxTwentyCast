@@ -9,5 +9,6 @@ BERT_PATH = "seyonec/BPE_SELFIES_PubChem_shard00_160k"
 TRAINING_FILE = "../input/toxTwentyCast.csv"
 TOKENIZER = AutoTokenizer.from_pretrained(
     BERT_PATH,
-    do_lower_case=True
+    do_lower_case=True,
+    add_prefix_space=True
 )
