@@ -2,6 +2,7 @@ import config
 import dataset
 import engine
 import torch
+from torch import cuda
 import pandas as pd
 import torch.nn as nn
 import numpy as np
@@ -56,7 +57,7 @@ def run():
     
     device = torch.device("cuda")
     model = ROBERTAClassifier()
-    #model.to(device)
+    model.to(device)
 
     param_optimizer = list (model.named_parameters())
     no_decay = ["bias", "LayerNorm.bias", "LayerNorm.weight"]
