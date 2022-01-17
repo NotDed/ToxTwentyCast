@@ -7,7 +7,7 @@ class ROBERTAClassifier(nn.Module):
 
         self.roberta = transformers.RobertaModel.from_pretrained(config.BERT_PATH)
         self.roberta_drop = nn.Dropout(0.2)
-        self.l1 = torch.nn.Linear(768, 1)
+        self.l1 = nn.Linear(768, 1)
         
     def forward(self, ids, attention_mask, token_type_ids):
         #_ = lasthiddenstate,o2pooler output
