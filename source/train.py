@@ -15,7 +15,7 @@ from transformers import get_linear_schedule_with_warmup
 
 
 def run():
-    dfx = pd.read_csv(config.TRAINING_FILE).fillna()
+    dfx = pd.read_csv(config.TRAINING_FILE).fillna('none')
     dfx.labels = dfx['labels']
 
     df_train, df_valid = model_selection.train_test_split(
