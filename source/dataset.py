@@ -28,10 +28,10 @@ class BERTDataset:
         token_type_ids = inputs["token_type_ids"]
 
 
-        padding_length = self.max_len - len(ids)
-        ids = ids + ([0] * padding_length)
-        mask = mask + ([0] * padding_length)
-        token_type_ids = token_type_ids + ([0]* padding_length)
+        #padding_length = self.max_len - len(ids)
+        #ids = ids + ([0] * padding_length)
+        #mask = mask + ([0] * padding_length)
+        #token_type_ids = token_type_ids + ([0]* padding_length)
 
         return{
             'ids': torch.tensor(ids, dytype=torch.long),
