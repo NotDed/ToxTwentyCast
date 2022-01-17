@@ -5,7 +5,7 @@ class ROBERTAClassifier(nn.Module):
     def __init__(self):
         super(ROBERTAClassifier, self).__init__()
 
-        self.roberta = transformers.RobertaModel.from_pretrained(config.BERTH_PATH)
+        self.roberta = transformers.RobertaModel.from_pretrained(config.BERT_PATH)
         self.roberta_drop = nn.Dropout(0.2)
         self.l1 = torch.nn.Linear(768, 1)
         
