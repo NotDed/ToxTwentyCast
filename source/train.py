@@ -55,13 +55,13 @@ def run():
 
     device = torch.device("cuda")
     model = ROBERTAClassifier()
-    # model.to_device()
+    model.to_device()
 
     param_optimizer = list (model.named_parameters())
     no_decay = ["bias", "LayerNorm.bias", "LayerNorm.weight"]
     optimizer_parameters  =[
         {'params': [p for n, p in param_optimizer if not any (nd in n for nd in no_decay)], 'weight_decay':0.001},
-        {'params': [p for n, p in param_optimizer if any (nd in n for nd in no_decay)], 'weight_decay':0.0}
+        {'params': [p for n, p in param_optimizer if any (nd in n for nd in no_decay)], 'weight_decay':0.0},
     ]
 
     num_train_steps  =int(len(df_train) / config.TRAIN_BATCH_SIZE * config.EPOCHS)
@@ -76,7 +76,7 @@ def run():
 
     best_accuracy = 0 
     for epoch in range(config.EPOCHS):
-        engine.train_fn(train_data_loader, model, optimizer, device)
+        engine.train_fn(train_data_loader, model, optimizer, device, scheduler)
         outputs, targets = engine.eval_fn(valid_data_loader, model, device)
         outputs = np.array(outputs) >= 0.5
         accuracy = metrics.accuracy_score(targets, outputs)
