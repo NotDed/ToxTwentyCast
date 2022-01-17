@@ -23,7 +23,7 @@ class BERTDataset:
             is_split_into_words = False
             # max_length = self.max_len
         )
-        ids=inputs[0]
+        ids=inputs["inputs_ids"]
         mask = inputs["attention_mask"]
         token_type_ids = inputs["token_type_ids"]
 
