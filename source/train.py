@@ -56,6 +56,7 @@ def run():
 
     device = torch.device("cuda")
     model = ROBERTAClassifier()
+    model = nn.DataParallel(model)
     model.to(device)
 
     param_optimizer = list (model.named_parameters())
@@ -73,7 +74,7 @@ def run():
         num_training_steps = num_train_steps
     )
 
-    model = nn.DataParallel(model)
+    
 
     best_accuracy = 0 
     for epoch in range(config.EPOCHS):
