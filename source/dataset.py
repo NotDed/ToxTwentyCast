@@ -22,9 +22,6 @@ class BERTDataset:
             add_special_tokens = True,
             max_length = self.max_len
         )
-        print(inputs)
-        print(type(inputs))
-        input()
         
         ids=inputs["inputs_ids"]
         mask = inputs["attention_mask"]
