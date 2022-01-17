@@ -55,7 +55,7 @@ def run():
 
     device = torch.device("cuda")
     model = ROBERTAClassifier()
-    model.to_device()
+    # model.to_device()
 
     param_optimizer = list (model.named_parameters())
     no_decay = ["bias", "LayerNorm.bias", "LayerNorm.weight"]
