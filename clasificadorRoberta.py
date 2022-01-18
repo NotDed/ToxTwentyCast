@@ -40,7 +40,7 @@ class ROBERTAClassifier(torch.nn.Module):
         pooler = hidden_state[:,0]
         pooler = self.l1(pooler)
         pooler = torch.nn.ReLU()(pooler)
-        pooler = self.d2(x)
-        output = self.l2(x)
+        pooler = self.d2(pooler)
+        output = self.l2(pooler)
         #x = self.act3(x)
         return output
