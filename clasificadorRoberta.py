@@ -36,8 +36,8 @@ class ROBERTAClassifier(torch.nn.Module):
 
     def forward(self, input_ids, attention_mask):
         output_1 = self.roberta(input_ids=input_ids, attention_mask=attention_mask)
-        hidden_state = output_1[0]
-        pooler = hidden_state[:,0]
+        hidden_state = output_1
+        pooler = hidden_state
         pooler = self.l1(pooler)
         pooler = torch.nn.ReLU()(pooler)
         pooler = self.d2(pooler)
