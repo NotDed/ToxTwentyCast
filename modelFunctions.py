@@ -212,7 +212,7 @@ def train(model,
 
     # Initialize losses and loss histories
     for param in model.module.roberta.parameters():
-       param.requires_grad = False
+       param.requires_grad = True
 
     train_loss = 0.0
     valid_loss = 0.0
