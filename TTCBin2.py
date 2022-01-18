@@ -115,7 +115,7 @@ def objective(trial):
                                                 num_training_steps=steps_per_epoch*NUM_EPOCHS)
 
 
-      Acc = train(model=model,
+      acc = train(model=model,
             train_iter=train_iter,
             valid_iter=valid_iter,
             optimizer=optimizer,
@@ -125,7 +125,7 @@ def objective(trial):
             PAD_INDEX = PAD_INDEX,
             UNK_INDEX = UNK_INDEX)
       
-      return Acc
+      return acc
       #-------------------------------------Training block----------------------
 
 #-------------------------------------Tokenizer definition----------------------
