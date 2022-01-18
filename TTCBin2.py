@@ -63,7 +63,7 @@ def objective(trial):
             "lr": trial.suggest_loguniform("lr", 1e-6, 2e-4)
       }
 
-      all_acc = []
+      
       #-------------------------------------Training block----------------------
       
       BERT_MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
@@ -106,7 +106,7 @@ def objective(trial):
       model = torch.nn.DataParallel(model)
       model.to(device)
       
-      NUM_EPOCHS = 20
+      NUM_EPOCHS = 15
       steps_per_epoch = len(train_iter)
 
       optimizer = AdamW(model.parameters(), lr=params['lr'])
@@ -115,7 +115,7 @@ def objective(trial):
                                                 num_training_steps=steps_per_epoch*NUM_EPOCHS)
 
 
-      acc = train(model=model,
+      Acc = train(model=model,
             train_iter=train_iter,
             valid_iter=valid_iter,
             optimizer=optimizer,
@@ -125,7 +125,7 @@ def objective(trial):
             PAD_INDEX = PAD_INDEX,
             UNK_INDEX = UNK_INDEX)
       
-      return acc
+      return Acc
       #-------------------------------------Training block----------------------
 
 #-------------------------------------Tokenizer definition----------------------
@@ -233,7 +233,7 @@ def objective(trial):
 
 if __name__ == '__main__':
       study = optuna.create_study(direction="maximize")
-      study.optimize(objective, n_trials = 20)
+      study.optimize(objective, n_trials = 8)
       
       print("best trial: ")
       trial_ = study.best_trial
