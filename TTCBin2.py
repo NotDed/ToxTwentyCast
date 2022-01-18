@@ -59,11 +59,11 @@ wandb.init(project="newTestTrain")
 def objective(trial):
       params = {
             "MAX_SEQ_LEN": trial.suggest_int ("MAX_SEQ_LEN", 128, 256),
-            "BATCH_SIZE": trial.suggest_int ("BATCH_SIZE", 16, 128),
-            "lr": trial.suggest_loguniform("lr", 1e-6, 1e-3)
+            "BATCH_SIZE": trial.suggest_int ("BATCH_SIZE", 64, 128),
+            "lr": trial.suggest_loguniform("lr", 1e-6, 2e-4)
       }
 
-      all_auc = []
+      all_acc = []
       #-------------------------------------Training block----------------------
       
       BERT_MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
@@ -115,7 +115,7 @@ def objective(trial):
                                                 num_training_steps=steps_per_epoch*NUM_EPOCHS)
 
 
-      temp_acc = train(model=model,
+      acc = train(model=model,
             train_iter=train_iter,
             valid_iter=valid_iter,
             optimizer=optimizer,
@@ -125,7 +125,7 @@ def objective(trial):
             PAD_INDEX = PAD_INDEX,
             UNK_INDEX = UNK_INDEX)
       
-      return temp_acc
+      return acc
       #-------------------------------------Training block----------------------
 
 #-------------------------------------Tokenizer definition----------------------

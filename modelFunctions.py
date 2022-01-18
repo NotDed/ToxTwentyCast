@@ -84,7 +84,8 @@ def pretrain(model,
     valid_loss = 0.0
     global_step = 0
     predictions = []
-    truePred = []
+    truePred = []   
+    accuracy= []
 
     # Train loop
     for epoch in range(num_epochs):
@@ -224,8 +225,7 @@ def train(model,
     
     predictions = []
     truePred = []
-
-
+    Acc = []
     model.train()
     
     # Train loop
@@ -288,7 +288,8 @@ def train(model,
                         loss = torch.nn.CrossEntropyLoss()(y_pred, target)
 
                         acc.append(accuracy_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
-                        
+                        y_pred = model(input_ids=source, attention_mask=mask).cuda()
+                        predictions.extend(y_pred.tolist())
                         try:
                             lol=(roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         except ValueError:
@@ -313,6 +314,7 @@ def train(model,
                 train_loss_list.append(train_loss)
                 valid_loss_list.append(valid_loss)
                 global_steps_list.append(global_step)
+                Acc.append(acc)
                 
                 
 
@@ -336,12 +338,12 @@ def train(model,
                 
     
     
-    wandb.log({'AUC-ROC' : wandb.plot.roc_curve(truePred, predictions, labels=[0, 1])})
-    wandb.log({'Precision_recall' : wandb.plot.pr_curve(truePred, predictions, labels=[0, 1])})
+    #wandb.log({'AUC-ROC' : wandb.plot.roc_curve(truePred, predictions, labels=[0, 1])})
+    #wandb.log({'Precision_recall' : wandb.plot.pr_curve(truePred, predictions, labels=[0, 1])})
 
     save_metrics(output_path + 'metric.pkl', train_loss_list, valid_loss_list, global_steps_list)
     print('Training done!')
-    return auc
+    return Acc
 
 #------------------------------------Evaluation---------------------------------
 
