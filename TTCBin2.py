@@ -106,7 +106,7 @@ def objective(trial):
       model = torch.nn.DataParallel(model)
       model.to(device)
       
-      NUM_EPOCHS = 15
+      NUM_EPOCHS = 10
       steps_per_epoch = len(train_iter)
 
       optimizer = AdamW(model.parameters(), lr=params['lr'])
@@ -233,7 +233,7 @@ def objective(trial):
 
 if __name__ == '__main__':
       study = optuna.create_study(direction="maximize")
-      study.optimize(objective, n_trials = 6)
+      study.optimize(objective, n_trials = 2)
       
       print("best trial: ")
       trial_ = study.best_trial

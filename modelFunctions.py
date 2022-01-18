@@ -314,7 +314,7 @@ def train(model,
                 train_loss_list.append(train_loss)
                 valid_loss_list.append(valid_loss)
                 global_steps_list.append(global_step)
-                Acc.append(acc)
+                
                 
                 
 
@@ -343,7 +343,7 @@ def train(model,
 
     save_metrics(output_path + 'metric.pkl', train_loss_list, valid_loss_list, global_steps_list)
     print('Training done!')
-    return Acc
+    return acc
 
 #------------------------------------Evaluation---------------------------------
 
