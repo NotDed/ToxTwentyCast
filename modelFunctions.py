@@ -306,7 +306,7 @@ def train(model,
 
                 # Store train and validation loss history
                 acc =  avg(acc[:-1])
-                auc =  avg(auc[:-1])
+                #auc =  avg(auc[:-1])
                 psc =  avg(psc[:-1])
                 recall =  avg(recall[:-1])
                 train_loss = train_loss / valid_period
