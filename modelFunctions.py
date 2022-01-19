@@ -295,7 +295,7 @@ def train(model,
                         except ValueError:
                             lol=0
 
-                        auc.append(roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
+                        #auc.append(roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         psc.append(precision_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                 
                         recall.append(recall_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
