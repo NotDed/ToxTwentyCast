@@ -40,7 +40,7 @@ import optuna
 
 #data_path = '~/ToxTwentyCast/dataset/toxTwentyCast.csv'
 #data_path = '~/ToxTwentyCast/dataset/toxTwentyCastShort.csv'
-data_path = '~/ToxTwentyCast/dataset/NR_ER.csv'
+data_path = '~/ToxTwentyCast/dataset/NR.csv'
 output_path = 'outputs/'
 
 
