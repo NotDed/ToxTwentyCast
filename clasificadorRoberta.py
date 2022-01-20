@@ -31,11 +31,6 @@ class ROBERTAClassifier(torch.nn.Module):
         self.l1 = torch.nn.Linear(768, 768)
         self.d2 = torch.nn.Dropout(p=0.3, inplace=False)
         self.l2 = torch.nn.Linear(768, 2)
-        #self.ln2 = torch.nn.LayerNorm(64)
-        #self.d3 = torch.nn.Dropout(p=0.2, inplace=False)
-        #self.l3 = torch.nn.Linear(384, 192)
-        #self.d4 = torch.nn.Dropout(p=0.2, inplace=False)
-        #self.l4 = torch.nn.Linear(64, 2)
         self.act = torch.nn.Softmax(dim=1)
     def forward(self, input_ids, attention_mask):
         _, x = self.roberta(input_ids=input_ids, attention_mask=attention_mask)

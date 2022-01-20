@@ -101,6 +101,7 @@ def pretrain(model,
             print('target: ',target)
             print('y_pred: ',y_pred)
             print('source: ',source.shape, ' target: ',target.shape, ' y_pred: ',y_pred.shape)
+            print(mask)
 
             loss = torch.nn.CrossEntropyLoss()(y_pred, target)
 
