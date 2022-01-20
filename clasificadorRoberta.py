@@ -50,5 +50,5 @@ class ROBERTAClassifier(torch.nn.Module):
         #x = torch.nn.ReLU()(x)
         #x = self.d4(x)
         x = self.l4(x)
-        x = torch.nn.Softmax(x)
+        #x = torch.nn.Softmax(x)
         return x
