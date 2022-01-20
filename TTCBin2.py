@@ -60,7 +60,7 @@ wandb.init(project="newTestTrain")
 
 def objective(trial):
       params = {
-            "MAX_SEQ_LEN": trial.suggest_int ("MAX_SEQ_LEN", 128, 256),
+            "MAX_SEQ_LEN": trial.suggest_int ("MAX_SEQ_LEN", 32, 200),
             "BATCH_SIZE": trial.suggest_int ("BATCH_SIZE", 64, 128),
             "lr": trial.suggest_loguniform("lr", 5e-6, 2e-4)
       }
