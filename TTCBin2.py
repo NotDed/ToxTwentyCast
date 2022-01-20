@@ -38,8 +38,9 @@ import optuna
 
 #-------------------------------------Paths-------------------------------------
 
-data_path = '~/ToxTwentyCast/dataset/toxTwentyCast.csv'
+#data_path = '~/ToxTwentyCast/dataset/toxTwentyCast.csv'
 #data_path = '~/ToxTwentyCast/dataset/toxTwentyCastShort.csv'
+data_path = '~/ToxTwentyCast/dataset/NR_ER.csv'
 output_path = 'outputs/'
 
 
@@ -233,7 +234,7 @@ def objective(trial):
 
 if __name__ == '__main__':
       study = optuna.create_study(direction="maximize")
-      study.optimize(objective, n_trials = 6)
+      study.optimize(objective, n_trials = 4)
       
       print("best trial: ")
       trial_ = study.best_trial
