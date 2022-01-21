@@ -37,7 +37,7 @@ class ROBERTAClassifier(torch.nn.Module):
         _, x = self.roberta(input_ids=input_ids, attention_mask=attention_mask)
         x = self.d1(x)
         x = self.l1(x)
-        x = torch.nn.functional.tanh()(x)
+        x = torch.nn.functional.tanh(x)
         x = self.d2(x)
         x = self.l2(x)
         x = self.act(x)
