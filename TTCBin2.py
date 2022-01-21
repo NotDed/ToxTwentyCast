@@ -16,7 +16,7 @@ import torch
 import torchtext
 from torchtext import data
 from torchtext.legacy.data import Field, TabularDataset, BucketIterator, Iterator
-from transformers import RobertaTokenizer, RobertaModel, AdamW, get_linear_schedule_with_warmup, AutoTokenizer, AutoModelForMaskedLM
+from transformers import RobertaTokenizer, RobertaModel, AutoModelForMaskedLM, AdamW, get_linear_schedule_with_warmup, AutoTokenizer
 
 import wandb
 
@@ -62,7 +62,7 @@ def objective(trial):
       params = {
             "MAX_SEQ_LEN": trial.suggest_int ("MAX_SEQ_LEN", 32, 200),
             "BATCH_SIZE": trial.suggest_int ("BATCH_SIZE", 64, 128),
-            "lr": trial.suggest_loguniform("lr", 5e-6, 2e-4)
+            "lr": trial.suggest_loguniform("lr", 5e-6, 1e-5)
       }
 
       
