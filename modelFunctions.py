@@ -58,146 +58,6 @@ def load_metrics(path):
 
 #------------------------------------Pretrain-----------------------------------
 
-
-def pretrain(model,
-             optimizer,
-             train_iter,
-             valid_iter,
-             PAD_INDEX,
-             UNK_INDEX,
-             scheduler = None,
-             valid_period = 1600,
-             num_epochs = 1):
-
-    # Pretrain linear layers, do not train bert
-    #for param in model.roberta.parameters():
-        #param.requires_grad = False
-    for param in model.parameters():
-        param.requires_grad = True
-        
-
-    
-    model.train()
-
-    # Initialize losses and loss histories
-    train_loss = 0.0
-    valid_loss = 0.0
-    global_step = 0
-    predictions = []
-    truePred = []   
-    accuracy= []
-
-    # Train loop
-    for epoch in range(num_epochs):
-        for (source, target), _ in train_iter:
-            #
-            mask = (source != PAD_INDEX).type(torch.uint8)
-
-            y_pred = model(input_ids=source,
-                           attention_mask=mask).cuda()
-            
-            target = target.cuda()
-
-            print('target: ',target)
-            print('y_pred: ',y_pred)
-            print('source: ',source.shape, ' target: ',target.shape, ' y_pred: ',y_pred.shape)
-            print(mask)
-
-            loss = torch.nn.CrossEntropyLoss()(y_pred, target)
-
-            loss.backward()
-            #loss.device
-            #Optimizer and scheduler step
-            optimizer.step()
-            scheduler.step()
-
-            optimizer.zero_grad()
-
-            # Update train loss and global step
-            train_loss += loss.item()
-            global_step += 1
-
-            # Validation loop. Save progress and evaluate model performance.
-            print(global_step, len(train_iter), valid_period)
-
-            if global_step % valid_period == 0:
-                model.eval()
-                print(len(valid_iter))
-                
-
-                acc = []
-                auc = []
-                psc = []
-                recall = []
-                with torch.no_grad():
-                    for (source, target), _ in valid_iter:
-                        
-                        #target = target.to(device)
-
-                        
-                        mask = (source != PAD_INDEX).type(torch.uint8)
-
-                        y_pred = model(input_ids=source, attention_mask=mask).cuda()
-                        predictions.extend(y_pred.tolist())
-                        
-                        target = target.cuda()
-                        truePred.extend(target.tolist())
-                        
-
-                        loss = torch.nn.CrossEntropyLoss()(y_pred, target)
-                        #pdb.set_trace()
-                        acc.append(accuracy_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
-                        
-                        #auc.append(roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
-                        
-                        #try:
-                        #   lol=(roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
-                        #except ValueError:
-                        #    lol=0
-
-                        auc.append(roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
-                        psc.append(precision_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
-                        
-                        recall.append(recall_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
-                        #wandb.log({'AUC-ROC' : wandb.plot.roc_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
-                        #wandb.log({'Precision_recall' : wandb.plot.pr_curve(target.cpu(),y_pred.cpu(), labels=[0, 1])})
-                        
-
-                        valid_loss += loss.item()
-
-                
-                
-                acc =  avg(acc[:-1])
-                auc = avg(auc[:-1])
-                psc = avg(psc[:-1])
-                recall = avg(recall[:-1])
-                
-                # Store train and validation loss history
-                train_loss = train_loss / valid_period
-                valid_loss = valid_loss / len(valid_iter)
-
-                model.train()
-                # print summary
-                
-                wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss,
-                'valid_loss': valid_loss, 'auc': auc, 'recall':recall, 'psc':psc})
-                print('Epoch [{}/{}], global step [{}/{}], PT Loss: {:.4f}, Val Loss: {:.4f}'
-                      .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
-                              train_loss, valid_loss))
-
-                train_loss = 0.0
-                valid_loss = 0.0
-
-    # Set bert parameters back to trainable
-    
-    wandb.log({'PRE-AUC-ROC' : wandb.plot.roc_curve(truePred, predictions, labels=[0, 1])})
-    wandb.log({'PRE-Precision_recall' : wandb.plot.pr_curve(truePred, predictions, labels=[0, 1])})
-    
-    #for param in model.module.roberta.parameters():
-    #    param.requires_grad = True
-
-    #print('Pre-training done!')
-
 #------------------------------------Train--------------------------------------
 
 def train(model,
@@ -297,7 +157,7 @@ def train(model,
                         except ValueError:
                             lol=0
 
-                        #auc.append(roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
+                        auc.append(roc_auc_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                         psc.append(precision_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
                 
                         recall.append(recall_score(target.cpu(), torch.argmax(y_pred.cpu(), axis=-1).tolist()))
@@ -308,7 +168,7 @@ def train(model,
 
                 # Store train and validation loss history
                 acc =  avg(acc[:-1])
-                #auc =  avg(auc[:-1])
+                auc =  avg(auc[:-1])
                 psc =  avg(psc[:-1])
                 recall =  avg(recall[:-1])
                 train_loss = train_loss / valid_period
@@ -324,9 +184,9 @@ def train(model,
                 
                 wandb.log({'epoch': epoch, 'global_step': global_step, 'acc': acc, 'train_loss': train_loss,
                            'valid_loss': valid_loss, 'auc': auc, 'recall':recall, 'psc':psc})
-                print('Epoch [{}/{}], global step [{}/{}], Train Loss: {:.4f}, Valid Loss: {:.4f}'
+                print('Epoch [{}/{}], global step [{}/{}], Train Loss: {:.4f}, Valid Loss: {:.4f}, Accuracy : {:.4f}'
                       .format(epoch+1, num_epochs, global_step, num_epochs*len(train_iter),
-                              train_loss, valid_loss))
+                              train_loss, valid_loss, acc))
 
                 # checkpoint
                 if best_valid_loss > valid_loss:

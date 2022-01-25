@@ -38,9 +38,9 @@ import optuna
 
 #-------------------------------------Paths-------------------------------------
 
-#data_path = '~/ToxTwentyCast/dataset/toxTwentyCast.csv'
+data_path = '~/ToxTwentyCast/dataset/toxTwentyCast.csv'
 #data_path = '~/ToxTwentyCast/dataset/toxTwentyCastShort.csv'
-data_path = '~/ToxTwentyCast/dataset/NR.csv'
+#data_path = '~/ToxTwentyCast/dataset/NR.csv'
 output_path = 'outputs/'
 
 
@@ -60,9 +60,9 @@ wandb.init(project="newTestTrain")
 
 def objective(trial):
       params = {
-            "MAX_SEQ_LEN": trial.suggest_int ("MAX_SEQ_LEN", 32, 200),
-            "BATCH_SIZE": trial.suggest_int ("BATCH_SIZE", 64, 128),
-            "lr": trial.suggest_loguniform("lr", 1e-6, 3e-5)
+            "MAX_SEQ_LEN": trial.suggest_int ("MAX_SEQ_LEN", 100, 227),
+            "BATCH_SIZE": trial.suggest_int ("BATCH_SIZE", 70, 256),
+            "lr": trial.suggest_loguniform("lr", 2e-6, 3e-5)
       }
 
       
@@ -108,7 +108,7 @@ def objective(trial):
       model = torch.nn.DataParallel(model)
       model.to(device)
       
-      NUM_EPOCHS =40 
+      NUM_EPOCHS =20 
       steps_per_epoch = len(train_iter)
 
       optimizer = AdamW(model.parameters(), lr=params['lr'])
@@ -235,7 +235,7 @@ def objective(trial):
 
 if __name__ == '__main__':
       study = optuna.create_study(direction="maximize")
-      study.optimize(objective, n_trials = 4)
+      study.optimize(objective, n_trials = 5)
       
       print("best trial: ")
       trial_ = study.best_trial

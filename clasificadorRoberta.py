@@ -27,9 +27,9 @@ class ROBERTAClassifier(torch.nn.Module):
     def __init__(self, BERT_MODEL_NAME):
         super(ROBERTAClassifier, self).__init__()
         self.roberta = RobertaModel.from_pretrained(BERT_MODEL_NAME, return_dict=False)
-        self.d1 = torch.nn.Dropout(p = 0.3, inplace=False)
+        self.d1 = torch.nn.Dropout(p = 0.25, inplace=False)
         self.l1 = torch.nn.Linear(768, 768)
-        self.d2 = torch.nn.Dropout(p=0.3, inplace=False)
+        self.d2 = torch.nn.Dropout(p=0.25, inplace=False)
         self.l2 = torch.nn.Linear(768, 2)
         self.act = torch.nn.Softmax(dim=1)
 
@@ -37,7 +37,7 @@ class ROBERTAClassifier(torch.nn.Module):
         _, x = self.roberta(input_ids=input_ids, attention_mask=attention_mask)
         x = self.d1(x)
         x = self.l1(x)
-        x = torch.nn.ReLU()(x)
+        x = torch.nn.Tanh()(x)
         x = self.d2(x)
         x = self.l2(x)
         x = self.act(x)
