@@ -16,7 +16,7 @@ device = 'cuda' if cuda.is_available() else 'cpu'
 from modelClasses import SentimentData, RobertaClass
 from modelFunctions import train, valid
 
-new_df = pd.read_csv('/content/toxTwentyCast.csv')
+new_df = pd.read_csv('/dataset/toxTwentyCast.csv')
 
 # Defining some key variables that will be used later on in the training
 MAX_LEN = 256
@@ -38,7 +38,6 @@ training_set = SentimentData(train_data, tokenizer, MAX_LEN)
 testing_set = SentimentData(test_data, tokenizer, MAX_LEN)
 
 #trining params
-
 train_params = {'batch_size': TRAIN_BATCH_SIZE,
                 'shuffle': True,
                 'num_workers': 0
@@ -79,4 +78,3 @@ torch.save(model_to_save, output_model_file)
 tokenizer.save_vocabulary(output_vocab_file)
 
 print('All files saved')
-print('This tutorial is completed')
