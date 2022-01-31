@@ -17,6 +17,9 @@ def train(epoch, model, training_loader, loss_function, optimizer):
     n_correct = 0
     nb_tr_steps = 0
     nb_tr_examples = 0
+    
+    auc = []
+    
     model.train()
     for _,data in tqdm(enumerate(training_loader, 0)):
         ids = data['ids'].to(device, dtype = torch.long)
