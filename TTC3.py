@@ -60,7 +60,7 @@ model.to(device)
 loss_function = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(params =  model.parameters(), lr=LEARNING_RATE)
 
-EPOCHS = 3
+EPOCHS = 15
 for epoch in range(EPOCHS):
     model = train(epoch, model, training_loader, loss_function, optimizer)
     
