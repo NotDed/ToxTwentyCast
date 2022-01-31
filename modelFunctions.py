@@ -33,7 +33,7 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         outputs = model(ids, mask, token_type_ids)
         
         loss = loss_function(outputs, targets)
-        auc.append(roc_auc_score(targets, outputs).tolist())
+        auc.append(roc_auc_score(targets.cpu, outputs.cpu).tolist())
         
         tr_loss += loss.item()
         big_val, big_idx = torch.max(outputs.data, dim=1)
