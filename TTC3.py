@@ -66,11 +66,12 @@ EPOCHS = 15
 
 #-------------------------------------Wandb login-------------------------------
 wandb.login()
-wandb.init(project="newTestTrain")
+wandb.init(project="FineT-Roberta")
 
 
 for epoch in range(EPOCHS):
     model, _ = train(epoch, model, training_loader, loss_function, optimizer)
+    wandb.log({'EPOCH': epoch})
     
 #Validating the Model
 acc = valid(model, testing_loader)
