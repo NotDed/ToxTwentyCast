@@ -1,4 +1,5 @@
 import torch
+import wandb
 from tqdm import tqdm
 
 from torch import cuda
@@ -35,8 +36,9 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         if _%5000==0:
             loss_step = tr_loss/nb_tr_steps
             accu_step = (n_correct*100)/nb_tr_examples 
-            print(f"Training Loss per 5000 steps: {loss_step}")
-            print(f"Training Accuracy per 5000 steps: {accu_step}")
+            wandb.log({'training_loss': loss_step, 'training_accuracy': accu_step})
+            # print(f"Training Loss per 5000 steps: {loss_step}")
+            # print(f"Training Accuracy per 5000 steps: {accu_step}")
 
         optimizer.zero_grad()
         loss.backward()
