@@ -23,9 +23,13 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         mask = data['mask'].to(device, dtype = torch.long)
         token_type_ids = data['token_type_ids'].to(device, dtype = torch.long)
         targets = data['targets'].to(device, dtype = torch.long)
+        
 
         outputs = model(ids, mask, token_type_ids)
+        
         loss = loss_function(outputs, targets)
+        auc.append(roc_auc_score(targets, outputs, axis=-1).tolist())
+        
         tr_loss += loss.item()
         big_val, big_idx = torch.max(outputs.data, dim=1)
         n_correct += calcuate_accuracy(big_idx, targets)
