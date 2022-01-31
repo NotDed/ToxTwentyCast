@@ -34,7 +34,7 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         
         loss = loss_function(outputs, targets)
     
-        #auc.append(roc_auc_score(targets.cpu, outputs.cpu, axis=-1).tolist())
+        auc.append(roc_auc_score(targets.cpu(), outputs.cpu(), axis=-1).tolist())
         
         tr_loss += loss.item()
         big_val, big_idx = torch.max(outputs.data, dim=1)
