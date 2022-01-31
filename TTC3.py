@@ -8,6 +8,8 @@ from transformers import AutoTokenizer
 import logging
 logging.basicConfig(level=logging.ERROR)
 
+import wandb
+
 # Setting up the device for GPU usage
 
 from torch import cuda
@@ -61,8 +63,14 @@ loss_function = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(params =  model.parameters(), lr=LEARNING_RATE)
 
 EPOCHS = 15
+
+#-------------------------------------Wandb login-------------------------------
+wandb.login()
+wandb.init(project="newTestTrain")
+
+
 for epoch in range(EPOCHS):
-    model = train(epoch, model, training_loader, loss_function, optimizer)
+    model, _ = train(epoch, model, training_loader, loss_function, optimizer)
     
 #Validating the Model
 acc = valid(model, testing_loader)
