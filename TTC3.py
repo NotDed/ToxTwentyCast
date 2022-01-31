@@ -18,14 +18,14 @@ device = 'cuda' if cuda.is_available() else 'cpu'
 from modelClasses import SentimentData, RobertaClass
 from modelFunctions import train, valid
 
-new_df = pd.read_csv('/dataset/toxTwentyCast.csv')
+new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
 
 # Defining some key variables that will be used later on in the training
 MAX_LEN = 256
 TRAIN_BATCH_SIZE = 8
 VALID_BATCH_SIZE = 4
 # EPOCHS = 1
-LEARNING_RATE = 1e-05
+LEARNING_RATE = 3e-05
 MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_166_5k'
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, truncation=True, do_lower_case=True)
         
