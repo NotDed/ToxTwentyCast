@@ -1,5 +1,7 @@
 import torch
 import wandb
+
+from sklearn.metrics import roc_auc_score
 from tqdm import tqdm
 
 from torch import cuda
@@ -52,11 +54,12 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         # # When using GPU
         optimizer.step()
 
-    print(f'The Total Accuracy for Epoch {epoch}: {(n_correct*100)/nb_tr_examples}')
+    # print(f'The Total Accuracy for Epoch {epoch}: {(n_correct*100)/nb_tr_examples}')
     epoch_loss = tr_loss/nb_tr_steps
     epoch_accu = (n_correct*100)/nb_tr_examples
     print(f"Training Loss Epoch: {epoch_loss}")
     print(f"Training Accuracy Epoch: {epoch_accu}")
+    wandb.log({'AUC': auc})
 
     return model, epoch_accu
 
