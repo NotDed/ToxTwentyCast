@@ -123,9 +123,11 @@ def valid(model, testing_loader, loss_function):
               psc_arr_valid.append(recall_score(targets.cpu().detach().numpy(), torch.argmax(outputs.cpu(), axis=-1)).tolist())
             except ValueError:
               pass
-
-            y_pred.extend(torch.argmax(outputs.cpu(), axis=-1).tolist())
+            
+            y_pred.extend(outputs.tolist())
             y_true.extend(targets.tolist())
+            #y_pred.extend(torch.argmax(outputs.cpu(), axis=-1).tolist())
+            #y_true.extend(targets.tolist())
 
             nb_tr_steps += 1
             nb_tr_examples+=targets.size(0)
@@ -146,7 +148,7 @@ def valid(model, testing_loader, loss_function):
     wandb.log({'Valid-LOSS': loss_step})
     wandb.log({'Valid-AVG-AUC': avg(roc_auc_arr_valid)})
     wandb.log({'Valid-AVG-PSC': avg(psc_arr_valid)})
-    wandb.log({'AUC-ROC': wandb.plot.roc_curve(y_true, y_pred)})
-    wandb.log({'Precision_recall': wandb.plot.pr_curve(y_true, y_pred)})
+    wandb.log({'AUC-ROC': wandb.plot.roc_curve(y_true, y_pred, labels=[0, 1])})
+    wandb.log({'Precision_recall': wandb.plot.pr_curve(y_true, y_pred, labels=[0, 1])})
     
     return epoch_accu
