@@ -65,8 +65,8 @@ optimizer = torch.optim.Adam(params =  model.parameters(), lr=LEARNING_RATE)
 EPOCHS = 15
 
 #-------------------------------------Wandb login-------------------------------
-wandb.login()
-wandb.init(project="FineT-Roberta")
+# wandb.login()
+# wandb.init(project="FineT-Roberta")
 
 
 for epoch in range(EPOCHS):
