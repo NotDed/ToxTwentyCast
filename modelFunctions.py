@@ -111,6 +111,13 @@ def valid(model, testing_loader, loss_function):
             outputs = model(ids, mask, token_type_ids).squeeze()
             loss = loss_function(outputs, targets)
             
+            tr_loss += loss.item()
+            big_val, big_idx = torch.max(outputs.data, dim=1)
+            n_correct += calcuate_accuracy(big_idx, targets)
+
+            y_pred.extend(outputs.tolist())
+            y_true.extend(targets.tolist())
+            
             try:
               roc_auc_arr_valid.append(roc_auc_score(targets.cpu().detach().numpy(), torch.argmax(outputs.cpu(), axis=-1)).tolist())
             except ValueError:
@@ -121,13 +128,7 @@ def valid(model, testing_loader, loss_function):
             except ValueError:
               pass
 
-            tr_loss += loss.item()
-            big_val, big_idx = torch.max(outputs.data, dim=1)
-            n_correct += calcuate_accuracy(big_idx, targets)
-
-            y_pred.extend(torch.argmax(outputs.cpu(), axis=-1).tolist())
-            y_true.extend(targets.tolist())
-
+            
             nb_tr_steps += 1
             nb_tr_examples+=targets.size(0)
             
