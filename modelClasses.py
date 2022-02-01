@@ -28,7 +28,7 @@ class SentimentData(Dataset):
             None,
             add_special_tokens=True,
             max_length=self.max_len,
-            padding=True,
+            padding= self.max_len,
             return_token_type_ids=True
         )
         ids = inputs['input_ids']
