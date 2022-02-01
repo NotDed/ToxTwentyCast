@@ -124,7 +124,7 @@ def valid(model, testing_loader, loss_function):
             except ValueError:
               pass
 
-            y_pred.extend(outputs.tolist())
+            y_pred.extend(torch.argmax(outputs.cpu(), axis=-1).tolist())
             y_true.extend(targets.tolist())
 
             nb_tr_steps += 1
