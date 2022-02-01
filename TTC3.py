@@ -62,7 +62,7 @@ model.to(device)
 loss_function = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(params =  model.parameters(), lr=LEARNING_RATE)
 
-EPOCHS = 1
+EPOCHS = 10
 
 #-------------------------------------Wandb login-------------------------------
 wandb.login()

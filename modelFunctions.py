@@ -148,7 +148,7 @@ def valid(model, testing_loader, loss_function):
     wandb.log({'Valid-LOSS': loss_step})
     wandb.log({'Valid-AVG-AUC': avg(roc_auc_arr_valid)})
     wandb.log({'Valid-AVG-PSC': avg(psc_arr_valid)})
-    wandb.log({'AUC-ROC': wandb.plot.roc_curve(y_true, y_pred, labels=[0, 1])})
-    wandb.log({'Precision_recall': wandb.plot.pr_curve(y_true, y_pred, labels=[0, 1])})
+    #wandb.log({'AUC-ROC': wandb.plot.roc_curve(y_true, y_pred, labels=[0, 1])})
+    #wandb.log({'Precision_recall': wandb.plot.pr_curve(y_true, y_pred, labels=[0, 1])})
     
     return epoch_accu
