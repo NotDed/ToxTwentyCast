@@ -62,7 +62,7 @@ model.to(device)
 loss_function = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(params =  model.parameters(), lr=LEARNING_RATE)
 
-EPOCHS = 15
+EPOCHS = 10
 
 #-------------------------------------Wandb login-------------------------------
 wandb.login()
@@ -74,7 +74,7 @@ for epoch in range(EPOCHS):
     wandb.log({'EPOCH': epoch})
     
 #Validating the Model
-acc = valid(model, testing_loader)
+acc = valid(model, testing_loader, loss_function)
 print("Accuracy on test data = %0.2f%%" % acc)
 
 #Saving the Trained Model Artifacts for inference
