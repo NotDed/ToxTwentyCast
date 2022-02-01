@@ -112,12 +112,12 @@ def valid(model, testing_loader, loss_function):
             loss = loss_function(outputs, targets)
             
             try:
-              roc_auc_arr.append(roc_auc_score(targets.cpu().detach().numpy(), torch.argmax(outputs.cpu(), axis=-1)).tolist())
+              roc_auc_arr_valid.append(roc_auc_score(targets.cpu().detach().numpy(), torch.argmax(outputs.cpu(), axis=-1)).tolist())
             except ValueError:
               pass
 
             try: 
-              psc_arr.append(recall_score(targets.cpu().detach().numpy(), torch.argmax(outputs.cpu(), axis=-1)).tolist())
+              psc_arr_valid.append(recall_score(targets.cpu().detach().numpy(), torch.argmax(outputs.cpu(), axis=-1)).tolist())
             except ValueError:
               pass
 
