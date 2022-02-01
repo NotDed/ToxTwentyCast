@@ -110,7 +110,7 @@ def valid(model, testing_loader, loss_function):
             targets = data['targets'].to(device, dtype = torch.long)
             outputs = model(ids, mask, token_type_ids).squeeze()
             loss = loss_function(outputs, targets)
-            
+            print(outputs)
             tr_loss += loss.item()
             big_val, big_idx = torch.max(outputs.data, dim=1)
             n_correct += calcuate_accuracy(big_idx, targets)
