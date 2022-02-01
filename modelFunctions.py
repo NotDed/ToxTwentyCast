@@ -96,13 +96,15 @@ def valid(model, testing_loader, loss_function):
     
     n_correct = 0; n_wrong = 0; total = 0; tr_loss=0; nb_tr_steps=0; nb_tr_examples=0
     
-    y_pred = []
-    y_true = []
+        y_pred = []
+        y_true = []
     
     roc_auc_arr_valid = []
     psc_arr_valid = []
     model.eval()
     with torch.no_grad():
+        y_pred = []
+        y_true = []
         for step, data in tqdm(enumerate(testing_loader, 0)):
             ids = data['ids'].to(device, dtype = torch.long)
             mask = data['mask'].to(device, dtype = torch.long)
@@ -149,7 +151,7 @@ def valid(model, testing_loader, loss_function):
     wandb.log({'Valid-LOSS': loss_step})
     wandb.log({'Valid-AVG-AUC': avg(roc_auc_arr_valid)})
     wandb.log({'Valid-AVG-PSC': avg(psc_arr_valid)})
-    wandb.log({'AUC-ROC' : wandb.plot.roc_curve(y_true, y_pred, labels=[0, 1])})
-    wandb.log({'Precision_recall' : wandb.plot.pr_curve(y_true, y_pred, labels=[0, 1])})
+        wandb.log({'AUC-ROC' : wandb.plot.roc_curve(y_true, y_pred, labels=[0, 1])})
+        wandb.log({'Precision_recall' : wandb.plot.pr_curve(y_true, y_pred, labels=[0, 1])})
     
     return epoch_accu
