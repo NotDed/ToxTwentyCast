@@ -27,7 +27,7 @@ VALID_BATCH_SIZE = 4
 # EPOCHS = 1
 LEARNING_RATE = 3e-05
 MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_166_5k'
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, truncation=True, do_lower_case=True)
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, truncation=True, padding=True)
         
 #data split
         
