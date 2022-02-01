@@ -1,4 +1,3 @@
-
 import torch
 import transformers
 from torch.utils.data import Dataset
@@ -29,7 +28,7 @@ class SentimentData(Dataset):
             None,
             add_special_tokens=True,
             max_length=self.max_len,
-            pad_to_max_length=True,
+            padding=True,
             return_token_type_ids=True
         )
         ids = inputs['input_ids']
@@ -53,6 +52,7 @@ class RobertaClass(torch.nn.Module):
         self.pre_classifier = torch.nn.Linear(768, 768)
         self.dropout = torch.nn.Dropout(0.3)
         self.classifier = torch.nn.Linear(768, 2)
+        self.act = torch.nn.Softmax(dim=1)
 
     def forward(self, input_ids, attention_mask, token_type_ids):
         output_1 = self.l1(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids)
@@ -62,4 +62,5 @@ class RobertaClass(torch.nn.Module):
         pooler = torch.nn.ReLU()(pooler)
         pooler = self.dropout(pooler)
         output = self.classifier(pooler)
+        output = self.act(output)
         return output
