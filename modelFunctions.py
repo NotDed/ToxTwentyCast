@@ -93,7 +93,7 @@ def train(epoch, model, training_loader, loss_function, optimizer):
 
 
 def valid(model, testing_loader, loss_function):
-    model.eval()
+    
     n_correct = 0; n_wrong = 0; total = 0; tr_loss=0; nb_tr_steps=0; nb_tr_examples=0
     
     y_pred = []
@@ -101,7 +101,7 @@ def valid(model, testing_loader, loss_function):
     
     roc_auc_arr_valid = []
     psc_arr_valid = []
-
+    model.eval()
     with torch.no_grad():
         for step, data in tqdm(enumerate(testing_loader, 0)):
             ids = data['ids'].to(device, dtype = torch.long)
@@ -114,10 +114,7 @@ def valid(model, testing_loader, loss_function):
             tr_loss += loss.item()
             big_val, big_idx = torch.max(outputs.data, dim=1)
             n_correct += calcuate_accuracy(big_idx, targets)
-
-            y_pred.extend(outputs.tolist())
-            y_true.extend(targets.tolist())
-            
+        
             try:
               roc_auc_arr_valid.append(roc_auc_score(targets.cpu().detach().numpy(), torch.argmax(outputs.cpu(), axis=-1)).tolist())
             except ValueError:
@@ -129,6 +126,10 @@ def valid(model, testing_loader, loss_function):
               pass
 
             
+
+            y_pred.extend(torch.argmax(outputs.cpu(), axis=-1).tolist())
+            y_true.extend(targets.tolist())
+
             nb_tr_steps += 1
             nb_tr_examples+=targets.size(0)
             
