@@ -66,7 +66,7 @@ EPOCHS = 20
 
 #-------------------------------------Wandb login-------------------------------
 wandb.login()
-wandb.init(project="FineT-Roberta")
+run = wandb.init(project="FineT-Roberta")
 
 
 for epoch in range(EPOCHS):
@@ -76,6 +76,8 @@ for epoch in range(EPOCHS):
 #Validating the Model
 acc = valid(model, testing_loader, loss_function)
 print("Accuracy on test data = %0.2f%%" % acc)
+
+run.finish()
 
 #Saving the Trained Model Artifacts for inference
 
