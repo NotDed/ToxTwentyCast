@@ -18,7 +18,7 @@ device = 'cuda' if cuda.is_available() else 'cpu'
 from modelClasses import SentimentData, RobertaClass
 from modelFunctions import train, valid
 
-new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv').head(500)
+new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
 
 # Defining some key variables that will be used later on in the training
 MAX_LEN = 256
@@ -62,7 +62,7 @@ model.to(device)
 loss_function = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(params =  model.parameters(), lr=LEARNING_RATE)
 
-EPOCHS = 5
+EPOCHS = 20
 
 #-------------------------------------Wandb login-------------------------------
 wandb.login()
