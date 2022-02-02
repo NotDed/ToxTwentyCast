@@ -136,8 +136,8 @@ def valid(model, testing_loader, loss_function):
                 loss_step = tr_loss/nb_tr_steps
                 accu_step = (n_correct*100)/nb_tr_examples
                 
-                wandb.log({'ACC': accu_step})
-                wandb.log({'LOSS': loss_step})
+                wandb.log({'ACC-T': accu_step})
+                wandb.log({'LOSS-T': loss_step})
                 
     
     y_pred = torch.argmax(torch.FloatTensor(y_pred), axis=-1).tolist()
