@@ -142,7 +142,7 @@ def valid(model, testing_loader, loss_function):
     print(y_true)
     print(y_pred)
                 
-    print(classification_report(y_true, y_pred, labels=[0,1], digits=4))
+    print(classification_report(y_true, torch.argmax(y_pred, axis=-1), labels=[0,1], digits=4))
 
     epoch_loss = tr_loss/nb_tr_steps
     epoch_accu = (n_correct*100)/nb_tr_examples
