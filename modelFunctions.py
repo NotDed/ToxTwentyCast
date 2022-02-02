@@ -139,7 +139,9 @@ def valid(model, testing_loader, loss_function):
                 wandb.log({'ACC': accu_step})
                 wandb.log({'LOSS': loss_step})
                 
-                       
+    
+    y_pred = torch.argmax(torch.FloatTensor(y_pred), axis=-1).tolist()
+    
     print(classification_report(y_true, y_pred, labels=[0,1], digits=4))
 
     epoch_loss = tr_loss/nb_tr_steps
