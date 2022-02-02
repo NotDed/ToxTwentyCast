@@ -18,8 +18,8 @@ device = 'cuda' if cuda.is_available() else 'cpu'
 from modelClasses import SentimentData, RobertaClass
 from modelFunctions import train, valid
 
-new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
-
+#new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
+new_df = pd.read_csv('~/ToxTwentyCast/dataset/NR.csv')
 # Defining some key variables that will be used later on in the training
 MAX_LEN = 256
 TRAIN_BATCH_SIZE =64 
