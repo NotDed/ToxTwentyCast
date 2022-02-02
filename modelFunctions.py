@@ -141,7 +141,9 @@ def valid(model, testing_loader, loss_function):
                 
     print(y_true)
     
-    y_pred = torch.argmax(torch.IntTensor(y_pred), axis=-1).tolist()
+    print(y_pred)
+    
+    y_pred = torch.argmax(torch.FloatTensor(y_pred), axis=-1).tolist()
     
     print(y_pred)
     
