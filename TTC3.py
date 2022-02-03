@@ -25,7 +25,7 @@ MAX_LEN = 256
 TRAIN_BATCH_SIZE =64 
 VALID_BATCH_SIZE = 32
 # EPOCHS = 1
-LEARNING_RATE = 3e-05
+LEARNING_RATE = 3e-06
 MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_166_5k'
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, padding=True)
         
@@ -62,7 +62,7 @@ model.to(device)
 loss_function = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(params =  model.parameters(), lr=LEARNING_RATE)
 
-EPOCHS = 40
+EPOCHS = 25
 
 #-------------------------------------Wandb login-------------------------------
 wandb.login()
