@@ -19,13 +19,15 @@ from modelClasses import SentimentData, RobertaClass
 from modelFunctions import train, valid
 
 #new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
-new_df = pd.read_csv('~/ToxTwentyCast/dataset/NR.csv')
+#new_df = pd.read_csv('~/ToxTwentyCast/dataset/NR.csv')
+new_df = pd.read_csv('~/ToxTwentyCast/dataset/Tox21B.csv')
+
 # Defining some key variables that will be used later on in the training
 MAX_LEN = 256
 TRAIN_BATCH_SIZE =64 
 VALID_BATCH_SIZE = 32
 # EPOCHS = 1
-LEARNING_RATE = 3e-06
+LEARNING_RATE = 3e-05
 MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_166_5k'
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, padding=True)
         
@@ -62,7 +64,7 @@ model.to(device)
 loss_function = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(params =  model.parameters(), lr=LEARNING_RATE)
 
-EPOCHS = 25
+EPOCHS = 20
 
 #-------------------------------------Wandb login-------------------------------
 wandb.login()
