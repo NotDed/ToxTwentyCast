@@ -20,7 +20,7 @@ from modelFunctions import train, valid
 
 #new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
 #new_df = pd.read_csv('~/ToxTwentyCast/dataset/NR.csv')
-new_df = pd.read_csv('~/ToxTwentyCast/dataset/Tox21B.csv')
+new_df = pd.read_csv('~/ToxTwentyCast/dataset/Tox21.csv')
 
 # Defining some key variables that will be used later on in the training
 MAX_LEN = 256
