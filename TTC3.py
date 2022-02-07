@@ -28,7 +28,7 @@ TRAIN_BATCH_SIZE =64
 VALID_BATCH_SIZE = 32
 # EPOCHS = 1
 LEARNING_RATE = 3e-05
-MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_166_5k'
+MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, padding=True)
         
 #data split
@@ -61,8 +61,8 @@ model.to(device)
 #Fine Tuning the Model
 
 # Creating the loss function and optimizer
-loss_function = torch.nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(params =  model.parameters(), lr=LEARNING_RATE)
+loss_function = torch.nn.BCELoss()
+optimizer = torch.optim.AdamW(params =  model.parameters(), lr=LEARNING_RATE)
 
 EPOCHS = 30
 

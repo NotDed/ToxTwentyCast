@@ -53,7 +53,7 @@ class RobertaClass(torch.nn.Module):
         super(RobertaClass, self).__init__()
         self.l1 = RobertaModel.from_pretrained("seyonec/BPE_SELFIES_PubChem_shard00_166_5k")
         self.pre_classifier = torch.nn.Linear(768, 768)
-        self.dropout = torch.nn.Dropout(0.3)
+        self.dropout = torch.nn.Dropout(0.2)
         self.classifier = torch.nn.Linear(768, 2)
         self.act = torch.nn.Softmax(dim=1)
 
