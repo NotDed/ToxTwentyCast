@@ -67,6 +67,12 @@ optimizer = torch.optim.AdamW(params =  model.parameters(), lr=LEARNING_RATE)
 EPOCHS = 30
 
 #-------------------------------------Wandb login-------------------------------
+output_model_name = input('''
+                          Ingrese un nombre sin espacios o simbolos para el modelo de salida:
+                          ej:
+                          este_es_el_primer_modelo.bin
+                          ''')
+
 wandb.login()
 run = wandb.init(project="FineT-Roberta")
 
@@ -83,7 +89,7 @@ run.finish()
 
 #Saving the Trained Model Artifacts for inference
 
-output_model_file = 'pytorch_roberta_sentiment.bin'
+output_model_file = output_model_name#'pytorch_roberta_sentiment.bin'
 output_vocab_file = './'
 
 model_to_save = model
