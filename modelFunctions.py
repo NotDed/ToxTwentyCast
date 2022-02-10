@@ -37,7 +37,7 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         targets = data['targets'].to(device, dtype = torch.long)
 
         outputs = model(ids, mask, token_type_ids)
-        loss = loss_function(outputs, targets)
+        loss = loss_function(outputs, torch.argmax(targets))
         #print(outputs)
         predictions.extend(outputs.tolist())
         truePred.extend(targets.tolist())
@@ -108,7 +108,7 @@ def valid(model, testing_loader, loss_function):
             token_type_ids = data['token_type_ids'].to(device, dtype=torch.long)
             targets = data['targets'].to(device, dtype = torch.long)
             outputs = model(ids, mask, token_type_ids).squeeze()
-            loss = loss_function(outputs, targets)
+            loss = loss_function(outputs, torch.argmax(targets))
             #print(outputs)
             tr_loss += loss.item()
             big_val, big_idx = torch.max(outputs.data, dim=1)
