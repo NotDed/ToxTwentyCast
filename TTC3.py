@@ -152,7 +152,7 @@ def objective(trial):
     #Validating the Model
     acc = valid(model, testing_loader, loss_function)
     
-    run.finish()
+   # run.finish()
     
     return acc
         
