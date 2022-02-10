@@ -24,49 +24,49 @@ new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
 #new_df = pd.read_csv('~/ToxTwentyCast/dataset/Tox21.csv')
 
 # Defining some key variables that will be used later on in the training
-def mainTrain():
-    MAX_LEN = 256
-    TRAIN_BATCH_SIZE =64 
-    VALID_BATCH_SIZE = 32
-    # EPOCHS = 1
-    LEARNING_RATE = 3e-05
-    MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, padding=True)
+# def mainTrain():
+#     MAX_LEN = 256
+#     TRAIN_BATCH_SIZE =64 
+#     VALID_BATCH_SIZE = 32
+#     # EPOCHS = 1
+#     LEARNING_RATE = 3e-05
+#     MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
+#     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, padding=True)
             
-    #data split
+#     #data split
             
-    train_size = 0.8
-    train_data=new_df.sample(frac=train_size,random_state=200)
-    test_data=new_df.drop(train_data.index).reset_index(drop=True)
-    train_data = train_data.reset_index(drop=True)
+#     train_size = 0.8
+#     train_data=new_df.sample(frac=train_size,random_state=200)
+#     test_data=new_df.drop(train_data.index).reset_index(drop=True)
+#     train_data = train_data.reset_index(drop=True)
 
-    training_set = SentimentData(train_data, tokenizer, MAX_LEN)
-    testing_set = SentimentData(test_data, tokenizer, MAX_LEN)
+#     training_set = SentimentData(train_data, tokenizer, MAX_LEN)
+#     testing_set = SentimentData(test_data, tokenizer, MAX_LEN)
 
-    #trining params
-    train_params = {'batch_size': TRAIN_BATCH_SIZE,
-                    'shuffle': True,
-                    'num_workers': 0
-                    }
+#     #trining params
+#     train_params = {'batch_size': TRAIN_BATCH_SIZE,
+#                     'shuffle': True,
+#                     'num_workers': 0
+#                     }
 
-    test_params = {'batch_size': VALID_BATCH_SIZE,
-                    'shuffle': True,
-                    'num_workers': 0
-                    }
+#     test_params = {'batch_size': VALID_BATCH_SIZE,
+#                     'shuffle': True,
+#                     'num_workers': 0
+#                     }
 
-    training_loader = DataLoader(training_set, **train_params)
-    testing_loader = DataLoader(testing_set, **test_params)
+#     training_loader = DataLoader(training_set, **train_params)
+#     testing_loader = DataLoader(testing_set, **test_params)
 
-    model = RobertaClass()
-    model.to(device)
+#     model = RobertaClass()
+#     model.to(device)
 
-    #Fine Tuning the Model
+#     #Fine Tuning the Model
 
-    # Creating the loss function and optimizer
-    loss_function = torch.nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(params =  model.parameters(), lr=LEARNING_RATE)
+#     # Creating the loss function and optimizer
+#     loss_function = torch.nn.CrossEntropyLoss()
+#     optimizer = torch.optim.Adam(params =  model.parameters(), lr=LEARNING_RATE)
 
-    EPOCHS = 30
+#     EPOCHS = 30}"
 
     #-------------------------------------Wandb login-------------------------------
     output_model_name = input('''
