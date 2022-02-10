@@ -69,37 +69,37 @@ new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
 #     EPOCHS = 30}"
 
     #-------------------------------------Wandb login-------------------------------
-    output_model_name = input('''
-                            Ingrese el nombre de el modelo de salida sin usar espacios
-                            ni simbolos:
-                            EJ:
-                            nombre_modelo_salida_v1.bin
-                            ''')
+    # output_model_name = input('''
+    #                         Ingrese el nombre de el modelo de salida sin usar espacios
+    #                         ni simbolos:
+    #                         EJ:
+    #                         nombre_modelo_salida_v1.bin
+    #                         ''')
 
-    wandb.login()
-    run = wandb.init(project="FineT-Roberta")
+    # wandb.login()
+    # run = wandb.init(project="FineT-Roberta")
 
 
-    for epoch in range(EPOCHS):
-        model, _ = train(epoch, model, training_loader, loss_function, optimizer)
-        wandb.log({'EPOCH': epoch})
+    # for epoch in range(EPOCHS):
+    #     model, _ = train(epoch, model, training_loader, loss_function, optimizer)
+    #     wandb.log({'EPOCH': epoch})
         
-    #Validating the Model
-    acc = valid(model, testing_loader, loss_function)
-    print("Accuracy on test data = %0.2f%%" % acc)
+    # #Validating the Model
+    # acc = valid(model, testing_loader, loss_function)
+    # print("Accuracy on test data = %0.2f%%" % acc)
 
-    run.finish()
+    # run.finish()
 
-    #Saving the Trained Model Artifacts for inference
+    # #Saving the Trained Model Artifacts for inference
 
-    output_model_file = output_model_name#'pytorch_roberta_sentiment.bin'
-    output_vocab_file = './'
+    # output_model_file = output_model_name#'pytorch_roberta_sentiment.bin'
+    # output_vocab_file = './'
 
-    model_to_save = model
-    torch.save(model_to_save, output_model_file)
-    tokenizer.save_vocabulary(output_vocab_file)
+    # model_to_save = model
+    # torch.save(model_to_save, output_model_file)
+    # tokenizer.save_vocabulary(output_vocab_file)
 
-    print('All files saved')
+    # print('All files saved')
 
 
 def objective(trial):
