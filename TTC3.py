@@ -104,8 +104,8 @@ def mainTrain():
 
 def objective(trial):
     params = {
-        "MAX_SEQ_LEN": trial.suggest_int ("MAX_SEQ_LEN", 100, 227),
-        "BATCH_SIZE": trial.suggest_int ("BATCH_SIZE", 64, 256),
+        "MAX_SEQ_LEN": trial.suggest_int ("MAX_SEQ_LEN", 180, 250),
+        "BATCH_SIZE": trial.suggest_int ("BATCH_SIZE", 64, 128),
         "lr": trial.suggest_loguniform("lr", 2e-6, 3e-5)
     }
     
@@ -139,7 +139,8 @@ def objective(trial):
     loss_function = torch.nn.BCELoss()
     optimizer = torch.optim.AdamW(params =  model.parameters(), lr=params['lr'])
 
-    EPOCHS = 30
+    EPOCHS = 12
+
     
     wandb.login()
     run = wandb.init(project="FineT-Roberta")
@@ -159,7 +160,7 @@ def objective(trial):
 if __name__ == '__main__': 
     # mainTrain()
     study = optuna.create_study(direction="maximize")
-    study.optimize(objective, n_trials = 20)
+    study.optimize(objective, n_trials = 6)
 
     print("best trial: ")
     trial_ = study.best_trial
