@@ -64,7 +64,7 @@ def mainTrain():
 
     # Creating the loss function and optimizer
     loss_function = torch.nn.CrossEntropyLoss()
-    optimizer = torch.optim.AdamW(params =  model.parameters(), lr=LEARNING_RATE)
+    optimizer = torch.optim.Adam(params =  model.parameters(), lr=LEARNING_RATE)
 
     EPOCHS = 30
 
