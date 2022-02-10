@@ -137,7 +137,7 @@ def objective(trial):
     model = RobertaClass()
     model.to(device)
     loss_function = torch.nn.CrossEntropyLoss()
-    optimizer = torch.optim.AdamW(params =  model.parameters(), lr=params['lr'])
+    optimizer = torch.optim.Adam(params =  model.parameters(), lr=params['lr'])
 
     EPOCHS = 12
 
