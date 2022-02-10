@@ -14,7 +14,7 @@ import wandb
 # Setting up the device for GPU usage
 
 from torch import cuda
-device = 'cuda' if cuda.is_available() else 'cpu'
+
 
 from modelClasses import SentimentData, RobertaClass
 from modelFunctions import train, valid
@@ -134,7 +134,9 @@ def objective(trial):
     training_loader = DataLoader(training_set, **train_params)
     testing_loader = DataLoader(testing_set, **test_params)
     
+    device = torch.device('cuda')
     model = RobertaClass()
+    model = torch.nn.DataParallel(model)
     model.to(device)
     loss_function = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(params =  model.parameters(), lr=params['lr'])
