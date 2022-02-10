@@ -134,7 +134,7 @@ def objective(trial):
     training_loader = DataLoader(training_set, **train_params)
     testing_loader = DataLoader(testing_set, **test_params)
     
-    model = RobertaClass()
+    model = RobertaClass(MODEL_NAME)
     model.to(device)
     loss_function = torch.nn.BCELoss()
     optimizer = torch.optim.AdamW(params =  model.parameters(), lr=params['lr'])
