@@ -126,7 +126,7 @@ def objective(trial):
                     'num_workers': 0
                     }
 
-    test_params = {'batch_size': params['BATCH_SIZE']/2,
+    test_params = {'batch_size': params['BATCH_SIZE'],
                     'shuffle': True,
                     'num_workers': 0
                     }
