@@ -167,13 +167,13 @@ def predict(model, tokenizer, text):
           return_token_type_ids=True
       )
   
-  ids = torch.tensor(inputs['input_ids'], dtype=torch.long).unsqueeze(0).cuda()
-  mask = torch.tensor(inputs['attention_mask'], dtype=torch.long).unsqueeze(0).cuda()
-  token_type_ids = torch.tensor(inputs["token_type_ids"], dtype=torch.long).cuda()
+  ids = torch.tensor(inputs['input_ids'], dtype=torch.long).unsqueeze(0)
+  mask = torch.tensor(inputs['attention_mask'], dtype=torch.long).unsqueeze(0)
+  token_type_ids = torch.tensor(inputs["token_type_ids"], dtype=torch.long)
   
-  outputs = model(ids, mask, token_type_ids).squeeze().cuda()
+  outputs = model(ids, mask, token_type_ids).squeeze().cpu()
   
-  outputs = torch.argmax(torch.FloatTensor(outputs).cuda(), axis=-1).tolist()
+  outputs = torch.argmax(torch.FloatTensor(outputs), axis=-1).tolist()
   
   return outputs
     
