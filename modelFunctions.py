@@ -163,7 +163,9 @@ def predict(model, tokenizer, text):
   
   inputs = tokenizer.encode_plus(
           text,
+          None,
           add_special_tokens=True,
+          max_length=256,
           return_token_type_ids=True
       )
   
@@ -171,7 +173,7 @@ def predict(model, tokenizer, text):
   mask = torch.tensor(inputs['attention_mask'], dtype=torch.long)
   token_type_ids = torch.tensor(inputs["token_type_ids"], dtype=torch.long)
   
-  outputs = model(ids, mask, token_type_ids)
+  outputs = model(ids, mask, token_type_ids).squeeze()
   
   outputs = torch.argmax(torch.FloatTensor(outputs), axis=-1).tolist()
   
