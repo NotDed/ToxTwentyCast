@@ -24,82 +24,84 @@ new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
 #new_df = pd.read_csv('~/ToxTwentyCast/dataset/Tox21.csv')
 
 # Defining some key variables that will be used later on in the training
-# def mainTrain():
-#     MAX_LEN = 256
-#     TRAIN_BATCH_SIZE =64 
-#     VALID_BATCH_SIZE = 32
-#     # EPOCHS = 1
-#     LEARNING_RATE = 3e-05
-#     MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
-#     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, padding=True)
+def mainTrain():
+    MAX_LEN = 256
+    TRAIN_BATCH_SIZE =64 
+    VALID_BATCH_SIZE = 32
+    # EPOCHS = 1
+    LEARNING_RATE = 3e-05
+    MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, padding=True)
             
-#     #data split
+    #data split
             
-#     train_size = 0.8
-#     train_data=new_df.sample(frac=train_size,random_state=200)
-#     test_data=new_df.drop(train_data.index).reset_index(drop=True)
-#     train_data = train_data.reset_index(drop=True)
+    train_size = 0.8
+    train_data=new_df.sample(frac=train_size,random_state=200)
+    test_data=new_df.drop(train_data.index).reset_index(drop=True)
+    train_data = train_data.reset_index(drop=True)
 
-#     training_set = SentimentData(train_data, tokenizer, MAX_LEN)
-#     testing_set = SentimentData(test_data, tokenizer, MAX_LEN)
+    training_set = SentimentData(train_data, tokenizer, MAX_LEN)
+    testing_set = SentimentData(test_data, tokenizer, MAX_LEN)
 
-#     #trining params
-#     train_params = {'batch_size': TRAIN_BATCH_SIZE,
-#                     'shuffle': True,
-#                     'num_workers': 0
-#                     }
+    #trining params
+    train_params = {'batch_size': TRAIN_BATCH_SIZE,
+                    'shuffle': True,
+                    'num_workers': 0
+                    }
 
-#     test_params = {'batch_size': VALID_BATCH_SIZE,
-#                     'shuffle': True,
-#                     'num_workers': 0
-#                     }
+    test_params = {'batch_size': VALID_BATCH_SIZE,
+                    'shuffle': True,
+                    'num_workers': 0
+                    }
 
-#     training_loader = DataLoader(training_set, **train_params)
-#     testing_loader = DataLoader(testing_set, **test_params)
+    training_loader = DataLoader(training_set, **train_params)
+    testing_loader = DataLoader(testing_set, **test_params)
 
-#     model = RobertaClass()
-#     model.to(device)
+    device = torch.device('cuda')
+    model = RobertaClass()
+    model = torch.nn.DataParallel(model)
+    model.to(device)
 
-#     #Fine Tuning the Model
+    #Fine Tuning the Model
 
-#     # Creating the loss function and optimizer
-#     loss_function = torch.nn.CrossEntropyLoss()
-#     optimizer = torch.optim.Adam(params =  model.parameters(), lr=LEARNING_RATE)
+    # Creating the loss function and optimizer
+    loss_function = torch.nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(params =  model.parameters(), lr=LEARNING_RATE)
 
-#     EPOCHS = 30}"
+    EPOCHS = 30}"
 
     #-------------------------------------Wandb login-------------------------------
-    # output_model_name = input('''
-    #                         Ingrese el nombre de el modelo de salida sin usar espacios
-    #                         ni simbolos:
-    #                         EJ:
-    #                         nombre_modelo_salida_v1.bin
-    #                         ''')
+    output_model_name = input('''
+                            Ingrese el nombre de el modelo de salida sin usar espacios
+                            ni simbolos:
+                            EJ:
+                            nombre_modelo_salida_v1.bin
+                            ''')
 
-    # wandb.login()
-    # run = wandb.init(project="FineT-Roberta")
+    wandb.login()
+    run = wandb.init(project="FineT-Roberta")
 
 
-    # for epoch in range(EPOCHS):
-    #     model, _ = train(epoch, model, training_loader, loss_function, optimizer)
-    #     wandb.log({'EPOCH': epoch})
+    for epoch in range(EPOCHS):
+        model, _ = train(epoch, model, training_loader, loss_function, optimizer)
+        wandb.log({'EPOCH': epoch})
         
-    # #Validating the Model
-    # acc = valid(model, testing_loader, loss_function)
-    # print("Accuracy on test data = %0.2f%%" % acc)
+    #Validating the Model
+    acc = valid(model, testing_loader, loss_function)
+    print("Accuracy on test data = %0.2f%%" % acc)
 
-    # run.finish()
+    run.finish()
 
-    # #Saving the Trained Model Artifacts for inference
+    #Saving the Trained Model Artifacts for inference
 
-    # output_model_file = output_model_name#'pytorch_roberta_sentiment.bin'
-    # output_vocab_file = './'
+    output_model_file = output_model_name#'pytorch_roberta_sentiment.bin'
+    output_vocab_file = './'
 
-    # model_to_save = model
-    # torch.save(model_to_save, output_model_file)
-    # tokenizer.save_vocabulary(output_vocab_file)
+    model_to_save = model
+    torch.save(model_to_save, output_model_file)
+    tokenizer.save_vocabulary(output_vocab_file)
 
-    # print('All files saved')
+    print('All files saved')
 
 
 def objective(trial):
