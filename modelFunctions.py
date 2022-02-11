@@ -167,9 +167,9 @@ def predict(model, tokenizer, text):
           return_token_type_ids=True
       )
   
-  ids = inputs['input_ids']
-  mask = inputs['attention_mask']
-  token_type_ids = inputs["token_type_ids"]
+  ids = torch.tensor(inputs['input_ids'], dtype=torch.long)
+  mask = torch.tensor(inputs['attention_mask'], dtype=torch.long)
+  token_type_ids = torch.tensor(inputs["token_type_ids"], dtype=torch.long)
   
   outputs = model(ids, mask, token_type_ids).squeeze()
   

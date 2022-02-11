@@ -6,15 +6,13 @@ import json
 from transformers import AutoTokenizer
 from modelFunctions import predict, multiPredict
 
-seyonecModel = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
-tokenizer = AutoTokenizer.from_pretrained(seyonecModel, padding=True)
-
-PATH = input('ingrese la direccion del modelo: ')
-model = torch.load(PATH)
-
 # Optional model configuration
+'''
+modos
+i: individual para pruebas con una sola cadena selfie
 
-#i: individual f: archivo
+f: archivo para pruebas con archivos que contengan multiples cadenas selfies
+'''
 modo = sys.argv[1]
 
 '''
@@ -30,6 +28,11 @@ save se refiere a la direccion de archivo .bin de el modelo
 que se va a usar para la prediccion
 '''
 save = sys.argv[3]
+
+seyonecModel = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
+tokenizer = AutoTokenizer.from_pretrained(seyonecModel, padding=True)
+
+model = torch.load(save)
 
 if modo == 'F':
     resultados = multiPredict(model, tokenizer, mol)
