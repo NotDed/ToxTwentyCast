@@ -163,9 +163,7 @@ def predict(model, tokenizer, text):
   
   inputs = tokenizer.encode_plus(
           text,
-          None,
           add_special_tokens=True,
-          max_length=256,
           return_token_type_ids=True
       )
   
