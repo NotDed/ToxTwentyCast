@@ -32,7 +32,7 @@ save = sys.argv[3]
 seyonecModel = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
 tokenizer = AutoTokenizer.from_pretrained(seyonecModel, padding=True)
 
-model = torch.load(save)
+model = torch.load(save).cuda()
 
 if modo == 'F':
     resultados = multiPredict(model, tokenizer, mol)
