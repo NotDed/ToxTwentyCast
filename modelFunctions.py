@@ -1,5 +1,6 @@
 import torch
 import wandb
+import json
 
 from sklearn.metrics import roc_auc_score, classification_report, recall_score
 from tqdm import tqdm
@@ -139,7 +140,6 @@ def valid(model, testing_loader, loss_function):
                 wandb.log({'ACC-T': accu_step})
                 wandb.log({'LOSS-T': loss_step})
                 
-    
     y_pred = torch.argmax(torch.FloatTensor(y_pred), axis=-1).tolist()
     
     print(classification_report(y_true, y_pred, labels=[0,1], digits=4))
@@ -155,3 +155,35 @@ def valid(model, testing_loader, loss_function):
     #wandb.log({'Precision_recall': wandb.plot.pr_curve(y_true, y_pred, labels=[0, 1])})
     
     return epoch_accu
+  
+  
+def predict(model, tokenizer, text):
+  
+  model.eval()
+  
+  inputs = tokenizer.encode_plus(
+          text,
+          add_special_tokens=True,
+          return_token_type_ids=True
+      )
+  
+  ids = inputs['input_ids']
+  mask = inputs['attention_mask']
+  token_type_ids = inputs["token_type_ids"]
+  
+  outputs = model(ids, mask, token_type_ids).squeeze()
+  
+  outputs = torch.argmax(torch.FloatTensor(outputs), axis=-1).tolist()
+  
+  return outputs
+    
+    
+def multiPredict(model, tokenizer, path_text):
+    predictions = {}
+    with open(path_text) as json_file:
+        dataT = json.load(json_file)
+        
+    for T in dataT:
+        predictions[T] = predict(model, tokenizer, T)
+    
+    return T
