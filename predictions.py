@@ -42,5 +42,5 @@ else:
     resultados[mol] = predict(model, tokenizer, mol)
     
 print('los resultado de esta prediccion son los siguientes: ')
-print(resultados)
+print(json.dumps(resultados, indent = 1))
     
