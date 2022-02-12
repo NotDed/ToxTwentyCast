@@ -185,7 +185,6 @@ def multiPredict(model, tokenizer, path_text):
     
     print(dataT)
     for T in dataT:
-        print(T)
         predictions[T] = predict(model, tokenizer, T)
     
     return predictions
