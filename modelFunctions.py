@@ -182,7 +182,8 @@ def multiPredict(model, tokenizer, path_text):
     predictions = {}
     with open(path_text) as json_file:
         dataT = json.load(json_file)
-        
+    
+    print(dataT)
     for T in dataT:
         print(T)
         predictions[T] = predict(model, tokenizer, T)
