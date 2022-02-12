@@ -34,7 +34,7 @@ tokenizer = AutoTokenizer.from_pretrained(seyonecModel, padding=True)
 
 model = torch.load(save).cuda()
 
-if modo == 'F':
+if modo == 'f':
     resultados = multiPredict(model, tokenizer, mol)
 else:
     resultados = predict(model, tokenizer, mol)
