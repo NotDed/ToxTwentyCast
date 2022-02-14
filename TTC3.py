@@ -143,7 +143,7 @@ def objective(trial):
     loss_function = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(params =  model.parameters(), lr=params['lr'])
 
-    EPOCHS = 15
+    EPOCHS = 30
 
     
     wandb.login()
