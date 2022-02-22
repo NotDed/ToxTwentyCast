@@ -107,7 +107,7 @@ def mainTrain():
 def objective(trial):
     params = {
         "MAX_SEQ_LEN": trial.suggest_int ("MAX_SEQ_LEN", 180, 250),
-        "BATCH_SIZE": trial.suggest_int ("BATCH_SIZE", 64, 128),
+        "BATCH_SIZE": trial.suggest_int ("BATCH_SIZE", 64, 84),
         "lr": trial.suggest_loguniform("lr", 2e-6, 3e-5)
     }
     
