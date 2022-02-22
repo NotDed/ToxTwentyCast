@@ -68,7 +68,7 @@ def mainTrain():
     loss_function = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(params =  model.parameters(), lr=LEARNING_RATE)
 
-    EPOCHS = 30
+    EPOCHS = 15
 
     #-------------------------------------Wandb login-------------------------------
     output_model_name = input('''
@@ -143,7 +143,7 @@ def objective(trial):
     loss_function = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(params =  model.parameters(), lr=params['lr'])
 
-    EPOCHS = 30
+    EPOCHS = 15
 
     
     wandb.login()
@@ -162,12 +162,12 @@ def objective(trial):
         
         
 if __name__ == '__main__': 
-    mainTrain()
-    # study = optuna.create_study(direction="maximize")
-    # study.optimize(objective, n_trials = 6)
+    #mainTrain()
+     study = optuna.create_study(direction="maximize")
+     study.optimize(objective, n_trials = 4)
 
-    # print("best trial: ")
-    # trial_ = study.best_trial
+     print("best trial: ")
+     trial_ = study.best_trial
 
-    # print(trial_.values)
-    # print(trial_.params)
+     print(trial_.values)
+     print(trial_.params)

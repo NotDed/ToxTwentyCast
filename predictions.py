@@ -6,6 +6,8 @@ import json
 from transformers import AutoTokenizer
 from modelFunctions import predict, multiPredict
 
+
+
 # Optional model configuration
 '''
 modos
