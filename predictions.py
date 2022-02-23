@@ -52,12 +52,9 @@ df = {
     "result" : list(resultados.values())
 }
 
+df = pd.DataFrame({'Mol': resultados.keys(), 'Result': resultados.keys()})
+
 print(df)
-
-
-
-resultados = pd.DataFrame([resultados])
-print(resultados)
 
 # positivos = len(resultados[ resultados['result'] == 1 ])
 # negativos = len(resultados[ resultados['result'] == 0 ])
