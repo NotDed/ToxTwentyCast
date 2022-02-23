@@ -52,7 +52,7 @@ df = {
     "result" : list(resultados.values())
 }
 
-df = pd.DataFrame({'Mol': resultados.keys(), 'Result': resultados.keys()})
+df = pd.DataFrame({'Mol': resultados.keys(), 'Result': resultados.values()})
 
 print(df)
 
