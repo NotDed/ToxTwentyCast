@@ -58,6 +58,6 @@ positivos = len(df[ df['Result'] == 1 ])
 negativos = len(df[ df['Result'] == 0 ])
 
 print("Resultados positivos: {}".format(positivos))
-print("{}%".format(positivos*100/len(df)))
+print("{}%".format(round(positivos*100/len(df), 2)))
 print("Resultados negativos: {}".format(negativos))
-print("{}%".format(negativos*100/len(df)))
+print("{}%".format(round(negativos*100/len(df), 2)))
