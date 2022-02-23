@@ -52,6 +52,8 @@ df = {
     "result" : list(resultados.values())
 }
 
+print(df)
+
 
 
 resultados = pd.DataFrame([resultados])
