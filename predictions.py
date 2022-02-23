@@ -51,7 +51,7 @@ df = {
     "result" : resultados.values()
 }
 
-resultados = pd.DataFrame(resultados)
+resultados = pd.DataFrame(resultados, index=[0])
 
 positivos = len(resultados[ resultados['result'] == 1 ])
 negativos = len(resultados[ resultados['result'] == 0 ])
