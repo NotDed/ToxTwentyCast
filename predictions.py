@@ -48,11 +48,11 @@ print('los resultado de esta prediccion son los siguientes: ')
 print(json.dumps(resultados, indent = 2))
 
 df = {
-    "mol" : resultados.keys(),
-    "result" : resultados.values()
+    "mol" : list(resultados.keys()),
+    "result" : list(resultados.values())
 }
 
-resultados = pd.DataFrame.from_dict(resultados, index = 0)
+resultados = pd.DataFrame.from_dict(resultados)
 
 positivos = len(resultados[ resultados['result'] == 1 ])
 negativos = len(resultados[ resultados['result'] == 0 ])
