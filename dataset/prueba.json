@@ -9,7 +9,7 @@
     "[C][=C][C][=C][C][=Branch1][Ring2][=C][Ring1][=Branch1][C][=C][C][=C][C][=C][Branch1][=N][C][=C][C][=C][C][=C][C][=C][Ring1][=Branch1][Ring1][#Branch2][C][=C][Ring1][=C][Ring2][Ring1][Ring1]",
     "[C][=Branch1][=Branch1][=C][Branch1][C][Cl][Cl][Cl]",
     "[Cr+6]",
-    "[C][C@@H1][C@H1][C@@H1][Branch1][O][C@H1][Ring1][Branch1][C@H1][C@@H1][Ring1][=Branch1][O][Ring1][Ring1][C@][Branch2][Ring1][#Branch1][C][=Branch2][Ring1][C][=C][Branch1][=C][C@@][Ring1][#Branch2][Branch1][Branch2][C][Ring1][Branch1][Branch1][C][Cl][Cl][Cl][Cl][Cl][Cl]"
+    "[C][C@@H1][C@H1][C@@H1][Branch1][O][C@H1][Ring1][Branch1][C@H1][C@@H1][Ring1][=Branch1][O][Ring1][Ring1][C@][Branch2][Ring1][#Branch1][C][=Branch2][Ring1][C][=C][Branch1][=C][C@@][Ring1][#Branch2][Branch1][Branch2][C][Ring1][Branch1][Branch1][C][Cl][Cl][Cl][Cl][Cl][Cl]",
     "[C][C][Branch2][Ring1][#C][C][Branch1][Ring2][O][Ring1][Ring1][C][O][C][=C][C][=C][C][=Branch1][C][=O][O][C][Ring1][#Branch1][=C][C][=C][Ring1][O][C][=C][O][Ring1][Branch1][C]",
     "[C][=Branch1][=Branch1][=C][Branch1][C][Cl][Cl][Branch1][#Branch2][C][=Branch1][=Branch1][=C][Branch1][C][Cl][Cl][Cl][Cl]",
     "[C][=C][C][=Branch2][Ring1][=Branch2][=C][C][=C][Ring1][=Branch1][C][=Branch1][=Branch1][=C][Branch1][C][Cl][Cl][C][=C][C][=C][Branch1][Branch1][C][=C][Ring1][=Branch1][Cl][Cl]",
@@ -111,5 +111,5 @@
     "[C][=C][Branch1][P][C][=Branch1][=N][=C][Branch1][=Branch2][C][=Branch1][Branch1][=C][Ring1][=Branch1][Cl][Cl][Cl][Cl][O][C][=C][Ring1][=N][C][=Branch1][=N][=C][Branch1][=Branch2][C][=Branch1][Branch1][=C][Ring1][=Branch1][Cl][Cl][Cl][Cl]",
     "[C][C][=C][C][=C][C][=C][C][=C][Ring1][=Branch1][C][=C][Ring1][#Branch2]",
     "[C][=C][C][=C][C][=Branch2][Ring1][#Branch2][=C][Branch2][Ring1][Branch1][C][=Branch1][P][=C][Ring1][=Branch1][O][C][Ring1][=Branch2][=C][C][=Branch1][Branch1][=C][Ring1][=N][Cl][Cl][Cl][Cl][Cl]",
-    
+
 ]
