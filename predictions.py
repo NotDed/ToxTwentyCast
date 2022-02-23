@@ -54,10 +54,10 @@ df = {
 
 df = pd.DataFrame({'Mol': resultados.keys(), 'Result': resultados.values()})
 
-positivos = len(resultados[ resultados['Result'] == 1 ])
-negativos = len(resultados[ resultados['Result'] == 0 ])
+positivos = len(df[ df['Result'] == 1 ])
+negativos = len(df[ df['Result'] == 0 ])
 
 print("Resultados positivos: {}".format(positivos))
-print("{}%".format(positivos*100/len(resultados)))
+print("{}%".format(positivos*100/len(df)))
 print("Resultados negativos: {}".format(negativos))
-print("{}%".format(negativos*100/len(resultados)))
+print("{}%".format(negativos*100/len(df)))
