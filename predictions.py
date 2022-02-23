@@ -1,3 +1,4 @@
+from operator import index
 import pandas as pd
 import sys
 import torch
@@ -51,7 +52,7 @@ df = {
     "result" : resultados.values()
 }
 
-resultados = pd.DataFrame.from_dict(resultados)
+resultados = pd.DataFrame.from_dict(resultados, index = 0)
 
 positivos = len(resultados[ resultados['result'] == 1 ])
 negativos = len(resultados[ resultados['result'] == 0 ])
