@@ -52,7 +52,7 @@ df = {
     "result" : list(resultados.values())
 }
 
-resultados = pd.DataFrame.from_dict(resultados)
+resultados = pd.DataFrame([resultados])
 
 positivos = len(resultados[ resultados['result'] == 1 ])
 negativos = len(resultados[ resultados['result'] == 0 ])
