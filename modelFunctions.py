@@ -29,6 +29,11 @@ def train(epoch, model, training_loader, loss_function, optimizer):
 
     roc_auc_arr = []
     psc_arr = []
+    
+    pr_arr = {
+      'truePred':[],
+      'predictions':[]
+    }
 
     model.train()
     for step, data in tqdm(enumerate(training_loader, 0)):
@@ -85,7 +90,11 @@ def train(epoch, model, training_loader, loss_function, optimizer):
     wandb.log({'LOSS': loss_step})
 
     wandb.log({'AUC-ROC' : wandb.plot.roc_curve(truePred, predictions, labels=[0, 1])})
-    wandb.log({'Precision_recall' : wandb.plot.pr_curve(truePred, predictions, labels=[0, 1])})
+    
+    pr_arr['truePred'].extend(truePred)
+    pr_arr['predictions'].extend(predictions)
+    
+    wandb.log({'Precision_recall' : wandb.plot.pr_curve(pr_arr['truePred'], pr_arr['predictions'], labels=[0, 1])})
 
     wandb.log({'AVG-AUC': avg(roc_auc_arr)})
     wandb.log({'AVG-PSC': avg(psc_arr)})
