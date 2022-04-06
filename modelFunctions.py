@@ -89,12 +89,12 @@ def train(epoch, model, training_loader, loss_function, optimizer):
     wandb.log({'ACC': accu_step})
     wandb.log({'LOSS': loss_step})
 
-    wandb.log({'AUC-ROC' : wandb.plot.roc_curve(truePred, predictions, labels=[0, 1])})
+    # wandb.log({'AUC-ROC' : wandb.plot.roc_curve(truePred, predictions, labels=[0, 1])})
     
-    pr_arr['truePred'].extend(truePred)
-    pr_arr['predictions'].extend(predictions)
+    # pr_arr['truePred'].extend(truePred)
+    # pr_arr['predictions'].extend(predictions)
     
-    wandb.log({'Precision_recall' : wandb.plot.pr_curve(pr_arr['truePred'], pr_arr['predictions'], labels=[0, 1])})
+    # wandb.log({'Precision_recall' : wandb.plot.pr_curve(pr_arr['truePred'], pr_arr['predictions'], labels=[0, 1])})
 
     wandb.log({'AVG-AUC': avg(roc_auc_arr)})
     wandb.log({'AVG-PSC': avg(psc_arr)})
@@ -158,8 +158,8 @@ def valid(model, testing_loader, loss_function):
           
     wandb.log({'valid-ACC': accu_step})
     wandb.log({'Valid-LOSS': loss_step})
-    wandb.log({'Valid-AVG-AUC': avg(roc_auc_arr_valid)})
-    wandb.log({'Valid-AVG-PSC': avg(psc_arr_valid)})
+    # wandb.log({'Valid-AVG-AUC': avg(roc_auc_arr_valid)})
+    # wandb.log({'Valid-AVG-PSC': avg(psc_arr_valid)})
     #wandb.log({'AUC-ROC': wandb.plot.roc_curve(y_true, y_pred, labels=[0, 1])})
     #wandb.log({'Precision_recall': wandb.plot.pr_curve(y_true, y_pred, labels=[0, 1])})
     
