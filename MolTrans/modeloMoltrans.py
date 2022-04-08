@@ -22,7 +22,7 @@ from stream import BIN_Data_Encoder
 use_cuda = torch.cuda.is_available()
 device = torch.device("cuda:0" if use_cuda else "cpu")
 
-PATH = '~/ToxTwentyCast/MolTrans/model.pth'
+PATH = 'model.pth'
 
 def test(data_generator, model):
     y_pred = []
