@@ -1,4 +1,7 @@
 import torch
+
+import wandb
+
 from torch.autograd import Variable
 import torch.nn.functional as F
 from torch.utils import data
@@ -12,6 +15,7 @@ import pandas as pd
 from time import time
 from sklearn.metrics import roc_auc_score, average_precision_score, f1_score, roc_curve, confusion_matrix, precision_score, recall_score, auc
 from sklearn.model_selection import KFold
+
 torch.manual_seed(1)    # reproducible torch:2 np:3
 np.random.seed(1)
 
@@ -90,6 +94,9 @@ def test(data_generator, model):
 
 
 def main(fold_n, lr):
+    wandb.login()
+    run = wandb.init(project="MoltransTest")
+    
     config = BIN_config_DBPE()
     
     lr = lr
@@ -136,6 +143,9 @@ def main(fold_n, lr):
     print('--- Go for Training ---')
     torch.backends.cudnn.benchmark = True
     for epo in range(train_epoch):
+        
+        wandb.log({'EPOCH': epo})
+        
         model.train()
         for i, (d, p, d_mask, p_mask, label) in enumerate(training_generator):
             score = model(d.long().cuda(), p.long().cuda(), d_mask.long().cuda(), p_mask.long().cuda())
@@ -147,6 +157,8 @@ def main(fold_n, lr):
             n = torch.squeeze(m(score))
             
             loss = loss_fct(n, label)
+            
+            
             loss_history.append(loss)
             
             opt.zero_grad()
@@ -154,6 +166,7 @@ def main(fold_n, lr):
             opt.step()
             
             if (i % 100 == 0):
+                wandb.log({'LOSS': loss.cpu().detach().numpy()})
                 print('Training at Epoch ' + str(epo + 1) + ' iteration ' + str(i) + ' with loss ' + str(loss.cpu().detach().numpy()))
             
         # every epoch test
@@ -163,7 +176,11 @@ def main(fold_n, lr):
                 model_max = copy.deepcopy(model)
                 max_auc = auc
             
+            wandb.log({'AUROC': auc})
+            wandb.log({'AUPRC': auprc})
+            
             print('Validation at Epoch '+ str(epo + 1) + ' , AUROC: '+ str(auc) + ' , AUPRC: ' + str(auprc) + ' , F1: '+str(f1))
+            
     torch.save(model.state_dict(), PATH)
     
     
