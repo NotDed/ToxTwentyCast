@@ -70,7 +70,7 @@ class RobertaClass(torch.nn.Module):
         # self.threshold = torch.nn.Threshold(0.8, 1)
 
     def forward(self, input_ids, attention_mask, token_type_ids):
-        _, pooler = self.l1(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids)
+        pooler, _ = self.l1(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids)
         pooler = self.drop1(pooler)
         pooler = self.linear1(pooler)
         pooler = self.norm1(pooler)
