@@ -45,20 +45,20 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         outputs = model(ids, mask, token_type_ids)
         loss = loss_function(outputs, targets)
         print('a')
-        print(targets.tolist())
+        print(targets)
         print('c')
-        print(outputs.tolist())
+        print(outputs)
         print('b')
         #print(outputs)
-        predictions.extend(outputs.tolist())
-        truePred.extend(targets.tolist())
+        predictions.extend(outputs)
+        truePred.extend(targets)
         try:
-           roc_auc_arr.append(roc_auc_score(targets.cpu(), outputs.cpu()).tolist())
+           roc_auc_arr.append(roc_auc_score(targets.cpu(), outputs.cpu()))
         except ValueError:
           pass
 
         try: 
-          psc_arr.append(recall_score(targets.cpu(), outputs.cpu()).tolist())
+          psc_arr.append(recall_score(targets.cpu(), outputs.cpu()))
         except ValueError:
           pass
 
