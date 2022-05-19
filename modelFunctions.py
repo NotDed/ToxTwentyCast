@@ -43,6 +43,9 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         targets = data['targets'].to(device, dtype = torch.long)
 
         outputs = model(ids, mask, token_type_ids)
+        print('a')
+        print(outputs)
+        print('b')
         loss = loss_function(outputs, targets)
         #print(outputs)
         predictions.extend(outputs.tolist())
