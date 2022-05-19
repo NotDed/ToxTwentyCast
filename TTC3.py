@@ -140,10 +140,10 @@ def objective(trial):
     model = RobertaClass()
     model = torch.nn.DataParallel(model)
     model.to(device)
-    loss_function = torch.nn.CrossEntropyLoss()
+    loss_function = torch.nn.BCELoss()
     optimizer = torch.optim.Adam(params =  model.parameters(), lr=params['lr'])
 
-    EPOCHS = 15
+    EPOCHS = 1
 
     
     wandb.login()
