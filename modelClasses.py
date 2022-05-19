@@ -57,7 +57,7 @@ class RobertaClass(torch.nn.Module):
         self.dropout = torch.nn.Dropout(0.3)
         self.classifier = torch.nn.Linear(64, 1)
         self.threshold = torch.nn.Threshold(0, 1, 0)
-
+        
         # self.pre_classifier = torch.nn.Linear(768, 768)
         # self.norm1 = torch.nn.LayerNorm(768)
         # self.dropout = torch.nn.Dropout(0.2)
