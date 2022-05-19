@@ -47,14 +47,14 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         #print(outputs)
         predictions.extend(outputs.tolist())
         truePred.extend(targets.tolist())
-
+        print(outputs.cpu())
         try:
-           roc_auc_arr.append(roc_auc_score(targets.cpu().detach().numpy(), torch.argmax(outputs.cpu(), axis=-1)).tolist())
+           roc_auc_arr.append(roc_auc_score(targets.cpu().detach().numpy(), outputs.cpu()).tolist())
         except ValueError:
           pass
 
         try: 
-          psc_arr.append(recall_score(targets.cpu().detach().numpy(), torch.argmax(outputs.cpu(), axis=-1)).tolist())
+          psc_arr.append(recall_score(targets.cpu().detach().numpy(), outputs.cpu()).tolist())
         except ValueError:
           pass
 
@@ -134,6 +134,7 @@ def valid(model, testing_loader, loss_function):
             except ValueError:
               pass
             
+            print(outputs.tolist())
             y_pred.extend(outputs.tolist())
             y_true.extend(targets.tolist())
             #y_pred.extend(torch.argmax(outputs.cpu(), axis=-1).tolist())

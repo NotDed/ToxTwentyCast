@@ -68,7 +68,7 @@ def mainTrain():
     loss_function = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(params =  model.parameters(), lr=LEARNING_RATE)
 
-    EPOCHS = 100
+    EPOCHS = 1
 
     #-------------------------------------Wandb login-------------------------------
     output_model_name = input('''

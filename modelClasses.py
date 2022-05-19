@@ -57,6 +57,7 @@ class RobertaClass(torch.nn.Module):
         self.classifier = torch.nn.Linear(768, 384)
         self.classifier1 = torch.nn.Linear(384, 192)
         self.classifier2 = torch.nn.Linear(192, 2)
+        self.threshold = torch.nn.Threshold(0.8, 1)
         # self.act = torch.nn.Softmax(dim=1)
 
     def forward(self, input_ids, attention_mask, token_type_ids):
@@ -72,6 +73,7 @@ class RobertaClass(torch.nn.Module):
         pooler = self.classifier1(pooler)
         pooler = torch.nn.ReLU()(pooler)
         pooler = self.dropout(pooler)
-        output = self.classifier2(pooler)
+        pooler = self.classifier2(pooler)
+        output = self.threshold(pooler)
         # output = self.act(output)
         return output
