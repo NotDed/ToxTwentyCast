@@ -51,13 +51,13 @@ class SentimentData(Dataset):
 class RobertaClass(torch.nn.Module):
     def __init__(self):
         super(RobertaClass, self).__init__()
+super(RobertaClass, self).__init__()
         self.l1 = RobertaModel.from_pretrained("seyonec/BPE_SELFIES_PubChem_shard00_160k")
         self.drop1 = torch.nn.Dropout(0.2)
-        self.linear1 = torch.nn.Linear(768, 64)
-        self.norm1 = torch.nn.LayerNorm(64)
-        self.drop2 = torch.nn.Dropout(0.2)
-        self.linear2 = torch.nn.Linear(64, 1)
-        self.threshold = torch.nn.Threshold(0.8, 1)
+        self.pre_classifier = torch.nn.Linear(768, 64)
+        self.dropout = torch.nn.Dropout(0.3)
+        self.classifier = torch.nn.Linear(64, 1)
+
         # self.pre_classifier = torch.nn.Linear(768, 768)
         # self.norm1 = torch.nn.LayerNorm(768)
         # self.dropout = torch.nn.Dropout(0.2)
@@ -71,16 +71,13 @@ class RobertaClass(torch.nn.Module):
 
     def forward(self, input_ids, attention_mask, token_type_ids):
         pooler = self.l1(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids)
-        hidden_state = pooler[0]
+        hidden_state =pooler[0]
         pooler = hidden_state[:, 0]
-        pooler = self.drop1(pooler)
-        pooler = self.linear1(pooler)
-        pooler = self.norm1(pooler)
-        pooler = torch.nn.Tanh()(pooler)
-        pooler = self.drop2(pooler)
-        pooler = self.linear2(pooler)
-        output = self.threshold(pooler)
-        output = output[0]
+        pooler = self.pre_classifier(pooler)
+        pooler = torch.nn.ReLU()(pooler)
+        pooler = self.dropout(pooler)
+        output = self.classifier(pooler)
+
         # hidden_state = output_1[0]
         # pooler = hidden_state[:, 0]
         # pooler = self.pre_classifier(pooler)
@@ -99,3 +96,7 @@ class RobertaClass(torch.nn.Module):
         # output = self.threshold(pooler)
         # pooler = self.classifier2(pooler)
         return output
+
+
+
+        
