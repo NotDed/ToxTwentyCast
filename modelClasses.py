@@ -80,7 +80,6 @@ class RobertaClass(torch.nn.Module):
         pooler = self.norm3(pooler)
         pooler = self.dropout(pooler)
         output = self.classifier2(pooler)
-        pooler = self.norm4(pooler)
         output = self.threshold(pooler)
         # pooler = self.classifier2(pooler)
         return output
