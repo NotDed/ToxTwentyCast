@@ -19,9 +19,9 @@ from torch import cuda
 from modelClasses import SentimentData, RobertaClass
 from modelFunctions import train, valid
 
-new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
+#new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
 #new_df = pd.read_csv('~/ToxTwentyCast/dataset/NR.csv')
-#new_df = pd.read_csv('~/ToxTwentyCast/dataset/Tox21.csv')
+new_df = pd.read_csv('~/ToxTwentyCast/dataset/Tox21.csv')
 
 # Defining some key variables that will be used later on in the training
 def mainTrain():
