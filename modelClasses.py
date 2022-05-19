@@ -80,6 +80,7 @@ class RobertaClass(torch.nn.Module):
         pooler = self.drop2(pooler)
         pooler = self.linear2(pooler)
         output = self.threshold(pooler)
+        output = output[0]
         # hidden_state = output_1[0]
         # pooler = hidden_state[:, 0]
         # pooler = self.pre_classifier(pooler)
