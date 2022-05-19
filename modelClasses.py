@@ -51,7 +51,6 @@ class SentimentData(Dataset):
 class RobertaClass(torch.nn.Module):
     def __init__(self):
         super(RobertaClass, self).__init__()
-super(RobertaClass, self).__init__()
         self.l1 = RobertaModel.from_pretrained("seyonec/BPE_SELFIES_PubChem_shard00_160k")
         self.drop1 = torch.nn.Dropout(0.2)
         self.pre_classifier = torch.nn.Linear(768, 64)
