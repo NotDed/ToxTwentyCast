@@ -47,7 +47,6 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         #print(outputs)
         predictions.extend(outputs.tolist())
         truePred.extend(targets.tolist())
-        print(outputs)
         try:
            roc_auc_arr.append(roc_auc_score(targets.cpu(), outputs.cpu()).tolist())
         except ValueError:
