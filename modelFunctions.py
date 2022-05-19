@@ -48,7 +48,7 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         print('c')
         print(outputs)
         print('b')
-        loss = loss_function(outputs[0].tolist(), targets.tolist())
+        loss = loss_function(outputs.tolist(), targets.tolist())
         #print(outputs)
         predictions.extend(outputs)
         truePred.extend(targets)
