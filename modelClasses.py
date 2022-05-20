@@ -77,7 +77,7 @@ class RobertaClass(torch.nn.Module):
         pooler = torch.nn.Sigmoid()(pooler)
         pooler = self.dropout(pooler)
         output = self.classifier(pooler)
-        output = torch.nn.LogSoftmax(output)
+        output = torch.nn.Softmax(output)
         #output = self.threshold(output)
         # hidden_state = output_1[0]
 
