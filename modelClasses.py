@@ -47,27 +47,57 @@ class SentimentData(Dataset):
         }
         
 #Creating the Neural Network for Fine Tuning
-class ROBERTAClassifier(torch.nn.Module):
+
+class RobertaClass(torch.nn.Module):
     def __init__(self):
-        super(ROBERTAClassifier, self).__init__()
-        self.roberta = RobertaModel.from_pretrained("seyonec/BPE_SELFIES_PubChem_shard00_160k")
-        self.d1 = torch.nn.Dropout( 0.25)
-        self.l1 = torch.nn.Linear(768, 768)
-        self.d2 = torch.nn.Dropout(0.25)
-        self.l2 = torch.nn.Linear(768, 2)
-        self.act = torch.nn.Softmax(dim=1)
+        super(RobertaClass, self).__init__()
+        self.l1 = RobertaModel.from_pretrained("seyonec/BPE_SELFIES_PubChem_shard00_160k")
+        self.drop1 = torch.nn.Dropout(0.2)
+        self.pre_classifier = torch.nn.Linear(768, 64)
+        self.dropout = torch.nn.Dropout(0.3)
+        self.classifier = torch.nn.Linear(64, 2)
+        #self.threshold = torch.nn.Threshold(0.4 , 1, 0)
+        
+        # self.pre_classifier = torch.nn.Linear(768, 768)
+        # self.norm1 = torch.nn.LayerNorm(768)
+        # self.dropout = torch.nn.Dropout(0.2)
+        # self.classifier = torch.nn.Linear(768, 384)
+        # self.norm2 = torch.nn.LayerNorm(384)
+        # self.classifier1 = torch.nn.Linear(384, 192)
+        # self.norm3 = torch.nn.LayerNorm(192)
+        # self.classifier2 = torch.nn.Linear(192, 1)
+        # # self.norm4 = torch.nn.LayerNorm(1)
+        # self.threshold = torch.nn.Threshold(0.8, 1)
 
     def forward(self, input_ids, attention_mask, token_type_ids):
-        _, x = self.roberta(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids)
-        x = self.d1(x)
-        x = self.l1(x)
-        x = torch.nn.ReLU()(x)
-        x = self.d2(x)
-        x = self.l2(x)
-        x = self.act(x)
-        return x
+        output_1 = self.l1(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids)
+        hidden_state =output_1[0]
+        pooler = hidden_state[:, 0]
+        pooler = self.pre_classifier(pooler)
+        pooler = torch.nn.Sigmoid()(pooler)
+        pooler = self.dropout(pooler)
+        output = self.classifier(pooler)
+        output = torch.nn.Softmax(output)
+        #output = self.threshold(output)
+        # hidden_state = output_1[0]
 
-
+        # pooler = hidden_state[:, 0]
+        # pooler = self.pre_classifier(pooler)
+        # pooler = torch.nn.ReLU()(pooler)
+        # pooler = self.norm1(pooler)
+        # pooler = self.dropout(pooler)
+        # pooler = self.classifier(pooler)
+        # pooler = torch.nn.ReLU()(pooler)
+        # pooler = self.norm2(pooler)
+        # pooler = self.dropout(pooler)
+        # pooler = self.classifier1(pooler)
+        # pooler = torch.nn.ReLU()(pooler)
+        # pooler = self.norm3(pooler)
+        # pooler = self.dropout(pooler)
+        # output = self.classifier2(pooler)
+        # output = self.threshold(pooler)
+        # pooler = self.classifier2(pooler)
+        return output
 
 
 
