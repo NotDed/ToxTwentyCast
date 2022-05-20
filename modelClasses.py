@@ -58,7 +58,7 @@ class ROBERTAClassifier(torch.nn.Module):
         self.act = torch.nn.Softmax(dim=1)
 
     def forward(self, input_ids, attention_mask):
-        _, x = self.roberta(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids)
+        _, x = self.roberta(input_ids=input_ids, attention_mask=attention_mask)
         x = self.d1(x)
         x = self.l1(x)
         x = torch.nn.ReLU()(x)
