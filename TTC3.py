@@ -65,7 +65,7 @@ def mainTrain():
     #Fine Tuning the Model
 
     # Creating the loss function and optimizer
-    loss_function = torch.nn.MSELoss()
+    loss_function = torch.nn.BCELoss()
     optimizer = torch.optim.Adam(params =  model.parameters(), lr=LEARNING_RATE)
 
     EPOCHS = 1
@@ -140,7 +140,7 @@ def objective(trial):
     model = RobertaClass()
     model = torch.nn.DataParallel(model)
     model.to(device)
-    loss_function = torch.nn.MSELoss()
+    loss_function = torch.nn.BCELoss()
     optimizer = torch.optim.Adam(params =  model.parameters(), lr=params['lr'])
 
     EPOCHS = 1
