@@ -58,7 +58,7 @@ def mainTrain():
     testing_loader = DataLoader(testing_set, **test_params)
 
     device = torch.device('cuda')
-    model = RobertaClass()
+    model = ROBERTAClassifier()
     model = torch.nn.DataParallel(model)
     model.to(device)
 
