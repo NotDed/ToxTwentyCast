@@ -16,7 +16,7 @@ import wandb
 from torch import cuda
 
 
-from modelClasses import SentimentData, RobertaClass
+from modelClasses import SentimentData, ROBERTAClassifier
 from modelFunctions import train, valid
 
 #new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
