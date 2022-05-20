@@ -77,7 +77,7 @@ class RobertaClass(torch.nn.Module):
         pooler = torch.nn.Sigmoid()(pooler)
         pooler = self.dropout(pooler)
         pooler = self.classifier(pooler)
-        output = self.act(output)
+        output = self.act(pooler)
         #output = self.threshold(output)
         # hidden_state = output_1[0]
 
