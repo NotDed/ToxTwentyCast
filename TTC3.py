@@ -140,7 +140,7 @@ def objective(trial):
     model = RobertaClass()
     model = torch.nn.DataParallel(model)
     model.to(device)
-    loss_function = torch.nn.BCELoss()
+    loss_function = torch.nn.BCELoss()loss = nn.MSELoss()
     optimizer = torch.optim.Adam(params =  model.parameters(), lr=params['lr'])
 
     EPOCHS = 1
