@@ -56,7 +56,7 @@ class RobertaClass(torch.nn.Module):
         self.pre_classifier = torch.nn.Linear(768, 64)
         self.dropout = torch.nn.Dropout(0.3)
         self.classifier = torch.nn.Linear(64, 1)
-        self.act = torch.nn.tanh()
+        #self.act = torch.nn.Softmax(dim=1)
         
         # self.pre_classifier = torch.nn.Linear(768, 768)
         # self.norm1 = torch.nn.LayerNorm(768)
@@ -75,7 +75,7 @@ class RobertaClass(torch.nn.Module):
         pooler = hidden_state[:, 0]
         pooler = self.dropout(pooler)
         pooler = self.pre_classifier(pooler)
-        pooler = self.act(pooler)
+        pooler = torch.tanh(pooler)
         pooler = self.dropout(pooler)
         pooler = self.classifier(pooler)
         #output = self.act(pooler)
