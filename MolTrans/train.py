@@ -4,6 +4,7 @@ from time import time
 import numpy as np
 import pandas as pd
 import torch
+import wandb
 from sklearn.metrics import roc_auc_score, average_precision_score, f1_score, roc_curve, confusion_matrix, \
     precision_score, recall_score, auc
 from torch import nn
@@ -83,28 +84,39 @@ def test(data_generator, model):
     thred_optim = thresholds[5:][np.argmax(f1[5:])]
 
     print("optimal threshold: " + str(thred_optim))
+    wandb.log({'optimal threshold': thred_optim})
 
     y_pred_s = [1 if i else 0 for i in (y_pred >= thred_optim)]
 
     auc_k = auc(fpr, tpr)
     print("AUROC:" + str(auc_k))
+    wandb.log({'AUROC': auc_k})
+    
     print("AUPRC: " + str(average_precision_score(y_label, y_pred)))
+    wandb.log({'AUPRC': average_precision_score(y_label, y_pred)})
 
     cm1 = confusion_matrix(y_label, y_pred_s)
     print('Confusion Matrix : \n', cm1)
+    wandb.log({'Confusion Matrix': cm1})
     print('Recall : ', recall_score(y_label, y_pred_s))
+    wandb.log({'Recall': recall_score(y_label, y_pred_s)})
     print('Precision : ', precision_score(y_label, y_pred_s))
+    wandb.log({'Precision': precision_score(y_label, y_pred_s)})
 
     total1 = sum(sum(cm1))
     #####from confusion matrix calculate accuracy
     accuracy1 = (cm1[0, 0] + cm1[1, 1]) / total1
     print('Accuracy : ', accuracy1)
+    wandb.log({'Accuracy': accuracy1})
+    
 
     sensitivity1 = cm1[0, 0] / (cm1[0, 0] + cm1[0, 1])
     print('Sensitivity : ', sensitivity1)
+    wandb.log({'Sensitivity': sensitivity1})
 
     specificity1 = cm1[1, 1] / (cm1[1, 0] + cm1[1, 1])
     print('Specificity : ', specificity1)
+    wandb.log({'Specificity': specificity1})
 
     outputs = np.asarray([1 if i else 0 for i in (np.asarray(y_pred) >= 0.5)])
     return roc_auc_score(y_label, y_pred), average_precision_score(y_label, y_pred), f1_score(y_label,
@@ -153,13 +165,23 @@ def main():
     max_auc = 0
     model_max = copy.deepcopy(model)
 
+    wandb.login()
+    wandb.init(project="Moltrans")
+
     with torch.set_grad_enabled(False):
         auc, auprc, f1, logits, loss = test(testing_generator, model_max)
+        
+        wandb.log({'AUROC': str(auc) , 'AUPRC': str(auprc), 'F1': str(f1), 'Test loss': str(loss)})
+        
         print('Initial Testing AUROC: ' + str(auc) + ' , AUPRC: ' + str(auprc) + ' , F1: ' + str(
             f1) + ' , Test loss: ' + str(loss))
 
     print('--- Go for Training ---')
+    
     torch.backends.cudnn.benchmark = True
+    
+    
+    
     for epo in range(args.epochs):
         model.train()
         for i, (d, p, d_mask, p_mask, label) in enumerate(training_generator):

@@ -117,6 +117,7 @@ class BIN_Interaction_Flat(nn.Sequential):
         
         #score = self.decoder(torch.cat((f, f_encode), dim = 1))
         score = self.decoder(f)
+        print('\nsalida de el decoder: {}\n'.format(score))
         return score    
    
 # help classes    
