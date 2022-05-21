@@ -204,6 +204,8 @@ def main():
 
 
 s = time()
-model_max, loss_history = main()
+model_max, loss_history = main(1, 5e-6)
 e = time()
 print(e - s)
+lh = list(filter(lambda x: x < 1, loss_history))
+print(lh)
