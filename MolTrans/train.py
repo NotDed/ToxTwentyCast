@@ -55,13 +55,13 @@ def test(data_generator, model):
     count = 0.0
     for i, (d, p, d_mask, p_mask, label) in enumerate(data_generator):
         score = model(d.long().cuda(), p.long().cuda(), d_mask.long().cuda(), p_mask.long().cuda())
-
+        print(score)
         m = torch.nn.Sigmoid()
         logits = torch.squeeze(m(score))
+        print(logits)
         loss_fct = torch.nn.BCELoss()
-
         label = Variable(torch.from_numpy(np.array(label)).float()).cuda()
-
+        print(label)
         loss = loss_fct(logits, label)
 
         loss_accumulate += loss
