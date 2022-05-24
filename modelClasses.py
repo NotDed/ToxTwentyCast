@@ -53,9 +53,9 @@ class RobertaClass(torch.nn.Module):
         super(RobertaClass, self).__init__()
         self.l1 = RobertaModel.from_pretrained("seyonec/BPE_SELFIES_PubChem_shard00_160k")
         self.pre_classifier = torch.nn.Linear(768, 512)
-        self.batchnorm = torch.nn.functional.normalize(512)
+        self.batchnorm = torch.nn.BatchNorm1d(512)
         self.classifier = torch.nn.Linear(512, 64)
-        self.batchnorm2 = torch.nn.functional.normalize(64)
+        self.batchnorm2 = torch.nn.BatchNorm1d(64)
         self.classifier2 = torch.nn.Linear(64, 32)
         self.classifier3 = torch.nn.Linear(32, 1)
 
