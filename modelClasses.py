@@ -52,32 +52,28 @@ class RobertaClass(torch.nn.Module):
     def __init__(self):
         super(RobertaClass, self).__init__()
         self.l1 = RobertaModel.from_pretrained("seyonec/BPE_SELFIES_PubChem_shard00_160k")
-        #self.drop1 = torch.nn.Dropout(0.2)
-        self.pre_classifier = torch.nn.Linear(768, 64)
-        self.dropout = torch.nn.Dropout(0.3)
-        self.classifier = torch.nn.Linear(64, 1)
-        #self.act = torch.nn.Softmax(dim=1)
-        
-        # self.pre_classifier = torch.nn.Linear(768, 768)
-        # self.norm1 = torch.nn.LayerNorm(768)
-        # self.dropout = torch.nn.Dropout(0.2)
-        # self.classifier = torch.nn.Linear(768, 384)
-        # self.norm2 = torch.nn.LayerNorm(384)
-        # self.classifier1 = torch.nn.Linear(384, 192)
-        # self.norm3 = torch.nn.LayerNorm(192)
-        # self.classifier2 = torch.nn.Linear(192, 1)
-        # # self.norm4 = torch.nn.LayerNorm(1)
-        # self.threshold = torch.nn.Threshold(0.8, 1)
+        self.pre_classifier = torch.nn.Linear(768, 512)
+        self.batchnorm = torch.nn.functional.normalize(512)
+        self.classifier = torch.nn.Linear(512, 64)
+        self.batchnorm2 = torch.nn.functional.normalize(64)
+        self.classifier2 = torch.nn.Linear(64, 32)
+        self.classifier3 = torch.nn.Linear(32, 1)
+
 
     def forward(self, input_ids, attention_mask, token_type_ids):
         output_1 = self.l1(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids)
         hidden_state =output_1[0]
         pooler = hidden_state[:, 0]
-        pooler = self.dropout(pooler)
         pooler = self.pre_classifier(pooler)
-        pooler = torch.sigmoid(pooler)
-        pooler = self.dropout(pooler)
-        output = self.classifier(pooler)
+        pooler = torch.ReLU(pooler)
+        pooler = self.batchnorm(pooler)
+        pooler = self.classifier1
+        pooler = torch.ReLU(pooler)
+        pooler = self.batchnorm2(pooler)
+        pooler = self.classifier2(pooler)
+        pooler = torch.ReLU(pooler)
+        pooler = self.classifier3(pooler)
+        output = torch.Sigmoid(pooler)
         #output = self.act(pooler)
         #output = self.threshold(output)
         # hidden_state = output_1[0]
