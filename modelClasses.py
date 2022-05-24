@@ -67,7 +67,7 @@ class RobertaClass(torch.nn.Module):
         pooler = self.pre_classifier(pooler)
         pooler = torch.nn.functional.relu(pooler)
         pooler = self.batchnorm(pooler)
-        pooler = self.classifier1(pooler)
+        pooler = self.classifier(pooler)
         pooler = torch.nn.functional.relu(pooler)
         pooler = self.batchnorm2(pooler)
         pooler = self.classifier2(pooler)
