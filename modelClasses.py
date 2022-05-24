@@ -73,7 +73,7 @@ class RobertaClass(torch.nn.Module):
         pooler = self.classifier2(pooler)
         pooler = torch.nn.functional.relu(pooler)
         pooler = self.classifier3(pooler)
-        pooler = torch.Sigmoid(pooler)
+        pooler = torch.sigmoid(pooler)
         output = torch.squeeze(pooler)
         #output = self.act(pooler)
         #output = self.threshold(output)
