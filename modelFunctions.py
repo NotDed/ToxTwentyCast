@@ -47,7 +47,7 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         print(len(targets))
         print(targets)
         print('c')
-        len(outputs)
+        print(len(outputs))
         print(outputs)
         print('b')
         loss = loss_function(outputs.tolist(), targets.tolist())
