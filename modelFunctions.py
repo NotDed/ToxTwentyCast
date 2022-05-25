@@ -44,8 +44,10 @@ def train(epoch, model, training_loader, loss_function, optimizer):
 
         outputs = model(ids, mask, token_type_ids)
         print('a')
+        len(targets)
         print(targets)
         print('c')
+        len(outputs)
         print(outputs)
         print('b')
         loss = loss_function(outputs.tolist(), targets.tolist())
