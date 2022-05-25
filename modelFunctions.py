@@ -48,7 +48,9 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         print('c')
         print(outputs)
         print('b')
-        loss = loss_function(outputs.tolist(), targets.tolist())
+        
+        loss = loss_function(outputs, targets)
+        #loss = loss_function(outputs.tolist(), targets.tolist())
         #print(outputs)
         predictions.extend(outputs)
         truePred.extend(targets)
@@ -69,8 +71,7 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         n_correct += calcuate_accuracy(big_idx, targets)
 
         nb_tr_steps += 1
-        nb_tr_examples+=targets.len(0)
-        #nb_tr_examples+=targets.size(0)
+        nb_tr_examples+=targets.size(0)
         
         if step % 5000==0:
             loss_step = tr_loss/nb_tr_steps
@@ -146,8 +147,7 @@ def valid(model, testing_loader, loss_function):
             #y_true.extend(targets.tolist())
 
             nb_tr_steps += 1
-            nb_tr_examples+=targets.len(0)
-            #nb_tr_examples+=targets.size(0)
+            nb_tr_examples+=targets.size(0)
             
             if step%5000==0:
                 loss_step = tr_loss/nb_tr_steps
