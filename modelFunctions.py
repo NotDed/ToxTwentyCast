@@ -40,7 +40,7 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         ids = data['ids'].to(device, dtype = torch.long)
         mask = data['mask'].to(device, dtype = torch.long)
         token_type_ids = data['token_type_ids'].to(device, dtype = torch.long)
-        targets = data['targets'].to(device, dtype = torch.long)
+        targets = torch.Tensor(data['targets'].to(device, dtype = torch.long))
 
         outputs = model(ids, mask, token_type_ids)
         print('a')
