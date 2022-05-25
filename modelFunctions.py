@@ -41,15 +41,13 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         mask = data['mask'].to(device, dtype = torch.long)
         token_type_ids = data['token_type_ids'].to(device, dtype = torch.long)
         targets = data['targets'].to(device, dtype = torch.long)
-
         outputs = model(ids, mask, token_type_ids)
         print('a')
         print(targets)
         print('c')
         print(outputs)
         print('b')
-        
-        loss = loss_function(outputs, targets)
+        loss = loss_function(outputs.totorch.FloatTensor(list()), targets.tolist())
         #loss = loss_function(outputs.tolist(), targets.tolist())
         #print(outputs)
         predictions.extend(outputs)
