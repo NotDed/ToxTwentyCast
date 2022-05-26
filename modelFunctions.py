@@ -48,10 +48,13 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         print(outputs)
         print('b')
         loss = loss_function(outputs.to(device, dtype = torch.float32), targets.to(device, dtype = torch.float32))
+        
         #loss = loss_function(outputs.tolist(), targets.tolist())
         #print(outputs)
+        
         predictions.extend(outputs)
         truePred.extend(targets)
+        
         # try:
         #    roc_auc_arr.append(roc_auc_score(targets, outputs))
         # except ValueError:
@@ -90,8 +93,8 @@ def train(epoch, model, training_loader, loss_function, optimizer):
     epoch_loss = tr_loss/nb_tr_steps
     epoch_accu = (n_correct*100)/nb_tr_examples
 
-    wandb.log({'ACC': accu_step})
-    wandb.log({'LOSS': loss_step})
+    # wandb.log({'ACC': accu_step})
+    # wandb.log({'LOSS': loss_step})
 
     # wandb.log({'AUC-ROC' : wandb.plot.roc_curve(truePred, predictions, labels=[0, 1])})
     
