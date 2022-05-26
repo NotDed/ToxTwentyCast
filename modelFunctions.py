@@ -52,16 +52,15 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         #print(outputs)
         predictions.extend(outputs)
         truePred.extend(targets)
-        try:
-           roc_auc_arr.append(roc_auc_score(targets.cpu(), outputs.cpu()))
-        except ValueError:
-          pass
+        # try:
+        #    roc_auc_arr.append(roc_auc_score(targets, outputs))
+        # except ValueError:
+        #   pass
 
-        try: 
-          psc_arr.append(recall_score(targets.cpu(), outputs.cpu()))
-        except ValueError:
-          pass
-
+        # try: 
+        #   psc_arr.append(recall_score(targets, outputs))
+        # except ValueError:
+        #   pass
 
         
         tr_loss += loss.item()
@@ -101,8 +100,8 @@ def train(epoch, model, training_loader, loss_function, optimizer):
     
     # wandb.log({'Precision_recall' : wandb.plot.pr_curve(pr_arr['truePred'], pr_arr['predictions'], labels=[0, 1])})
 
-    wandb.log({'AVG-AUC': avg(roc_auc_arr)})
-    wandb.log({'AVG-PSC': avg(psc_arr)})
+    # wandb.log({'AVG-AUC': avg(roc_auc_arr)})
+    # wandb.log({'AVG-PSC': avg(psc_arr)})
 
     return model, epoch_accu
 
