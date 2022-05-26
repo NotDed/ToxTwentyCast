@@ -63,20 +63,20 @@ def train(epoch, model, training_loader, loss_function, optimizer):
         #   pass
 
         
-        tr_loss += loss.item()
-        big_val, big_idx = torch.max(outputs.data, dim=1)
-        n_correct += calcuate_accuracy(big_idx, targets)
+        # tr_loss += loss.item()
+        # big_val, big_idx = torch.max(outputs.data, dim=1)
+        # n_correct += calcuate_accuracy(big_idx, targets)
 
-        nb_tr_steps += 1
-        nb_tr_examples+=len(targets)
+        # nb_tr_steps += 1
+        # nb_tr_examples+=len(targets)
         #nb_tr_examples+=targets.size(0)
         
-        if step % 5000==0:
-            loss_step = tr_loss/nb_tr_steps
-            accu_step = (n_correct*100)/nb_tr_examples 
+        # if step % 5000==0:
+        #     loss_step = tr_loss/nb_tr_steps
+        #     accu_step = (n_correct*100)/nb_tr_examples 
 
-            wandb.log({'ACC': accu_step})
-            wandb.log({'LOSS': loss_step})
+        #     wandb.log({'ACC': accu_step})
+        #     wandb.log({'LOSS': loss_step})
 
             # print(f"Training Loss per 5000 steps: {loss_step}")
             # print(f"Training Accuracy per 5000 steps: {accu_step}")
