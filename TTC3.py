@@ -90,7 +90,7 @@ def mainTrain():
     acc = valid(model, testing_loader, loss_function)
     print("Accuracy on test data = %0.2f%%" % acc)
 
-    run.finish()
+    # run.finish()
 
     #Saving the Trained Model Artifacts for inference
 
