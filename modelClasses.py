@@ -74,29 +74,8 @@ class RobertaClass(torch.nn.Module):
         pooler = self.classifier2(pooler)
         pooler = torch.nn.functional.relu(pooler)
         pooler = self.classifier3(pooler)
-        #pooler = torch.squeeze(pooler)
         pooler = self.activation(pooler)
         output = torch.squeeze(pooler)
-        #output = self.act(pooler)
-        #output = self.threshold(output)
-        # hidden_state = output_1[0]
-
-        # pooler = hidden_state[:, 0]
-        # pooler = self.pre_classifier(pooler)
-        # pooler = torch.nn.ReLU()(pooler)
-        # pooler = self.norm1(pooler)
-        # pooler = self.dropout(pooler)
-        # pooler = self.classifier(pooler)
-        # pooler = torch.nn.ReLU()(pooler)
-        # pooler = self.norm2(pooler)
-        # pooler = self.dropout(pooler)
-        # pooler = self.classifier1(pooler)
-        # pooler = torch.nn.ReLU()(pooler)
-        # pooler = self.norm3(pooler)
-        # pooler = self.dropout(pooler)
-        # output = self.classifier2(pooler)
-        # output = self.threshold(pooler)
-        # pooler = self.classifier2(pooler)
         return output
 
 
