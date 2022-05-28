@@ -56,6 +56,8 @@ def test(data_generator, model):
         
     loss = loss_accumulate/count
     
+    print(y_label, y_pred)
+    
     fpr, tpr, thresholds = roc_curve(y_label, y_pred)
 
     precision = tpr / (tpr + fpr)
