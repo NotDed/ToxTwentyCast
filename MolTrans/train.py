@@ -74,7 +74,9 @@ def test(data_generator, model):
         y_pred = y_pred + logits.flatten().tolist()
 
     loss = loss_accumulate / count
-
+    print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+    print(y_label, y_pred)
+    print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
     fpr, tpr, thresholds = roc_curve(y_label, y_pred)
 
     precision = tpr / (tpr + fpr)
