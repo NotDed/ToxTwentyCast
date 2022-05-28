@@ -60,6 +60,8 @@ def valid(model, loader, loss_function):
     #Metrics
     loss = loss_accumulate/count
     
+    
+    print(y_target, y_pred)
     fpr, tpr, thresholds = roc_curve(y_target, y_pred)
     precision = tpr / (tpr + fpr)
     
