@@ -54,8 +54,8 @@ def valid(model, loader, loss_function):
       outputs = outputs.detach().cpu().numpy()
       targets = targets.to('cpu').numpy()
       
-      y_pred.append(outputs.flatten().tolist())
-      y_target.append(targets.flatten().tolist())
+      y_pred.extend(outputs.flatten().tolist())
+      y_target.extend(targets.flatten().tolist())
       
     #Metrics
     loss = loss_accumulate/count
