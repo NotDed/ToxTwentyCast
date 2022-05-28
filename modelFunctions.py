@@ -74,7 +74,8 @@ def valid(model, loader, loss_function):
     
     auc_k = auc(fpr, tpr)
     print("AUROC:" + str(auc_k))
-    print("AUPRC: "+ str(average_precision_score(y_target, y_pred)))
+    print("AUPRC: "+ str(average_precision_score(y_target, y_predictions)))
+    #print("AUPRC: "+ str(average_precision_score(y_target, y_pred)))
     
     cm1 = confusion_matrix(y_target, y_predictions)
     print('Confusion Matrix : \n', cm1)
