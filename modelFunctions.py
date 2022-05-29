@@ -30,7 +30,7 @@ def getDataFromLoader(loaderData):
     
     return ids, mask, token_type_ids, targets
   
-  
+
 def valid(model, loader, loss_function):
     y_pred = []
     y_target = []
@@ -76,9 +76,9 @@ def valid(model, loader, loss_function):
     
     auc_k = auc(fpr, tpr)
     print("AUROC:" + str(auc_k))
-    wandb.log({'AUROC': auc_k})
+    wandb.log({'AUROC': float(auc_k)})
     print("AUPRC: "+ str(average_precision_score(y_target, y_predictions)))
-    wandb.log({'AUPRC': average_precision_score(y_target, y_predictions)})
+    wandb.log({'AUPRC': float(average_precision_score(y_target, y_predictions))})
     #print("AUPRC: "+ str(average_precision_score(y_target, y_pred)))
     
     cm1 = confusion_matrix(y_target, y_predictions)
@@ -124,14 +124,12 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
         if (step % 100 == 0):
             print('Training at Epoch {} iteration {} with loss {}'.format(epoch + 1, step, loss.cpu().detach().numpy()))
 
-        
-        
-    
+
 
     #validation phase
     with torch.set_grad_enabled(False):
         auc, auprc, f1, predictions, loss = valid(model, validationLoader, loss_function)
-        wandb.log({'AUROC': str(auc) , 'AUPRC': str(auprc), 'F1': str(f1), 'Test loss': str(loss)})
+        wandb.log({'AUROC': str(auc) , 'AUPRC': str(auprc), 'F1': float(f1), 'Test loss': str(loss)})
         #wandb.log({'auc': auc, 'auprc': auprc, 'f1':f1, 'loss':valid_loss, 'accuracy1':accuracy, 'RECALL': recall, 'PRECISION', 'Accuracy':accuracy:})
         print('Validation at Epoch {}, AUROC: {}, AUPRC: {}, F1: {}'.format(epoch + 1, auc, auprc, f1))
         
