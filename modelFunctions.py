@@ -61,7 +61,7 @@ def valid(model, loader, loss_function):
     loss = loss_accumulate/count
     
     
-    print(y_target, y_pred)
+    #print(y_target, y_pred)
     fpr, tpr, thresholds = roc_curve(y_target, y_pred)
     precision = tpr / (tpr + fpr)
     
@@ -70,26 +70,31 @@ def valid(model, loader, loss_function):
     thred_optim = thresholds[5:][np.argmax(f1[5:])]
     
     print("optimal threshold: " + str(thred_optim))
-    
+    wandb.log({'optimal threshold': thred_optim})
     y_predictions = [1 if i else 0 for i in (y_pred >= thred_optim)]
-    print(y_predictions)
+    #print(y_predictions)
     
     auc_k = auc(fpr, tpr)
     print("AUROC:" + str(auc_k))
+    wandb.log({'AUROC': auc_k})
     print("AUPRC: "+ str(average_precision_score(y_target, y_predictions)))
+    wandb.log({'AUPRC': average_precision_score(y_target, y_predictions)})
     #print("AUPRC: "+ str(average_precision_score(y_target, y_pred)))
     
     cm1 = confusion_matrix(y_target, y_predictions)
     print('Confusion Matrix : \n', cm1)
+    wandb.log({'Confusion Matrix': cm1})
     print('Recall : ', recall_score(y_target, y_predictions))
+    wandb.log({'Recall': recall_score(y_target, y_predictions)})
     print('Precision : ', precision_score(y_target, y_predictions))
-    
+    wandb.log({'Precision': precision_score(y_target, y_predictions)})
     total1=sum(sum(cm1))
     
     #accuracy from confusion matrix
     accuracy1 = (cm1[0,0] + cm1[1,1]) / total1
     print ('Accuracy : ', accuracy1)
-    
+    wandb.log({'Accuracy': accuracy1})
+
     outputs = np.asarray([1 if i else 0 for i in (np.asarray(y_pred) >= 0.5)])
     
     return roc_auc_score(y_target, y_pred), average_precision_score(y_target, y_pred), f1_score(y_target, outputs), y_pred, loss.item()
@@ -117,13 +122,18 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
         
         #printing loss every n steps
         if (step % 100 == 0):
-          print('Training at Epoch {} iteration {} with loss {}'.format(epoch + 1, step, loss.cpu().detach().numpy()))
-          
+            print('Training at Epoch {} iteration {} with loss {}'.format(epoch + 1, step, loss.cpu().detach().numpy()))
+
+        
+        
+    
+
     #validation phase
     with torch.set_grad_enabled(False):
         auc, auprc, f1, predictions, loss = valid(model, validationLoader, loss_function)
-        
-        print('Validation at Epoch {}, AUROC: {}, AUPRC: {}, F1: {}'.format(epoch + 1, auc, auprc, f1))
+         wandb.log({'AUROC': str(auc) , 'AUPRC': str(auprc), 'F1': str(f1), 'Test loss': str(loss)})
+        #wandb.log({'auc': auc, 'auprc': auprc, 'f1':f1, 'loss':valid_loss, 'accuracy1':accuracy, 'RECALL': recall, 'PRECISION', 'Accuracy':accuracy:})
+        print('Validation at Epoch {}, AUROC: {}, AUPRC: {}, F1: {}, Accuracy: {}'.format(epoch + 1, auc, auprc, f1, accuracy))
         
     print('The Total Accuracy for Epoch {}'.format(epoch))
 
