@@ -69,7 +69,7 @@ def mainTrain():
     loss_function = torch.nn.BCELoss()
     optimizer = torch.optim.Adam(params = model.parameters(), lr=LEARNING_RATE)
 
-    EPOCHS = 2
+    EPOCHS = 15
     #-------------------------------------Wandb login-------------------------------
     wandb.login()
     run = wandb.init(project="FineT-Roberta")
