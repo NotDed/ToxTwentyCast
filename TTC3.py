@@ -19,18 +19,18 @@ from torch import cuda
 from modelClasses import SentimentData, RobertaClass
 from modelFunctions import train, valid
 
-#new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
+new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
 #new_df = pd.read_csv('~/ToxTwentyCast/dataset/Datasets NR/NR-AhR.csv')
-new_df = pd.read_csv('~/ToxTwentyCast/dataset/Tox21.csv')
+#new_df = pd.read_csv('~/ToxTwentyCast/dataset/Tox21.csv')
 
     
 
 # Defining some key variables that will be used later on in the training
 def mainTrain():
     MAX_LEN = 256
-    TRAIN_BATCH_SIZE =64 
-    VALID_BATCH_SIZE = 32
-    LEARNING_RATE = 3e-05
+    TRAIN_BATCH_SIZE = 32 
+    VALID_BATCH_SIZE = 16
+    LEARNING_RATE = 5e-05
     MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
     
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, padding=True)
@@ -69,7 +69,7 @@ def mainTrain():
     loss_function = torch.nn.BCELoss()
     optimizer = torch.optim.Adam(params = model.parameters(), lr=LEARNING_RATE)
 
-    EPOCHS = 1
+    EPOCHS = 20
     #-------------------------------------Wandb login-------------------------------
     output_model_name = input('Ingrese el nombre de el modelo de salida sin usar espacios: ')
 
