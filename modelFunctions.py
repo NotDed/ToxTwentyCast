@@ -74,7 +74,7 @@ def valid(model, loader, loss_function):
     print("optimal threshold: " + str(thred_optim))
     wandb.log({'optimal threshold': thred_optim})
     y_predictions = [1 if i else 0 for i in (y_pred >= thred_optim)]
-    print(y_predictions)
+    #print(y_predictions)
     
     auc_k = auc(fpr, tpr)
     print("AUROC:" + str(auc_k))
@@ -82,7 +82,7 @@ def valid(model, loader, loss_function):
     wandb.log({'AUROC': float(auc_k)})
     auprc = str(average_precision_score(y_target, y_predictions))
     print("AUPRC: "+ str(average_precision_score(y_target, y_predictions)))
-    wandb.log({'AUPRC': average_precision_score(y_target, y_predictions)})
+    #wandb.log({'AUPRC': average_precision_score(y_target, y_predictions)})
     wandb.log({'AUPRC': float(average_precision_score(y_target, y_predictions))})
     print("AUPRC: "+ str(average_precision_score(y_target, y_pred)))
     
