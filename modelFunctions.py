@@ -73,36 +73,36 @@ def valid(model, loader, loss_function):
     
     print("optimal threshold: " + str(thred_optim))
     wandb.log({'optimal threshold': thred_optim})
-    y_predictions = [1 if i else 0 for i in (y_pred >= thred_optim)]
+    # y_predictions = [1 if i else 0 for i in (y_pred >= thred_optim)]
     #print(y_predictions)
     
     auc_k = auc(fpr, tpr)
-    print("AUROC:" + str(auc_k))
-    wandb.log({'AUROC': auc_k})
-    #wandb.log({'AUROC': float(auc_k)})
-    #auprc = str(average_precision_score(y_target, y_predictions)
-    print("AUPRC: "+ str(average_precision_score(y_target, y_predictions)))
-    wandb.log({'AUPRC': average_precision_score(y_target, y_predictions)})
-    #wandb.log({'AUPRC': float(average_precision_score(y_target, y_predictions))})
-    #print("AUPRC: "+ str(average_precision_score(y_target, y_pred)))
+    # print("AUROC:" + str(auc_k))
+    # wandb.log({'AUROC': auc_k})
+    # #wandb.log({'AUROC': float(auc_k)})
+    # #auprc = str(average_precision_score(y_target, y_predictions)
+    # print("AUPRC: "+ str(average_precision_score(y_target, y_predictions)))
+    # wandb.log({'AUPRC': average_precision_score(y_target, y_predictions)})
+    # #wandb.log({'AUPRC': float(average_precision_score(y_target, y_predictions))})
+    # #print("AUPRC: "+ str(average_precision_score(y_target, y_pred)))
     
-    cm1 = confusion_matrix(y_target, y_predictions)
-    print('Confusion Matrix : \n', cm1)
-    wandb.log({'Confusion Matrix': cm1})
-    print('Recall : ', recall_score(y_target, y_predictions))
-    wandb.log({'Recall': recall_score(y_target, y_predictions)})
-    print('Precision : ', precision_score(y_target, y_predictions))
-    wandb.log({'Precision': precision_score(y_target, y_predictions)})
-    total1=sum(sum(cm1))
+    # cm1 = confusion_matrix(y_target, y_predictions)
+    # print('Confusion Matrix : \n', cm1)
+    # wandb.log({'Confusion Matrix': cm1})
+    # print('Recall : ', recall_score(y_target, y_predictions))
+    # wandb.log({'Recall': recall_score(y_target, y_predictions)})
+    # print('Precision : ', precision_score(y_target, y_predictions))
+    # wandb.log({'Precision': precision_score(y_target, y_predictions)})
+    # total1=sum(sum(cm1))
     
-    #accuracy from confusion matrix
-    accuracy1 = (cm1[0,0] + cm1[1,1]) / total1
-    print ('Accuracy : ', accuracy1)
-    wandb.log({'Accuracy': accuracy1})
+    # #accuracy from confusion matrix
+    # accuracy1 = (cm1[0,0] + cm1[1,1]) / total1
+    # print ('Accuracy : ', accuracy1)
+    # wandb.log({'Accuracy': accuracy1})
 
-    outputs = np.asarray([1 if i else 0 for i in (np.asarray(y_pred) >= 0.5)])
+    # outputs = np.asarray([1 if i else 0 for i in (np.asarray(y_pred) >= 0.5)])
     
-    return roc_auc_score(y_target, y_pred), average_precision_score(y_target, y_pred), f1_score(y_target, outputs), y_pred, loss.item()
+    return auc_k, precision, f1, y_pred, loss.item()
   
   
 

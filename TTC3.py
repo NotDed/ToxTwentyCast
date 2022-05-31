@@ -28,8 +28,8 @@ new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
 # Defining some key variables that will be used later on in the training
 def mainTrain():
     MAX_LEN = 256
-    TRAIN_BATCH_SIZE = 32 
-    VALID_BATCH_SIZE = 16
+    TRAIN_BATCH_SIZE = 16 
+    VALID_BATCH_SIZE = 8
     LEARNING_RATE = 3e-05
     MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
     
