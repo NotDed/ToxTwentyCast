@@ -76,7 +76,7 @@ def valid(model, loader, loss_function):
     
     auc_k = auc(fpr, tpr)
     print("AUROC:" + str(auc_k))
-    wandb.log({'AUROC': str(auc_k)})
+    wandb.log({'AUROC': auc_k})
     #wandb.log({'AUROC': float(auc_k)})
     #auprc = str(average_precision_score(y_target, y_predictions)
     print("AUPRC: "+ str(average_precision_score(y_target, y_predictions)))
@@ -132,8 +132,7 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
     #validation phase
     with torch.set_grad_enabled(False):
         auc, auprc, f1, predictions, loss = valid(model, validationLoader, loss_function)
-        wandb.log({'AUROC': str(auc) , 'AUPRC': str(auprc), 'F1': float(f1), 'Test loss': str(loss)})
-        #wandb.log({'auc': auc, 'auprc': auprc, 'f1':f1, 'loss':valid_loss, 'accuracy1':accuracy, 'RECALL': recall, 'PRECISION', 'Accuracy':accuracy:})
+        wandb.log({'AUROC': auc , 'AUPRC': auprc, 'F1': f1, 'Test loss': loss})
         print('Validation at Epoch {}, AUROC: {}, AUPRC: {}, F1: {}'.format(epoch + 1, auc, auprc, f1))
         
     print('The Total Accuracy for Epoch {}'.format(epoch))
