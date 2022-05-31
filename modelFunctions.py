@@ -37,6 +37,8 @@ def valid(model, loader, loss_function):
     loss_accumulate = 0.0
     count = 0.0
     
+    torch.cuda.empty_cache()
+    
     model.eval()
     
     for step, data in tqdm(enumerate(loader, 0)):
