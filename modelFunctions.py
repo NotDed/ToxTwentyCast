@@ -80,7 +80,7 @@ def valid(model, loader, loss_function):
     print("AUROC:" + str(auc_k))
     wandb.log({'AUROC': auc_k})
     wandb.log({'AUROC': float(auc_k)})
-    auprc = str(average_precision_score(y_target, y_predictions)
+    auprc = str(average_precision_score(y_target, y_predictions))
     print("AUPRC: "+ str(average_precision_score(y_target, y_predictions)))
     wandb.log({'AUPRC': average_precision_score(y_target, y_predictions)})
     wandb.log({'AUPRC': float(average_precision_score(y_target, y_predictions))})
