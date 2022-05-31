@@ -79,7 +79,13 @@ def mainTrain():
         model = train(epoch, model, training_loader, testing_loader, loss_function, optimizer)
         
     #Validating the Model
-    auc, auprc, f1, predictions, loss = valid(model, testing_loader, loss_function)
+    
+    # auc, auprc, f1, predictions, loss = valid(model, testing_loader, loss_function)
+    
+    with torch.set_grad_enabled(False):
+        auc, auprc, f1, predictions, loss = valid(model, testing_loader, loss_function)
+            
+        print('Validation at Epoch {}, AUROC: {}, AUPRC: {}, F1: {}, LOSS: {}'.format(epoch + 1, auc, auprc, f1, loss))
 
     output_model_file = '{}.bin'.format(output_model_name) #'pytorch_roberta_sentiment.bin'
     output_vocab_file = './'

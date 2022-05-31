@@ -134,12 +134,13 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
     #validation phase
     with torch.set_grad_enabled(False):
         auc, auprc, f1, predictions, loss = valid(model, validationLoader, loss_function)
-        try:
-            wandb.log({'AUROC': auc , 'AUPRC': auprc, 'F1': f1, 'Test loss': loss})
-        except Exception as e:
-            print(e)
+        
+        # try:
+        #     wandb.log({'AUROC': auc , 'AUPRC': auprc, 'F1': f1, 'Test loss': loss})
+        # except Exception as e:
+        #     print(e)
             
-        print('Validation at Epoch {}, AUROC: {}, AUPRC: {}, F1: {}'.format(epoch + 1, auc, auprc, f1))
+        print('Validation at Epoch {}, AUROC: {}, AUPRC: {}, F1: {}, LOSS: {}'.format(epoch + 1, auc, auprc, f1, loss))
         
     print('The Total Accuracy for Epoch {}'.format(epoch))
 
