@@ -57,6 +57,7 @@ class RobertaClass(torch.nn.Module):
         self.classifier = torch.nn.Linear(512, 64)
         self.batchnorm2 = torch.nn.BatchNorm1d(64)
         self.classifier2 = torch.nn.Linear(64, 32)
+        self.batchnorm3 = torch.nn.BatchNorm1d(32)
         self.classifier3 = torch.nn.Linear(32, 1)
         self.activation = torch.nn.Sigmoid()
 
@@ -73,6 +74,7 @@ class RobertaClass(torch.nn.Module):
         pooler = self.batchnorm2(pooler)
         pooler = self.classifier2(pooler)
         pooler = torch.nn.functional.relu(pooler)
+        pooler = self.batchnorm3(pooler)
         pooler = self.classifier3(pooler)
         pooler = self.activation(pooler)
         output = torch.squeeze(pooler)

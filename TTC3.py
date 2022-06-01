@@ -30,7 +30,7 @@ def mainTrain():
     MAX_LEN = 256
     TRAIN_BATCH_SIZE = 32
     VALID_BATCH_SIZE = 16
-    LEARNING_RATE = 5e-05
+    LEARNING_RATE = 2e-05
     MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
     
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, padding=True)
