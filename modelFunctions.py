@@ -101,6 +101,12 @@ def valid(model, loader, loss_function):
     print ('Accuracy : ', accuracy1)
     wandb.log({'Accuracy': accuracy1})
 
+    sensitivity1 = cm1[0,0]/(cm1[0,0]+cm1[0,1])
+    print('Sensitivity : ', sensitivity1 )
+
+    specificity1 = cm1[1,1]/(cm1[1,0]+cm1[1,1])
+    print('Specificity : ', specificity1)
+
     outputs = np.asarray([1 if i else 0 for i in (np.asarray(y_pred) >= 0.5)])
     return roc_auc_score(y_target, y_pred), average_precision_score(y_target, y_pred), f1_score(y_target, outputs), y_pred, loss.item()
     #return auc_k, precision, f1, y_pred, loss.item()
