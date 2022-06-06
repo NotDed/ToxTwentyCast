@@ -19,9 +19,9 @@ from torch import cuda
 from modelClasses import SentimentData, RobertaClass
 from modelFunctions import train, valid
 
-#new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
+new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
 #new_df = pd.read_csv('~/ToxTwentyCast/dataset/Datasets NR/NR-AhR.csv')
-new_df = pd.read_csv('~/ToxTwentyCast/dataset/Tox21.csv')
+#new_df = pd.read_csv('~/ToxTwentyCast/dataset/Tox21.csv')
 
     
 
@@ -30,13 +30,13 @@ def mainTrain():
     MAX_LEN = 256
     TRAIN_BATCH_SIZE = 32
     VALID_BATCH_SIZE = 16
-    LEARNING_RATE = 2e-05
+    LEARNING_RATE = 4e-06
     MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
     
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, padding=True)
             
     #data split
-    train_size = 0.8
+    train_size = 0.7
     train_data=new_df.sample(frac=train_size,random_state=200)
     test_data=new_df.drop(train_data.index).reset_index(drop=True)
     train_data = train_data.reset_index(drop=True)
@@ -69,7 +69,7 @@ def mainTrain():
     loss_function = torch.nn.BCELoss()
     optimizer = torch.optim.Adam(params = model.parameters(), lr=LEARNING_RATE)
 
-    EPOCHS = 20
+    EPOCHS = 40
     #-------------------------------------Wandb login-------------------------------
     wandb.login()
     run = wandb.init(project="FineT-Roberta")

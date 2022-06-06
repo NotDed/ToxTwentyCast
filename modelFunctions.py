@@ -42,22 +42,23 @@ def valid(model, loader, loss_function):
     model.eval()
     
     for step, data in tqdm(enumerate(loader, 0)):
-      ids, mask, token_type_ids, targets = getDataFromLoader(data)
+
+        ids, mask, token_type_ids, targets = getDataFromLoader(data)
       
-      #model ouputs
-      outputs = model(ids, mask, token_type_ids)
-      outputs = outputs.to(device, dtype = torch.float32)
-      
-      loss = loss_function(outputs, targets)
-      
-      loss_accumulate += loss
-      count += 1
-      
-      outputs = outputs.detach().cpu().numpy()
-      targets = targets.to('cpu').numpy()
-      
-      y_pred.extend(outputs.flatten().tolist())
-      y_target.extend(targets.flatten().tolist())
+        #model ouputs
+        outputs = model(ids, mask, token_type_ids)
+        outputs = outputs.to(device, dtype = torch.float32)
+        
+        loss = loss_function(outputs, targets)
+        
+        loss_accumulate += loss
+        count += 1
+        
+        outputs = outputs.detach().cpu().numpy()
+        targets = targets.to('cpu').numpy()
+        
+        y_pred.extend(outputs.flatten().tolist())
+        y_target.extend(targets.flatten().tolist())
       
     #Metrics
     loss = loss_accumulate/count
