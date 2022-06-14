@@ -27,16 +27,16 @@ new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
 
 # Defining some key variables that will be used later on in the training
 def mainTrain():
-    MAX_LEN = 256
+    MAX_LEN = 180
     TRAIN_BATCH_SIZE = 32
     VALID_BATCH_SIZE = 16
-    LEARNING_RATE = 6e-6
+    LEARNING_RATE = 5e-6
     MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
     
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, padding=True)
             
     #data split
-    train_size = 0.7
+    train_size = 0.8
     train_data=new_df.sample(frac=train_size,random_state=200)
     test_data=new_df.drop(train_data.index).reset_index(drop=True)
     train_data = train_data.reset_index(drop=True)
@@ -69,7 +69,7 @@ def mainTrain():
     loss_function = torch.nn.BCELoss()
     optimizer = torch.optim.Adam(params = model.parameters(), lr=LEARNING_RATE)
 
-    EPOCHS = 20
+    EPOCHS = 25
     #-------------------------------------Wandb login-------------------------------
     wandb.login()
     run = wandb.init(project="FineT-Roberta")
