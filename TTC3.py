@@ -27,10 +27,10 @@ new_df = pd.read_csv('~/ToxTwentyCast/dataset/toxTwentyCast.csv')
 
 # Defining some key variables that will be used later on in the training
 def mainTrain():
-    MAX_LEN = 180
+    MAX_LEN = 200
     TRAIN_BATCH_SIZE = 32
     VALID_BATCH_SIZE = 16
-    LEARNING_RATE = 6e-5
+    LEARNING_RATE = 3e-6
     MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
     
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, padding=True)

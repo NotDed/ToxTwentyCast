@@ -124,7 +124,7 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
         #model ouputs
         outputs = model(ids, mask, token_type_ids)
         outputs = outputs.to(device, dtype = torch.float32)
-        
+        print(outputs)
         #loss meassure
         loss = loss_function(outputs, targets)
         lossHistory.append(loss)
