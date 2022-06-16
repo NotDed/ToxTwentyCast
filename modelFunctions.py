@@ -107,7 +107,7 @@ def valid(model, loader, loss_function):
     specificity1 = cm1[1,1]/(cm1[1,0]+cm1[1,1])
     print('Specificity : ', specificity1)
 
-    outputs = np.asarray([1 if i else 0 for i in (np.asarray(y_pred) >= 0.5)])
+    outputs = np.asarray([1 if i else 0 for i in (np.asarray(y_pred) >= 0.38)]) 
     return roc_auc_score(y_target, y_pred), average_precision_score(y_target, y_pred), f1_score(y_target, outputs), y_pred, loss.item()
     #return auc_k, precision, f1, y_pred, loss.item()
   
@@ -142,7 +142,7 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
         auc, auprc, f1, predictions, loss = valid(model, validationLoader, loss_function)
         
         try:
-            wandb.log({'AUROC': auc , 'AUPRC': auprc, 'F1': f1, 'Test loss': loss})
+            wandb.log({'AUROC': auc , 'AUPRC': auprc, 'F1': f1, 'loss': loss})
         except Exception as e:
             print(e)
             
