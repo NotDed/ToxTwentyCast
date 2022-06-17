@@ -30,7 +30,7 @@ def mainTrain():
     MAX_LEN = 200
     TRAIN_BATCH_SIZE = 32
     VALID_BATCH_SIZE = 16
-    LEARNING_RATE = 2e-6
+    LEARNING_RATE = 3e-5
     MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
     
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, padding=True)
@@ -66,10 +66,10 @@ def mainTrain():
     #Fine Tuning the Model
 
     # Creating the loss function and optimizer
-    loss_function = torch.nn.MSELoss()
+    loss_function = torch.nn.BCELoss()
     optimizer = torch.optim.Adam(params = model.parameters(), lr=LEARNING_RATE)
 
-    EPOCHS = 60
+    EPOCHS = 30
     #-------------------------------------Wandb login-------------------------------
     #wandb.login()
     #run = wandb.init(project="FineT-Roberta")
