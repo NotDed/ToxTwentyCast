@@ -73,33 +73,32 @@ def valid(model, loader, loss_function):
     thred_optim = thresholds[5:][np.argmax(f1[5:])]
     
     print("optimal threshold: " + str(thred_optim))
-    wandb.log({'optimal threshold': thred_optim})
+    #wandb.log({'optimal threshold': thred_optim})
     y_predictions = [1 if i else 0 for i in (y_pred >= thred_optim)]
     #print(y_predictions)
     
     auc_k = auc(fpr, tpr)
     print("AUROC:" + str(auc_k))
-    wandb.log({'AUROC': auc_k})
-    wandb.log({'AUROC': float(auc_k)})
+    #wandb.log({'AUROC': auc_k})
+    # wandb.log({'AUROC': float(auc_k)})
     #auprc = str(average_precision_score(y_target, y_predictions))
     print("AUPRC: "+ str(average_precision_score(y_target, y_predictions)))
-    #wandb.log({'AUPRC': average_precision_score(y_target, y_predictions)})
-    wandb.log({'AUPRC': float(average_precision_score(y_target, y_predictions))})
+    # wandb.log({'AUPRC': float(average_precision_score(y_target, y_predictions))})
     print("AUPRC: "+ str(average_precision_score(y_target, y_pred)))
     
     cm1 = confusion_matrix(y_target, y_predictions)
     print('Confusion Matrix : \n', cm1)
-    wandb.log({'Confusion Matrix': cm1})
+    # wandb.log({'Confusion Matrix': cm1})
     print('Recall : ', recall_score(y_target, y_predictions))
-    wandb.log({'Recall': recall_score(y_target, y_predictions)})
+    # wandb.log({'Recall': recall_score(y_target, y_predictions)})
     print('Precision : ', precision_score(y_target, y_predictions))
-    wandb.log({'Precision': precision_score(y_target, y_predictions)})
+    # wandb.log({'Precision': precision_score(y_target, y_predictions)})
     total1=sum(sum(cm1))
     
     #accuracy from confusion matrix
     accuracy1 = (cm1[0,0] + cm1[1,1]) / total1
     print ('Accuracy : ', accuracy1)
-    wandb.log({'Accuracy': accuracy1})
+    # wandb.log({'Accuracy': accuracy1})
 
     sensitivity1 = cm1[0,0]/(cm1[0,0]+cm1[0,1])
     print('Sensitivity : ', sensitivity1 )
@@ -141,10 +140,10 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
     with torch.set_grad_enabled(False):
         auc, auprc, f1, predictions, loss = valid(model, validationLoader, loss_function)
         
-        try:
-            wandb.log({'AUROC': auc , 'AUPRC': auprc, 'F1': f1, 'loss': loss})
-        except Exception as e:
-            print(e)
+        # try:
+        #    wandb.log({'AUROC': auc , 'AUPRC': auprc, 'F1': f1, 'loss': loss})
+        #except Exception as e:
+            #print(e)
             
         print('Validation at Epoch {}, AUROC: {}, AUPRC: {}, F1: {}, LOSS: {}'.format(epoch + 1, auc, auprc, f1, loss))
         

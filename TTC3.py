@@ -71,8 +71,8 @@ def mainTrain():
 
     EPOCHS = 40
     #-------------------------------------Wandb login-------------------------------
-    wandb.login()
-    run = wandb.init(project="FineT-Roberta")
+    #wandb.login()
+    #run = wandb.init(project="FineT-Roberta")
     output_model_name = input('Ingrese el nombre de el modelo de salida sin usar espacios: ')
 
     for epoch in range(EPOCHS):
