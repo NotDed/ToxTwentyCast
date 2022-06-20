@@ -5,7 +5,7 @@ import torch
 import json
 
 from transformers import AutoTokenizer
-from modelFunctions import predict#, multiPredict
+from modelFunctions import predict, multiPredict
 
 
 
@@ -39,12 +39,10 @@ model = torch.load(save).cuda()
 
 resultados = {}
 
-resultados = predict(model, tokenizer, mol)
-
-# if modo == 'f':
-#     resultados = multiPredict(model, tokenizer, mol)
-# else:
-#     resultados[mol] = predict(model, tokenizer, mol)
+if modo == 'f':
+    resultados = multiPredict(model, tokenizer, mol)
+else:
+    resultados[mol] = predict(model, tokenizer, mol)
     
 print('los resultado de esta prediccion son los siguientes: ')
 print(json.dumps(resultados, indent = 2))

@@ -165,3 +165,14 @@ def predict(model, tokenizer, text, threshold = 0.26):
   predValue = 1 if outputs >= threshold else 0
 
   return {text: {'pred' : predValue, 'linear value': outputs, 'with threshold' : threshold}}
+
+def multiPredict(model, tokenizer, path_text, threshold = 0.26):
+    predictions = {}
+    with open(path_text) as json_file:
+        dataT = json.load(json_file)
+        
+    for T in dataT:
+        out = predict(model, tokenizer, T, threshold)
+        predictions.update(out)
+    
+    return predictions
