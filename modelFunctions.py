@@ -151,13 +151,12 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
 
     return model
 
-
 def predict(model, tokenizer, text, threshold = 0.2):
   model.eval()
   inputs = tokenizer.encode_plus(text, add_special_tokens=True, return_token_type_ids=True)
   
-  ids = torch.tensor(inputs['input_ids'], dtype=torch.long)
-  mask = torch.tensor(inputs['attention_mask'], dtype=torch.long)
+  ids = torch.tensor(inputs['input_ids'], dtype=torch.long).unsqueeze(0)
+  mask = torch.tensor(inputs['attention_mask'], dtype=torch.long).unsqueeze(0)
   token_type_ids = torch.tensor(inputs["token_type_ids"], dtype=torch.long)
   
   outputs = model(ids, mask, token_type_ids)
