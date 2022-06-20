@@ -151,7 +151,7 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
 
     return model
 
-def predict(model, tokenizer, text, threshold = 0.2):
+def predict(model, tokenizer, text, threshold = 0.26):
   model.eval()
   inputs = tokenizer.encode_plus(text, add_special_tokens=True, return_token_type_ids=True)
   
@@ -162,7 +162,6 @@ def predict(model, tokenizer, text, threshold = 0.2):
   outputs = model(ids, mask, token_type_ids)
   outputs = outputs.to(device, dtype = torch.float32)
   outputs = outputs.flatten().tolist()[0]
+  predValue = 1 if outputs >= threshold else 0
 
-#   y_predictions = [1 if i else 0 for i in (outputs >= threshold)]
-
-  return {text: outputs}
+  return {text: [outputs, predValue]}
