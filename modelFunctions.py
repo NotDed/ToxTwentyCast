@@ -161,7 +161,7 @@ def predict(model, tokenizer, text, threshold = 0.2):
   
   outputs = model(ids, mask, token_type_ids)
   outputs = outputs.to(device, dtype = torch.float32)
-  outputs = outputs.flatten().tolist()
+  outputs = outputs.flatten().tolist()[0]
 
 #   y_predictions = [1 if i else 0 for i in (outputs >= threshold)]
 
