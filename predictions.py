@@ -39,10 +39,12 @@ model = torch.load(save).cuda()
 
 resultados = {}
 
-if modo == 'f':
-    resultados = multiPredict(model, tokenizer, mol)
-else:
-    resultados[mol] = predict(model, tokenizer, mol)
+resultados = predict(model, tokenizer, mol)
+
+# if modo == 'f':
+#     resultados = multiPredict(model, tokenizer, mol)
+# else:
+#     resultados[mol] = predict(model, tokenizer, mol)
     
 print('los resultado de esta prediccion son los siguientes: ')
 print(json.dumps(resultados, indent = 2))

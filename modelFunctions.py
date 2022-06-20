@@ -151,32 +151,19 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
 
     return model
 
-  
-def predict(model, tokenizer, text):
-  
+
+def predict(model, tokenizer, text, threshold = 0.2):
   model.eval()
+  inputs = tokenizer.encode_plus(text, add_special_tokens=True, return_token_type_ids=True)
   
-  inputs = tokenizer.encode_plus(
-          text,
-          add_special_tokens=True,
-          return_token_type_ids=True
-      )
-  
-  ids = torch.tensor(inputs['input_ids'], dtype=torch.long).unsqueeze(0)
-  mask = torch.tensor(inputs['attention_mask'], dtype=torch.long).unsqueeze(0)
+  ids = torch.tensor(inputs['input_ids'], dtype=torch.long)
+  mask = torch.tensor(inputs['attention_mask'], dtype=torch.long)
   token_type_ids = torch.tensor(inputs["token_type_ids"], dtype=torch.long)
   
-  outputs = model(ids, mask, token_type_ids).squeeze().cpu().tolist()
-  
-  return outputs
-    
-    
-def multiPredict(model, tokenizer, path_text):
-    predictions = {}
-    with open(path_text) as json_file:
-        dataT = json.load(json_file)
-        
-    for T in dataT:
-        predictions[T] = predict(model, tokenizer, T)
-    
-    return predictions
+  outputs = model(ids, mask, token_type_ids)
+  outputs = outputs.to(device, dtype = torch.float32)
+  outputs = outputs.flatten().tolist()
+
+  y_predictions = [1 if i else 0 for i in (outputs >= threshold)]
+
+  return {text: y_predictions}
