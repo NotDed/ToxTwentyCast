@@ -164,4 +164,4 @@ def predict(model, tokenizer, text, threshold = 0.26):
   outputs = outputs.flatten().tolist()[0]
   predValue = 1 if outputs >= threshold else 0
 
-  return {text: [outputs, predValue]}
+  return {text: {'pred' : predValue, 'linear value': outputs, 'with threshold' : threshold}}
