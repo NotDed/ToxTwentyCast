@@ -3,5 +3,9 @@
     "[O][=C][Branch1_1][C][O][C][C][=C][C][Branch1_1][C][I][=C][Branch1_1][S][O][C][=C][C][=C][Branch1_1][C][O][C][Branch1_1][C][I][=C][Ring1][Branch2_1][C][Branch1_1][C][I][=C][Ring1][P]",
     "[Cl][/C][=C][\\C][N+expl][C][N][C][N][Branch1_1][O][C][N][Branch1_1][Ring2][C][Ring1][Branch1_2][C][Ring1][Branch2_2][C][Ring1][Branch2_3]",
     "[O][=C][Branch1_1][C][O-expl][C][C][=C][C][=C][C][=C][C][=C][C][=C][Ring1][Branch2_3][Ring1][Branch1_2]",
-    "[C][C][O][C][=C][C][=C][Branch1_1][Branch2_2][S][Branch1_2][C][=O][Branch1_2][C][=O][O][C][=C][C][=C][N][=C][Ring1][=C][Ring1][Branch1_2]"
+    "[C][C][O][C][=C][C][=C][Branch1_1][Branch2_2][S][Branch1_2][C][=O][Branch1_2][C][=O][O][C][=C][C][=C][N][=C][Ring1][=C][Ring1][Branch1_2]",
+    "[C][=C][C][=C][C][=C][Ring1][=Branch1]",
+    "[B][Branch2][Ring2][Branch2][C@H1][Branch1][#Branch1][C][C][Branch1][C][C][C][N][C][=Branch1][C][=O][C@H1][Branch1][#Branch2][C][C][=C][C][=C][C][=C][Ring1][=Branch1][N][C][=Branch1][C][=O][C][=N][C][=C][N][=C][Ring1][=Branch1][Branch1][C][O][O]",
+    "B([C@H](CC(C)C)NC(=O)CNC(=O)C1=C(C=CC(=C1)Cl)Cl)(O)O",
+    "C1[C@@H]([C@H](O[C@H]1N2C=NC(=NC2=O)N)CO)O"
 ]
