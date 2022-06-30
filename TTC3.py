@@ -1,6 +1,7 @@
 #Fine Tuning Roberta for Sentiment Analysis
 
 # Importing the libraries needed
+import json
 import pandas as pd
 import optuna
 import torch
@@ -75,9 +76,17 @@ def mainTrain():
     #run = wandb.init(project="FineT-Roberta")
     output_model_name = input('Ingrese el nombre de el modelo de salida sin usar espacios: ')
 
+    predicciones = {}
     for epoch in range(EPOCHS):
-        model = train(epoch, model, training_loader, testing_loader, loss_function, optimizer)
+        model, y_pred, y_target = train(epoch, model, training_loader, testing_loader, loss_function, optimizer)
+        predicciones[str(epoch)] = [y_pred, y_target]
         
+    print('predictions by epoch')
+    print(json.dumps(predicciones, indent=4))
+    
+    predictionsFileName = 'predictions_{}.json'.format(output_model_name)
+    with open(predictionsFileName, "w") as outfile:
+        json.dump(predicciones, outfile)
     #Validating the Model
     
     # auc, auprc, f1, predictions, loss = valid(model, testing_loader, loss_function)

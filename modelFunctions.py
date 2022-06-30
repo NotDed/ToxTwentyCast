@@ -115,6 +115,8 @@ def valid(model, loader, loss_function):
 def train(epoch, model, loader, validationLoader, loss_function, optimizer):
   
     lossHistory = []
+    y_pred = []
+    y_target = []
     
     model.train()
     for step, data in tqdm(enumerate(loader, 0)):
@@ -123,6 +125,11 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
         #model ouputs
         outputs = model(ids, mask, token_type_ids)
         outputs = outputs.to(device, dtype = torch.float32)
+        
+        outputs = outputs.detach().cpu().numpy()
+        targets = targets.to('cpu').numpy()
+        y_pred.extend(outputs.flatten().tolist())
+        y_target.extend(targets.flatten().tolist())
         #loss meassure
         loss = loss_function(outputs, targets)
         lossHistory.append(loss)
@@ -139,17 +146,12 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
     #validation phase
     with torch.set_grad_enabled(False):
         auc, auprc, f1, predictions, loss = valid(model, validationLoader, loss_function)
-        
-        # try:
-        #    wandb.log({'AUROC': auc , 'AUPRC': auprc, 'F1': f1, 'loss': loss})
-        #except Exception as e:
-            #print(e)
             
         print('Validation at Epoch {}, AUROC: {}, AUPRC: {}, F1: {}, LOSS: {}'.format(epoch + 1, auc, auprc, f1, loss))
         
     print('The Total Accuracy for Epoch {}'.format(epoch))
 
-    return model
+    return model, y_pred, y_target
 
 def predict(model, tokenizer, text, threshold = 0.26):
   model.eval()
