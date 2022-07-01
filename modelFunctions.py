@@ -113,7 +113,6 @@ def valid(model, loader, loss_function):
   
 
 def train(epoch, model, loader, validationLoader, loss_function, optimizer):
-  
     lossHistory = []
     y_pred = []
     y_target = []
@@ -123,7 +122,6 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
         ids, mask, token_type_ids, targets = getDataFromLoader(data)
         
         #model ouputs
-
         outputs = model(ids, mask, token_type_ids)
         outputs = outputs.to(device, dtype = torch.float32)
         
@@ -133,11 +131,13 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-
-        outputs = outputs.detach().cpu().numpy()
-        targets = targets.to('cpu').numpy()
-        y_pred.extend(outputs.flatten().tolist())
-        y_target.extend(targets.flatten().tolist())
+        
+        with torch.set_grad_enabled(False):
+            outputs = outputs.detach().cpu().numpy()
+            targets = targets.to('cpu').numpy()
+            
+            y_pred.extend(outputs.flatten().tolist())
+            y_target.extend(targets.flatten().tolist())
         
         
         #printing loss every n steps
