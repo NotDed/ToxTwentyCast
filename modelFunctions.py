@@ -123,9 +123,6 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
         ids, mask, token_type_ids, targets = getDataFromLoader(data)
         
         #model ouputs
-        outputs = model(ids, mask, token_type_ids)
-        outputs = outputs.to(device, dtype = torch.float32)
-
 
         outputs = model(ids, mask, token_type_ids)
         outputs = outputs.to(device, dtype = torch.float32)
