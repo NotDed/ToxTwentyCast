@@ -31,13 +31,13 @@ def mainTrain():
     MAX_LEN = 200
     TRAIN_BATCH_SIZE = 32
     VALID_BATCH_SIZE = 16
-    LEARNING_RATE = 3e-5
+    LEARNING_RATE = 3e-6
     MODEL_NAME = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
     
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, padding=True)
             
     #data split
-    train_size = 0.8
+    train_size = 0.7
     train_data=new_df.sample(frac=train_size,random_state=200)
     test_data=new_df.drop(train_data.index).reset_index(drop=True)
     train_data = train_data.reset_index(drop=True)
