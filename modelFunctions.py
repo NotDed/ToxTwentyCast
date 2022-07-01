@@ -126,8 +126,8 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
 
         outputs = model(ids, mask, token_type_ids)
         outputs = outputs.to(device, dtype = torch.float32)
-        #outputs = outputs.detach().cpu().numpy()
-        targets = targets.to('cpu').numpy()
+        outputs = outputs.detach().cpu().numpy()
+        #targets = targets.to('cpu').numpy()
         y_pred.extend(outputs.flatten().tolist())
         y_target.extend(targets.flatten().tolist())
         #loss meassure
