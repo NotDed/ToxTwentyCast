@@ -151,7 +151,7 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
         
     print('The Total Accuracy for Epoch {}'.format(epoch))
 
-    return model, y_pred, y_target
+    return model# y_pred, y_target
 
 def predict(model, tokenizer, text, threshold = 0.26):
   model.eval()
