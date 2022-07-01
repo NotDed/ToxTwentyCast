@@ -125,8 +125,11 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
         #model ouputs
         outputs = model(ids, mask, token_type_ids)
         outputs = outputs.to(device, dtype = torch.float32)
-        
-        outputs = outputs.detach().cpu().numpy()
+
+
+        outputs = model(ids, mask, token_type_ids)
+        outputs = outputs.to(device, dtype = torch.float32)
+        #outputs = outputs.detach().cpu().numpy()
         targets = targets.to('cpu').numpy()
         y_pred.extend(outputs.flatten().tolist())
         y_target.extend(targets.flatten().tolist())
@@ -151,7 +154,7 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
         
     print('The Total Accuracy for Epoch {}'.format(epoch))
 
-    return model# y_pred, y_target
+    return model, y_pred, y_target
 
 def predict(model, tokenizer, text, threshold = 0.26):
   model.eval()
