@@ -98,8 +98,8 @@ def mainTrain():
         print(len(y_pred))
         print('Validation at Epoch {}, AUROC: {}, AUPRC: {}, F1: {}, LOSS: {}'.format(epoch + 1, auc, auprc, f1, loss))
     
-    #print('predictions by epoch')
-    #print(json.dumps(predicciones, indent=4))
+    print('predictions by epoch')
+    print(json.dumps(predicciones, indent=4))
     
     predictionsFileName = 'predictions_{}.json'.format(output_model_name)
     with open(predictionsFileName, "w") as outfile:
