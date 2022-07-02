@@ -136,8 +136,8 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
             outputs = outputs.detach().cpu().numpy()
             targets = targets.to('cpu').numpy()
             
-            y_pred.extend(outputs.flatten().tolist())
-            y_target.extend(targets.flatten().tolist())
+            #y_pred.extend(outputs.flatten().tolist())
+            #y_target.extend(targets.flatten().tolist())
         
         
         #printing loss every n steps

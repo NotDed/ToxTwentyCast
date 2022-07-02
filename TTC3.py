@@ -70,7 +70,7 @@ def mainTrain():
     loss_function = torch.nn.BCELoss()
     optimizer = torch.optim.Adam(params = model.parameters(), lr=LEARNING_RATE)
 
-    EPOCHS = 40
+    EPOCHS = 1
     #-------------------------------------Wandb login-------------------------------
     #wandb.login()
     #run = wandb.init(project="FineT-Roberta")
@@ -81,20 +81,28 @@ def mainTrain():
         model, y_pred, y_target = train(epoch, model, training_loader, testing_loader, loss_function, optimizer)
         predicciones[str(epoch)] = [y_pred, y_target]
         
+    #print('predictions by epoch')
+    #print(json.dumps(predicciones, indent=4))
+    
+    #predictionsFileName = 'predictions_{}.json'.format(output_model_name)
+    #with open(predictionsFileName, "w") as outfile:
+    
+    #    json.dump(predicciones, outfile)
+    #Validating the Model
+    
+    # auc, auprc, f1, predictions, loss = valid(model, testing_loader, loss_function)
+    
+    with torch.set_grad_enabled(False):
+        auc, auprc, f1, predictions, loss, y_pred, y_target = valid(model, testing_loader, loss_function)
+        predicciones[str(epoch)] = [y_pred, y_target]
+        print('Validation at Epoch {}, AUROC: {}, AUPRC: {}, F1: {}, LOSS: {}'.format(epoch + 1, auc, auprc, f1, loss))
+
     print('predictions by epoch')
     print(json.dumps(predicciones, indent=4))
     
     predictionsFileName = 'predictions_{}.json'.format(output_model_name)
     with open(predictionsFileName, "w") as outfile:
         json.dump(predicciones, outfile)
-    #Validating the Model
-    
-    # auc, auprc, f1, predictions, loss = valid(model, testing_loader, loss_function)
-    
-    with torch.set_grad_enabled(False):
-        auc, auprc, f1, predictions, loss = valid(model, testing_loader, loss_function)
-            
-        print('Validation at Epoch {}, AUROC: {}, AUPRC: {}, F1: {}, LOSS: {}'.format(epoch + 1, auc, auprc, f1, loss))
 
     output_model_file = '{}.bin'.format(output_model_name) #'pytorch_roberta_sentiment.bin'
     output_vocab_file = './'
