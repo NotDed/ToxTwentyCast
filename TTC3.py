@@ -95,11 +95,11 @@ def mainTrain():
     with torch.set_grad_enabled(False):
         auc, auprc, f1, predictions, loss, y_pred, y_target= valid(model, testing_loader, loss_function)
         predicciones[str(epoch)] = [y_pred, y_target]
-        print(len(predicciones))
+        
         print('Validation at Epoch {}, AUROC: {}, AUPRC: {}, F1: {}, LOSS: {}'.format(epoch + 1, auc, auprc, f1, loss))
     
-    print('predictions by epoch')
-    print(json.dumps(predicciones, indent=4))
+    #print('predictions by epoch')
+    #print(json.dumps(predicciones, indent=4))
     
     predictionsFileName = 'predictions_{}.json'.format(output_model_name)
     with open(predictionsFileName, "w") as outfile:
@@ -116,7 +116,7 @@ def mainTrain():
     tokenizer.save_vocabulary(output_vocab_file)
 
     print('All files saved')
-
+    print(len(predicciones))
 
 if __name__ == '__main__': 
     mainTrain()
