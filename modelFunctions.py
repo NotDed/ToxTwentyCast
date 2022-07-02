@@ -107,8 +107,8 @@ def valid(model, loader, loss_function):
     print('Specificity : ', specificity1)
 
     outputs = np.asarray([1 if i else 0 for i in (np.asarray(y_pred) >= 0.5)]) 
-    return roc_auc_score(y_target, y_pred), average_precision_score(y_target, y_pred), f1_score(y_target, outputs), y_pred, loss.item()
-    #return auc_k, precision, f1, y_pred, loss.item()
+    return y_pred, y_target, roc_auc_score(y_target, y_pred), average_precision_score(y_target, y_pred), f1_score(y_target, outputs), y_pred, loss.item()
+    
   
   
 
@@ -136,8 +136,8 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
             outputs = outputs.detach().cpu().numpy()
             targets = targets.to('cpu').numpy()
             
-            #y_pred.extend(outputs.flatten().tolist())
-            #y_target.extend(targets.flatten().tolist())
+            y_pred.extend(outputs.flatten().tolist())
+            y_target.extend(targets.flatten().tolist())
         
         
         #printing loss every n steps
@@ -148,7 +148,7 @@ def train(epoch, model, loader, validationLoader, loss_function, optimizer):
 
     #validation phase
     with torch.set_grad_enabled(False):
-        auc, auprc, f1, predictions, loss = valid(model, validationLoader, loss_function)
+        auc, auprc, f1, predictions, loss, y_target, y_pred = valid(model, validationLoader, loss_function)
             
         print('Validation at Epoch {}, AUROC: {}, AUPRC: {}, F1: {}, LOSS: {}'.format(epoch + 1, auc, auprc, f1, loss))
         
