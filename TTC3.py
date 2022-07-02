@@ -95,6 +95,7 @@ def mainTrain():
     with torch.set_grad_enabled(False):
         auc, auprc, f1, predictions, loss, y_pred, y_target= valid(model, testing_loader, loss_function)
         predicciones[str(epoch)] = [y_pred, y_target]
+        print(len(predicciones))
         print('Validation at Epoch {}, AUROC: {}, AUPRC: {}, F1: {}, LOSS: {}'.format(epoch + 1, auc, auprc, f1, loss))
     
     print('predictions by epoch')
