@@ -70,10 +70,7 @@ def mainTrain():
     loss_function = torch.nn.BCELoss()
     optimizer = torch.optim.Adam(params = model.parameters(), lr=LEARNING_RATE)
 
-    EPOCHS = 1
-    #-------------------------------------Wandb login-------------------------------
-    #wandb.login()
-    #run = wandb.init(project="FineT-Roberta")
+    EPOCHS = 40
     output_model_name = input('Ingrese el nombre de el modelo de salida sin usar espacios: ')
 
     predicciones = {}
@@ -82,7 +79,7 @@ def mainTrain():
         
         with torch.set_grad_enabled(False):
             y_pred, y_target, avg_loss = valid(model, testing_loader, loss_function)
-            predicciones[str(epoch)] = [y_pred, y_target]
+            predicciones[str(epoch+1)] = [y_pred, y_target]
             print(len(y_pred))
     
     print('predictions by epoch')
