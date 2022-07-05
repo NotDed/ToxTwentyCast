@@ -78,32 +78,18 @@ def mainTrain():
 
     predicciones = {}
     for epoch in range(EPOCHS):
-        model, y_pred, y_target = train(epoch, model, training_loader, testing_loader, loss_function, optimizer)
-        #predicciones[str(epoch)] = [y_pred, y_target]
+        model = train(epoch, model, training_loader, loss_function, optimizer)
         
-    #print('predictions by epoch')
-    #print(json.dumps(predicciones, indent=4))
-    
-    #predictionsFileName = 'predictions_{}.json'.format(output_model_name)
-    #with open(predictionsFileName, "w") as outfile:
-    
-        #json.dump(predicciones, outfile)
-    #Validating the Model
-    
-    # auc, auprc, f1, predictions, loss = valid(model, testing_loader, loss_function)
-    
-    with torch.set_grad_enabled(False):
-        auc, auprc, f1, predictions, loss, y_pred, y_target= valid(model, testing_loader, loss_function)
-        predicciones[str(epoch)] = [y_pred, y_target]
-        print(len(y_pred))
-        print('Validation at Epoch {}, AUROC: {}, AUPRC: {}, F1: {}, LOSS: {}'.format(epoch + 1, auc, auprc, f1, loss))
+        with torch.set_grad_enabled(False):
+            y_pred, y_target, avg_loss = valid(model, testing_loader, loss_function)
+            predicciones[str(epoch)] = [y_pred, y_target]
+            print(len(y_pred))
     
     print('predictions by epoch')
     print(json.dumps(predicciones, indent=4))
     
     predictionsFileName = 'predictions_{}.json'.format(output_model_name)
     with open(predictionsFileName, "w") as outfile:
-    
         json.dump(predicciones, outfile)
         
 
