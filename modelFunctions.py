@@ -101,12 +101,10 @@ def predict(model, tokenizer, text, threshold = 0.26):
 
   return {text: {'pred' : predValue, 'linear value': outputs, 'with threshold' : threshold}}
 
-def multiPredict(model, tokenizer, path_text, threshold = 0.26):
+def multiPredict(model, tokenizer, selfies, threshold = 0.26):
     predictions = {}
-    with open(path_text) as json_file:
-        dataT = json.load(json_file)
         
-    for T in dataT:
+    for T in selfies:
         out = predict(model, tokenizer, T, threshold)
         predictions.update(out)
     
