@@ -1,4 +1,4 @@
-const API_URL = 'http://127.0.0.1:3000/predict';
+const API_URL = 'https://3d4d-3-15-163-56.ngrok.io/predict';
 
 
 function askToxicity(){

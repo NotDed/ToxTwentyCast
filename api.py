@@ -30,7 +30,6 @@ def query():
     if request.method == 'POST':
         data = dict(request.json)
         resultados = predict(model, tokenizer, data['selfie'])
-        resultados['selfie'] = data['selfie']
         return resultados
         
 if __name__ == "__main__":
