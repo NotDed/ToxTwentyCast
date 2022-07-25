@@ -25,7 +25,7 @@ def hello():
     return 'Hello World!'
 
 @app.route('/predict', methods=['POST'])
-def predict():
+def query():
     resultados = {}
     if request.method == 'POST':
         data = dict(request.json)
