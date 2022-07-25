@@ -11,7 +11,7 @@ function askToxicity(){
         var predDiv = document.querySelector("#preds");
         var data = response.data
         for (var key in data){
-            console.log(data[key]);
+            // console.log(data[key]);
             var p = document.createElement("h1");
             p.classList = "mx-auto p-1 rounded-lg text-center font-bold w-full";
             if (data[key]['pred'] == 1){
@@ -22,7 +22,7 @@ function askToxicity(){
             
             ul.appendChild(p);
         }
-        console.log(data);
+        // console.log(data);
         predDiv.innerHTML = ul.innerHTML
       })
 }
