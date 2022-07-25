@@ -1,9 +1,10 @@
 const API_URL = 'https://2efd-3-142-82-205.ngrok.io/predict';
 
 const tableStyles = "border-collapse table-auto w-full";
-const cellStyles = "mx-auto my-2 rounded-lg text-center font-bold w-full"
+const cellStyles = "mx-auto my-2 rounded-lg text-center font-bold w-full";
 const headerStyles = "border-b font-bold text-center text-slate-900";
-const cellElemetsStyle = "border-b border-slate-200 text-center text-slate-600 rounded-lg my-4"
+const cellElemetsStyle = "border-b border-slate-200 text-center text-slate-600 rounded-lg";
+const errorStyle = "mx-auto my-2 w-full text-center font-bold rounded-lg text-white";
 
 function createPredictionTable(){
 
@@ -37,22 +38,23 @@ function createPredictionTable(){
 
 function createPredictionCell(key, data){
     var cell = document.createElement("tr");
-    cell.classList = cellStyles
+    cell.classList = cellStyles;
 
     var keyCell = document.createElement("td");
     var predCell = document.createElement("td");
     var trCell = document.createElement("td");
 
     keyCell.innerHTML = key;
-    keyCell.classList = cellElemetsStyle
-    keyCell.classList.toggle('text-left')
+    keyCell.classList = cellElemetsStyle;
+    keyCell.classList.replace('text-center','text-left');
 
-    predCell.innerHTML = data[key]['pred'] == 18 ? "Toxic" : "Non toxic";
-    predCell.classList = cellElemetsStyle
-    predCell.classList.add(data[key]['pred'] == 18 ? "bg-red-500" : "bg-green-500")
+    predCell.innerHTML = data[key]['pred'] == 1 ? "Toxic" : "Non toxic";
+    predCell.classList = cellElemetsStyle;
+    predCell.classList.replace('text-slate-600','text-white');
+    predCell.classList.add(data[key]['pred'] == 1 ? "bg-red-500" : "bg-green-500");
 
     trCell.innerHTML =  data[key]['with threshold'];
-    trCell.classList = cellElemetsStyle
+    trCell.classList = cellElemetsStyle;
 
     cell.appendChild(keyCell);
     cell.appendChild(predCell);
@@ -70,17 +72,27 @@ function drawPredictions(data, destinationElement){
     destinationElement.innerHTML = predTable.outerHTML;
 }
 
+function drawError(erroValue, destinationElement){
+    var errorPrompt = document.createElement("p");
+    errorPrompt.classList = errorStyle;
+    errorPrompt.innerHTML = erroValue;
+    destinationElement.innerHTML = predTable.outerHTML;
+}
+
 function askToxicity(){
     var selfieInput = document.querySelector("#selfieInput").value.split(",");
-    console.log(selfieInput)
-    axios.post(API_URL, {
+    var predOutput = document.querySelector("#preds");
+
+    axios.get(API_URL, {
         'selfies':selfieInput
       })
       .then(function (response) {
-        var predDiv = document.querySelector("#preds");
+        console.log(response.data);
         var data = response.data;
-        drawPredictions(data, predDiv)
-      })
+        drawPredictions(data, predOutput);
+      }).catch(function (error) {
+        drawError("something went wrong", destinationElement);
+      });
 }
 
 // document.querySelector("#selfieInput").addEventListener("change", askToxicity);
