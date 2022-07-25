@@ -13,7 +13,7 @@
   </head>
   <body>
     <div class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12">
-      <div class="relative mx-auto  w-6/12 bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5">
+      <div class="relative mx-auto w-11/12 bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5">
         <div class="mx-auto">
           <h1 class="text-4xl font-black">ToxTwentyCast</h1>
           <h3 class="mt-1 text-xl text-gray-600">InSilico toxicology predictor</h3>
@@ -21,11 +21,10 @@
             <div class="">
               <form>
                 <div>
-                  <input class="mx-auto block w-full text-sm bg-gray-50 rounded-lg border cursor-pointer focus:outline-none" id="selfieInput" type="text" placeholder="SELFIE"/>
+                  <textarea class="mx-auto block w-full text-sm bg-gray-50 rounded-lg border cursor-pointer focus:outline-none" id="selfieInput" type="text" placeholder="comma, sepparated, selfies" cols="30" rows="10"></textarea>
                 </div>
                 <div class="mt-4 flex items-center justify-between">
-                  <button class="focus:shadow-outline rounded bg-gray-800 py-2 px-4 font-bold text-white hover:bg-gray-600 focus:outline-none" id="predict" type="button">Predict</button>
-                  <button class="inline-block align-baseline text-sm font-bold text-gray-900 hover:text-gray-600 hidden" id="toggler" type="button">Multi prediction</button>
+                  <button class="focus:shadow-outline rounded w-full bg-gray-800 py-2 px-4 font-bold text-white hover:bg-gray-600 focus:outline-none" id="predict" type="button">Predict</button>
                 </div>
               </form>
             </div>
