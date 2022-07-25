@@ -29,6 +29,7 @@ def query():
     resultados = {}
     if request.method == 'POST':
         data = dict(request.json)
+        print('aaaaaaaaa')
         print(data)
         resultados = multiPredict(model, tokenizer, data['selfie'])
         return resultados
