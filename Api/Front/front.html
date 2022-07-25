@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.1/dist/flowbite.min.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/flowbite@1.5.1/dist/flowbite.js" type="module"></script>
+    <script src="index.js" type="module"></script>
+    <script src="toggler.js" type="module"></script>
+  </head>
+  <body>
+    <div class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12">
+      <div class="relative mx-auto max-w-xl bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
+        <div class="mx-auto max-w-md">
+          <h1 class="text-4xl font-black">ToxTwentyCast</h1>
+          <h3 class="mt-1 text-xl text-gray-600">InSilico toxicology predictor</h3>
+          <div class="my-4">
+            <div class="">
+              <form>
+                <div>
+                  <input class="mx-auto block w-full text-sm bg-gray-50 rounded-lg border cursor-pointer focus:outline-none" id="selfieInput" type="text" placeholder="SELFIE"/>
+                </div>
+                <div class="mt-4 flex items-center justify-between">
+                  <button class="focus:shadow-outline rounded bg-gray-800 py-2 px-4 font-bold text-white hover:bg-gray-600 focus:outline-none hidden" id="predict" type="button">Predict</button>
+                  <button class="inline-block align-baseline text-sm font-bold text-gray-900 hover:text-gray-600" id="toggler" type="button">Multi prediction</button>
+                </div>
+              </form>
+              <div id="preds">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
