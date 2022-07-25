@@ -12,14 +12,12 @@ function askToxicity(){
         var data = response.data
         for (var key in data){
             console.log(data[key]);
-            var p = document.createElement("p");
-            p.classList = "mx-auto p-1 rounded-full text-center text-white font-bold w-full";
+            var p = document.createElement("h1");
+            p.classList = "mx-auto p-1 rounded-lg text-center font-bold w-full";
             if (data[key]['pred'] == 1){
-                p.classList.add('bg-red-500')
-                p.innerHTML = `${key} is toxic`;
+                p.innerHTML = `<p>${key} <strong class="p-1 rounded-lg bg-red-500 text-white">is toxic</strong></p>`;
             }else{
-                p.classList.add('bg-green-500')
-                p.innerHTML = `${key}  is not toxic`;
+                p.innerHTML = `<p>${key} <strong class="p-1 rounded-lg bg-green-500 text-white">is not toxic</strong></p>`;
             }
             
             ul.appendChild(p);
