@@ -33,7 +33,6 @@ para un entrenamiento con el dataset toxtwentycast usar el comando:
 Para usar el predictor `predictions.py` usamos el comando:
 `python predictions.py <modo> <mol> <save>`
 
-donde:
 `modo` es el tipo de prediccion que queremos realizar ya sea para un selfie escrito directamente en la linea de comandos o un archivo que contenga una o mas selfies
 `i`: individual para pruebas con una sola cadena selfie
 `f`: archivo para pruebas con archivos que contengan multiples cadenas selfies
@@ -44,4 +43,14 @@ donde:
 
 
 ## Api prediction
+La api esta se construyó principalmente con Flask aprovechando los predictores de el modelo ya entrenado
 
+### BackEnd
+Para poner en funcinamiento el Backend solo se requiere el comando `python api.py` la api se abrira en el puerto 3000
+
+las peticiones se realizan al endpoint `/predict` que mediante el cuerpo recibe un archivo Json de la siguiente manera
+`{"selfie":[<selfie1>,<selfie2>,<selfie3>,...,<selfieN>]}`
+
+### FrontEnd
+Para el FrontEnd se contruyó principalmente con Javascript, AXIOSjs, TailwindCss y Flowbite
+es necesario el uso de LiveServer para hostear la plantilla principalment
