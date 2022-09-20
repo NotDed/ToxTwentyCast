@@ -46,18 +46,3 @@ else:
     
 print('los resultado de esta prediccion son los siguientes: ')
 print(json.dumps(resultados, indent = 2))
-
-# df = {
-#     "mol" : list(resultados.keys()),
-#     "result" : list(resultados.values())
-# }
-
-# df = pd.DataFrame({'Mol': resultados.keys(), 'Result': resultados.values()})
-
-# positivos = len(df[ df['Result'] == 1 ])
-# negativos = len(df[ df['Result'] == 0 ])
-
-# print("Resultados positivos: {}".format(positivos))
-# print("{}%".format(round(positivos*100/len(df), 2)))
-# print("Resultados negativos: {}".format(negativos))
-# print("{}%".format(round(negativos*100/len(df), 2)))
