@@ -46,11 +46,13 @@ Para usar el predictor `predictions.py` usamos el comando:
 La api esta se construyó principalmente con Flask aprovechando los predictores de el modelo ya entrenado
 
 ### BackEnd
-Para poner en funcinamiento el Backend solo se requiere el comando `python api.py` la api se abrira en el puerto 3000
+Para poner en funcinamiento el Backend solo se requiere el comando `python api.py` la api se abrira en el puerto `3000`
 
 las peticiones se realizan al endpoint `/predict` que mediante el cuerpo recibe un archivo Json de la siguiente manera
 `{"selfie":[<selfie1>,<selfie2>,<selfie3>,...,<selfieN>]}`
 
 ### FrontEnd
 Para el FrontEnd se contruyó principalmente con Javascript, AXIOSjs, TailwindCss y Flowbite
-es necesario el uso de LiveServer para hostear la plantilla principalment
+es necesario el uso de LiveServer para hostear la plantilla principalmente
+
+En la caja de texto van las cadenas selfies sobre las cuales desee hacer una predicción separadas por `,` de la siguiente manera `<selfie1>,<selfie2>,<selfie3>,...,<selfieN>`
