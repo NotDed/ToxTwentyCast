@@ -95,6 +95,6 @@ function askToxicity(){
       });
 }
 
-// document.querySelector("#selfieInput").addEventListener("change", askToxicity);
+
 document.querySelector("#predict").addEventListener("click", askToxicity);
 
