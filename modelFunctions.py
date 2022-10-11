@@ -97,7 +97,8 @@ def predict(model, tokenizer, text, threshold = 0.26):
   outputs = model(ids, mask, token_type_ids)
   outputs = outputs.to(device, dtype = torch.float32)
   outputs = outputs.flatten().tolist()[0]
-  predValue = 1 if outputs >= threshold else 0
+  predValue = outputs
+#   predValue = 1 if outputs >= threshold else 0
 
   return {text: {'pred' : predValue, 'linear value': outputs, 'with threshold' : threshold}}
 
