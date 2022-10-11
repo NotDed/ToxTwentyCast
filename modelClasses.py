@@ -91,7 +91,6 @@ class RobertaClass(torch.nn.Module):
         pooler = self.relu(pooler)
         output = self.classifiers(pooler)
         output = self.act(output)
-        print("this output: ", output)
         return output
         
         # output_1 = self.l1(input_ids=input_ids, attention_mask=attention_mask, token_type_ids=token_type_ids)
