@@ -67,7 +67,7 @@ def mainTrain():
     loss_function = torch.nn.BCELoss()
     optimizer = torch.optim.Adam(params = model.parameters(), lr=LEARNING_RATE)
 
-    EPOCHS = 40
+    EPOCHS = 100
     output_model_name = input('Ingrese el nombre de el modelo de salida sin usar espacios: ')
 
     predicciones = {}
