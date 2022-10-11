@@ -59,8 +59,8 @@ class RobertaClass(torch.nn.Module):
         self.classifier2 = torch.nn. Linear(500, 300) #2
         self.classifier3 = torch.nn. Linear(300, 100) #3
         self.classifier4 = torch.nn. Linear (100, 50) #4
-        self.classifiers = torch.nn. Linear(50, 2) #5
-        self.act = torch.nn.Softmax(dim=1)
+        self.classifiers = torch.nn. Linear(50, 1) #5
+        # self.act = torch.nn.Softmax(dim=1)
         # super(RobertaClass, self).__init__()
         # self.l1 = RobertaModel.from_pretrained("seyonec/BPE_SELFIES_PubChem_shard00_160k")
         # self.d1 = torch.nn.Dropout(p = 0.2, inplace=False) 
@@ -71,7 +71,7 @@ class RobertaClass(torch.nn.Module):
         # self.batchnorm3 = torch.nn.BatchNorm1d(32)
         # self.d3 = torch.nn.Dropout(p = 0.2, inplace=False) 
         # self.classifier3 = torch.nn.Linear(32, 1)
-        # self.activation = torch.nn.Sigmoid()
+        self.act = torch.nn.Sigmoid()
 
 
     def forward(self, input_ids, attention_mask, token_type_ids):
