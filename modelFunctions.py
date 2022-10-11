@@ -45,11 +45,9 @@ def valid(model, loader, loss_function):
         
         outputs = model(ids, mask, token_type_ids)
         outputs = outputs.to(device, dtype = torch.float32)
-        print(outputs)
-        print(targets)
-        loss = loss_function(outputs, targets)
-        outputs = outputs.to(device, dtype = torch.float32)
         outputs = outputs.flatten()
+        
+        loss = loss_function(outputs, targets)
         
         avg_loss.append(loss.item())
         
@@ -77,8 +75,6 @@ def train(epoch, model, loader, loss_function, optimizer):
         outputs = outputs.to(device, dtype = torch.float32)
         outputs = outputs.flatten()
         
-        print(outputs)
-        print(targets)
         #loss meassure
         loss = loss_function(outputs, targets)
         
