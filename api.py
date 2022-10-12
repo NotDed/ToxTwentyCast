@@ -17,7 +17,7 @@ tokenizer = AutoTokenizer.from_pretrained(seyonecModel, padding=True)
 save = "100_linear_tox_modof.bin"
 model = torch.load(save).cuda()
 
-app = Flask(__name__, static_url_path='static')
+app = Flask(__name__, static_url_path='/static')
 CORS(app)
 
 @app.route('/')
