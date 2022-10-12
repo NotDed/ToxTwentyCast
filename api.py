@@ -20,6 +20,13 @@ model = torch.load(save).cuda()
 app = Flask(__name__, static_url_path='')
 CORS(app)
 
+@app.route('/', methods=['POST'])
+def home():
+    resultados = {}
+    if request.method == 'POST':
+        data = dict(request.json)
+        resultados = multiPredict(model, tokenizer, data['selfie'])
+
 @app.route('/predict', methods=['POST'])
 def query():
     resultados = {}
@@ -28,9 +35,6 @@ def query():
         resultados = multiPredict(model, tokenizer, data['selfie'])
         return resultados
         
-@app.route('/')
-def page():
-    return render_template('front.html')
 
 if __name__ == "__main__":
     app.run(port = 3000, debug = True)
