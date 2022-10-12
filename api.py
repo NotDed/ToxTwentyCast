@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import request, jsonify
+from flask import request, jsonify, render_template
 from flask_cors import CORS
 
 from operator import index
@@ -14,19 +14,14 @@ from modelFunctions import predict, multiPredict
 seyonecModel = 'seyonec/BPE_SELFIES_PubChem_shard00_160k'
 tokenizer = AutoTokenizer.from_pretrained(seyonecModel, padding=True)
 
-save = "40eRun.bin"
+save = "100_linear_tox_modof.bin"
 model = torch.load(save).cuda()
 
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/', methods=['POST'])
 def page():
-    resultados = {}
-    if request.method == 'POST':
-        data = dict(request.json)
-        resultados = multiPredict(model, tokenizer, data['selfies'])
-        return resultados
+    return render_template('Api/Front/front.html')
 
 @app.route('/predict', methods=['POST'])
 def query():
