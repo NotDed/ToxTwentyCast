@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/predict";
+const API_URL = "https://0bb6-18-221-65-130.ngrok.io/predict";
 
 const tableStyles = "border-collapse table-auto w-full";
 const cellStyles = "mx-auto my-2 rounded-lg text-center font-bold w-full";
