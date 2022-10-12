@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import request, jsonify, render_template
+from flask import request
 from flask_cors import CORS
 
 from operator import index
@@ -17,7 +17,7 @@ tokenizer = AutoTokenizer.from_pretrained(seyonecModel, padding=True)
 save = "100_linear_tox_modof.bin"
 model = torch.load(save).cuda()
 
-app = Flask(__name__, static_url_path='')
+app = Flask(__name__)
 CORS(app)
 
 @app.route('/', methods=['POST'])
