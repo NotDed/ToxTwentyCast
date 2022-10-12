@@ -76,7 +76,7 @@ function drawError(erroValue, destinationElement){
     var errorPrompt = document.createElement("p");
     errorPrompt.classList = errorStyle;
     errorPrompt.innerHTML = erroValue;
-    destinationElement.innerHTML = predTable.outerHTML;
+    destinationElement.innerHTML = errorPrompt.innerHTML;
 }
 
 function askToxicity(){

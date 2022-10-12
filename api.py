@@ -18,7 +18,7 @@ save = "100_linear_tox_modof.bin"
 model = torch.load(save).cuda()
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
 
 @app.route('/', methods=['POST'])
 def home():
@@ -26,6 +26,7 @@ def home():
     if request.method == 'POST':
         data = dict(request.json)
         resultados = multiPredict(model, tokenizer, data['selfie'])
+        return resultados
 
 @app.route('/predict', methods=['POST'])
 def query():
