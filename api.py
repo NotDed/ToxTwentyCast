@@ -22,7 +22,7 @@ CORS(app)
 
 @app.route('/')
 def page():
-    return render_template('/Api/Front/front.html')
+    return render_template('/home/ubuntu/ToxTwentyCast/Api/Front/front.html')
 
 @app.route('/predict', methods=['POST'])
 def query():
