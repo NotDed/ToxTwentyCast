@@ -24,10 +24,6 @@ CORS(app)
 def page():
     return render_template('front.html')
 
-@app.route('/index_js')
-def index_js():
-    return render_template('/static/index.js')
-
 @app.route('/predict', methods=['POST'])
 def query():
     resultados = {}
