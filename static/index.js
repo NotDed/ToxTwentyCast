@@ -84,14 +84,14 @@ function askToxicity(){
     var predOutput = document.querySelector("#preds");
 
     axios.get(API_URL, {
-        'selfies':selfieInput
+        'selfie':selfieInput
       })
       .then(function (response) {
         console.log(response.data);
         var data = response.data;
         drawPredictions(data, predOutput);
       }).catch(function (error) {
-        drawError("something went wrong", destinationElement);
+        drawError("something went wrong", predOutput);
       });
 }
 
