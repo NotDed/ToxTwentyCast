@@ -55,11 +55,11 @@ class RobertaClass(torch.nn.Module):
         self.relu = torch.nn.ReLU()
         self.pre_classifier = torch.nn. Linear (768, 768)
         #self.dropout = torch.nn. Dropout (0.3)
-        self.classifier = torch.nn. Linear (768, 500) #1
-        self.classifier2 = torch.nn. Linear(500, 300) #2
-        self.classifier3 = torch.nn. Linear(300, 100) #3
-        self.classifier4 = torch.nn. Linear (100, 50) #4
-        self.classifiers = torch.nn. Linear(50, 1) #5
+        self.classifier = torch.nn.Linear (768, 500) #1
+        self.classifier2 = torch.nn.Linear(500, 300) #2
+        self.classifier3 = torch.nn.Linear(300, 100) #3
+        self.classifier4 = torch.nn.Linear (100, 50) #4
+        self.classifiers = torch.nn.Linear(50, 1) #5
         # self.act = torch.nn.Softmax(dim=1)
         # super(RobertaClass, self).__init__()
         # self.l1 = RobertaModel.from_pretrained("seyonec/BPE_SELFIES_PubChem_shard00_160k")
