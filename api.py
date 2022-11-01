@@ -18,7 +18,7 @@ save = "100_linear_tox_modof.bin"
 model = torch.load(save).cuda()
 
 app = Flask(__name__)
-# CORS(app)
+CORS(app)
 
 @app.route('/', methods=['POST'])
 def home():

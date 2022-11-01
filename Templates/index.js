@@ -1,4 +1,4 @@
-const API_URL = "https://f77a-18-221-65-130.ngrok.io/predict";
+const API_URL = "https://0163-18-221-65-130.ngrok.io/predict";
 
 const tableStyles = "border-collapse table-auto w-full";
 const cellStyles = "mx-auto my-2 rounded-lg text-center font-bold w-full";
@@ -81,17 +81,40 @@ function drawError(erroValue, destinationElement){
 function askToxicity(){
     var selfieInput = document.querySelector("#selfieInput").value.split(",");
     var predOutput = document.querySelector("#preds");
-
-    axios.get(API_URL, {
-        'selfie':selfieInput
-      })
-      .then(function (response) {
+    const options = {
+        method: 'GET',
+        url: 'https://0163-18-221-65-130.ngrok.io/predict',
+        headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+        data: {
+          selfie: [
+            'COc1cc2c(cc1OC)CC([NH3+])C2',
+          ]
+        }
+      };
+      
+      axios.request(options).then(function (response) {
         console.log(response.data);
-        var data = response.data;
-        drawPredictions(data, predOutput);
       }).catch(function (error) {
-        drawError("something went wrong", predOutput);
+        console.error(error);
       });
+
+//     var options = {
+//         method: 'POST',
+//         url: 'https://0163-18-221-65-130.ngrok.io/predict',
+//         headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+//         data: {
+//           selfie: selfieInput
+//         }
+//       };
+
+//     axios.get(API_URL, options)
+//       .then(function (response) {
+//         console.log(response.data);
+//         var data = response.data;
+//         drawPredictions(data, predOutput);
+//       }).catch(function (error) {
+//         drawError("something went wrong", predOutput);
+//       });
 }
 
 
