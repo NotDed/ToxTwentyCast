@@ -1,4 +1,4 @@
-const API_URL = "https://0163-18-221-65-130.ngrok.io/predict";
+const API_URL = "https://3541-18-218-3-115.ngrok.io/predict";
 
 const tableStyles = "border-collapse table-auto w-full";
 const cellStyles = "mx-auto my-2 rounded-lg text-center font-bold w-full";
@@ -28,7 +28,7 @@ function createPredictionTable(){
 
     headerCell.appendChild(keyHeaderCell);
     headerCell.appendChild(predHeaderCell);
-    headerCell.appendChild(trHeaderCell);
+    // headerCell.appendChild(trHeaderCell);
 
     table.appendChild(headerCell);
 
@@ -41,23 +41,23 @@ function createPredictionCell(key, data){
 
     var keyCell = document.createElement("td");
     var predCell = document.createElement("td");
-    var trCell = document.createElement("td");
+    // var trCell = document.createElement("td");
 
     keyCell.innerHTML = key;
     keyCell.classList = cellElemetsStyle;
     keyCell.classList.replace('text-center','text-left');
 
-    predCell.innerHTML = data[key]['pred'] == 1 ? "Toxic" : "Non toxic";
+    predCell.innerHTML = data[key]['pred'] ;
     predCell.classList = cellElemetsStyle;
     predCell.classList.replace('text-slate-600','text-white');
-    predCell.classList.add(data[key]['pred'] == 1 ? "bg-red-500" : "bg-green-500");
+    predCell.classList.add(data[key]['pred'] > data[key]['with threshold'] ? "bg-red-500" : "bg-green-500");
 
-    trCell.innerHTML =  data[key]['with threshold'];
-    trCell.classList = cellElemetsStyle;
+    // trCell.innerHTML =  data[key]['with threshold'];
+    // trCell.classList = cellElemetsStyle;
 
     cell.appendChild(keyCell);
     cell.appendChild(predCell);
-    cell.appendChild(trCell);
+    // cell.appendChild(trCell);
 
     return cell;
 }
@@ -82,41 +82,50 @@ function askToxicity(){
     var selfieInput = document.querySelector("#selfieInput").value.split(",");
     var predOutput = document.querySelector("#preds");
     const options = {
-        method: 'GET',
-        url: 'https://0163-18-221-65-130.ngrok.io/predict',
-        headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+        method: 'POST',
+        url: API_URL,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Credentials': 'true'
+        },
         data: {
-          selfie: [
-            'COc1cc2c(cc1OC)CC([NH3+])C2',
-          ]
+          selfie: selfieInput
         }
       };
       
       axios.request(options).then(function (response) {
         console.log(response.data);
+        var data = response.data;
+        drawPredictions(data, predOutput);
       }).catch(function (error) {
         console.error(error);
+        drawError("something went wrong", predOutput);
       });
 
-//     var options = {
-//         method: 'POST',
-//         url: 'https://0163-18-221-65-130.ngrok.io/predict',
-//         headers: {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-//         data: {
-//           selfie: selfieInput
-//         }
-//       };
+    // var options = {
+    //     method: 'POST',
+    //     url: API_URL,
+    //     headers: {
+    //       'Access-Control-Allow-Origin': '*',
+    //       'Access-Control-Allow-Headers': '*',
+    //       'Access-Control-Allow-Credentials': 'true'
+    //     },
+    //     data: {
+    //       selfie: selfieInput
+    //     }
+    //   };
 
-//     axios.get(API_URL, options)
-//       .then(function (response) {
-//         console.log(response.data);
-//         var data = response.data;
-//         drawPredictions(data, predOutput);
-//       }).catch(function (error) {
-//         drawError("something went wrong", predOutput);
-//       });
+    // axios.post(API_URL, options)
+    //   .then(function (response) {
+    //     console.log(response.data);
+    //     var data = response.data;
+    //     drawPredictions(data, predOutput);
+    //   }).catch(function (error) {
+    //     drawError("something went wrong", predOutput);
+    //   });
 }
 
-
+document.querySelector("#selfieInput").addEventListener("input", askToxicity);
 document.querySelector("#predict").addEventListener("click", askToxicity);
 
